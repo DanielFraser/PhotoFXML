@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane minHeight="600.0" minWidth="600.0" prefHeight="66.0" prefWidth="66.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nonadmin.searchController">
+   <children>
+      <SplitPane dividerPositions="0.5" prefHeight="600.0" prefWidth="594.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <Label id="username" layoutX="14.0" layoutY="567.0" text="&lt;username&gt;" />
+                  <ScrollPane layoutX="11.0" layoutY="279.0" prefHeight="260.0" prefWidth="270.0">
+                     <content>
+                        <TitledPane prefHeight="255.0" prefWidth="265.0" />
+                     </content>
+                  </ScrollPane>
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="175.0" prefWidth="155.0">
+               <children>
+                  <ImageView id="albumDisplay" fitHeight="159.0" fitWidth="270.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../../../../../Pictures/ACBF_THEME/ac4_Wallpaper2_1280x720.jpg" />
+                     </image>
+                  </ImageView>
+                  <Button id="quit" layoutX="37.0" layoutY="551.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="87.0" text="Quit" />
+                  <Button id="logout" layoutX="169.0" layoutY="551.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="87.0" text="Log Out" />
+                  <Label layoutX="62.0" layoutY="238.0" text="Name: " />
+                  <Label layoutX="37.0" layoutY="266.0" text="# of photos:" />
+                  <Label id="numPhotos" layoutX="124.0" layoutY="266.0" text="&lt;# photos&gt;" />
+                  <Label id="albumName" layoutX="124.0" layoutY="238.0" text="&lt;album name&gt;" />
+                  <Label layoutX="34.0" layoutY="291.0" text="Date created:" />
+                  <Label id="dateCreated" layoutX="124.0" layoutY="291.0" text="&lt;date created&gt;" />
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+   </children>
+</AnchorPane>
