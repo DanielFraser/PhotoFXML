@@ -1,23 +1,43 @@
 package main;
 	
+import java.io.IOException;
+
 import javafx.application.Application;
-import javafx.stage.Stage;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
+import nonadmin.AlbumController;
 
 
 public class Main extends Application {
 	@Override
-	public void start(Stage primaryStage) {
-		try {
-			BorderPane root = new BorderPane();
-			Scene scene = new Scene(root,400,400);
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-			primaryStage.setScene(scene);
-			primaryStage.show();
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
+	public void start(Stage primaryStage) throws IOException {
+		FXMLLoader loader = new FXMLLoader();
+		loader.setLocation(getClass().getResource("/nonadmin/album.fxml"));
+		AnchorPane root = (AnchorPane) loader.load();
+		
+		AlbumController controller = loader.getController();
+		controller.start(primaryStage);
+		
+		Scene scene = new Scene(root);
+		primaryStage.setScene(scene);
+		primaryStage.setTitle("Non-admin homepage");
+		primaryStage.setResizable(false);
+		primaryStage.show();
+		
+		primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+		    @Override
+		    public void handle(WindowEvent t) {
+		    	//List<Consultation> showing = provider.getItems();
+		    	//controller.saveList();
+		        Platform.exit();
+		        System.exit(0);
+		    }
+		});
 	}
 	
 	public static void main(String[] args) {
