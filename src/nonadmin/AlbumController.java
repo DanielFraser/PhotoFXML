@@ -1,6 +1,8 @@
 package nonadmin;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import javafx.event.ActionEvent;
@@ -159,9 +161,9 @@ public class AlbumController
 		 */
 		@Override
 		public void handle(Event evt) {
-			Label lbl = (Label) evt.getSource();;
+			Label lbl = (Label) evt.getSource();
 			albumName.setText(lbl.getText());
-			System.out.println(Calendar.DAY_OF_YEAR);
 		}
+		
 	}
 }
