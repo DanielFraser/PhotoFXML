@@ -1,5 +1,6 @@
 package search;
 
-public class SearchController {
+public class SearchController 
+{
 
 }

@@ -21,7 +21,7 @@ public class Main extends Application {
 		AnchorPane root = (AnchorPane) loader.load();
 		
 		AlbumController controller = loader.getController();
-		controller.start(primaryStage);
+		controller.start(primaryStage, "aa");
 		
 		Scene scene = new Scene(root);
 		primaryStage.setScene(scene);
