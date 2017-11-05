@@ -9,7 +9,10 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Control;
@@ -22,6 +25,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import search.SearchController;
 import utility.buttonUtility;
 
 /**
@@ -137,18 +141,20 @@ public class AlbumController
 	private void quitAct(ActionEvent e) throws IOException
 	{
 		Stage stage = (Stage) albumDisplay.getScene().getWindow();
-		buttonUtility.logOut(stage);
+		buttonUtility.quit(stage);
 	}
 
 	/**
 	 * in debugging mode.
 	 *
 	 * @param e the e
+	 * @throws IOException 
 	 */
 	@FXML
-	private void logOutAct(ActionEvent e)
+	private void logOutAct(ActionEvent e) throws IOException
 	{
-
+		Stage stage = (Stage) albumDisplay.getScene().getWindow();
+		buttonUtility.logOut(stage);
 	}
 
 	/**
