@@ -15,7 +15,10 @@
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="350.0">
                <children>
                   <Label fx:id="username" layoutX="14.0" layoutY="567.0" text="&lt;username&gt;" />
-                  <ScrollPane fx:id="albumDisplayPane" layoutX="7.0" layoutY="223.0" prefHeight="326.0" prefWidth="305.0" />
+                  <ScrollPane fx:id="albumDisplayPane" layoutX="7.0" layoutY="158.0" prefHeight="391.0" prefWidth="305.0" />
+                  <Label layoutX="14.0" layoutY="14.0" text="Welcome!" />
+                  <Button layoutX="213.0" layoutY="19.0" mnemonicParsing="false" text="New Album" />
+                  <Button layoutX="213.0" layoutY="82.0" mnemonicParsing="false" text="Search" />
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="598.0" prefWidth="305.0" SplitPane.resizableWithParent="false">
@@ -25,8 +28,8 @@
                         <Image url="@../../../../../../../Pictures/ACBF_THEME/ac4_Wallpaper2_1280x720.jpg" />
                      </image>
                   </ImageView>
-                  <Button fx:id="quit" layoutX="37.0" layoutY="551.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="87.0" text="Quit" onAction="#quitAct" />
-                  <Button fx:id="logout" layoutX="169.0" layoutY="551.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="87.0" text="Log Out" onAction="#logOutAct"/>
+                  <Button fx:id="quit" layoutX="37.0" layoutY="551.0" mnemonicParsing="false" onAction="#quitAct" prefHeight="25.0" prefWidth="87.0" text="Quit" />
+                  <Button fx:id="logout" layoutX="169.0" layoutY="551.0" mnemonicParsing="false" onAction="#logOutAct" prefHeight="25.0" prefWidth="87.0" text="Log Out" />
                   <Label layoutX="62.0" layoutY="238.0" text="Name: " />
                   <Label layoutX="37.0" layoutY="266.0" text="# of photos:" />
                   <Label fx:id="numPhotos" layoutX="124.0" layoutY="266.0" text="&lt;# photos&gt;" />
