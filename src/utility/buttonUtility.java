@@ -31,6 +31,7 @@ public class buttonUtility
 		stage.setScene(scene);
 		stage.show();
 	}
+	
 	/**
 	 * have someone implement save on quit
 	 * 

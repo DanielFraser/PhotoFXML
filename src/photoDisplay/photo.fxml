@@ -22,7 +22,7 @@
                   <ScrollPane fx:id="albumDisplayPane" layoutX="7.0" layoutY="158.0" prefHeight="391.0" prefWidth="305.0" />
                   <Label fx:id="albumName" layoutX="14.0" layoutY="14.0" text="&lt;album name&gt;" />
                   <Button fx:id="home" layoutX="237.0" layoutY="19.0" mnemonicParsing="false" text="Home" />
-                  <Button fx:id="addPhoto" layoutX="225.0" layoutY="78.0" mnemonicParsing="false" text="Add Photo" />
+                  <Button fx:id="addPhoto" onAction="#addPhoto" layoutX="225.0" layoutY="78.0" mnemonicParsing="false" text="Add Photo" />
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="598.0" prefWidth="305.0" SplitPane.resizableWithParent="false">

@@ -160,15 +160,19 @@ public class AlbumController
 	/**
 	 * The Class clickAlbum.
 	 */
-	private class clickAlbum implements EventHandler<Event>{
+	private class clickAlbum implements EventHandler<MouseEvent>{
 		
 		/* (non-Javadoc)
 		 * @see javafx.event.EventHandler#handle(javafx.event.Event)
 		 */
 		@Override
-		public void handle(Event evt) {
-			Label lbl = (Label) evt.getSource();
+		public void handle(MouseEvent event) {
+			Label lbl = (Label) event.getSource();
 			albumName.setText(lbl.getText());
+			if(event.getClickCount() == 2)
+			{
+				System.out.println("mouse click");
+			}
 		}
 		
 	}

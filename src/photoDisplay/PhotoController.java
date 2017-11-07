@@ -1,12 +1,17 @@
 package photoDisplay;
 
+import java.io.File;
 import java.io.IOException;
+
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import utility.buttonUtility;
@@ -81,5 +86,22 @@ public class PhotoController
 	{
 		Stage stage = (Stage) quit.getScene().getWindow();
 		buttonUtility.logOut(stage);
+	}
+	
+	@FXML
+	private void addPhoto(ActionEvent e) throws IOException
+	{
+		FileNameExtensionFilter filter = new FileNameExtensionFilter("Image Files", "jpg", "png", "gif", "jpeg");
+		JFileChooser fc = new JFileChooser();
+		fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+		fc.setFileFilter(filter);
+		fc.setAcceptAllFileFilterUsed(false);
+		int selection = fc.showOpenDialog(fc);
+		
+		if (selection == JFileChooser.APPROVE_OPTION) {
+            File file = fc.getSelectedFile();
+            albumDisplay.setImage(new Image(file.toURI().toString()));
+            System.out.println(file);
+        }
 	}
 }
