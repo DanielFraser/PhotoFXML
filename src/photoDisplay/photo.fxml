@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.gluonhq.charm.glisten.control.ToggleButtonGroup?>
 <?import javafx.scene.Group?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -23,7 +22,7 @@
                   <ScrollPane fx:id="albumDisplayPane" layoutX="7.0" layoutY="158.0" prefHeight="391.0" prefWidth="305.0" />
                   <Label fx:id="albumName" layoutX="14.0" layoutY="14.0" text="&lt;album name&gt;" />
                   <Button fx:id="home" layoutX="237.0" layoutY="19.0" mnemonicParsing="false" text="Home" />
-                  <Button fx:id="addPhoto" layoutX="225.0" layoutY="78.0" mnemonicParsing="false" text="Add Photo" />
+                  <Button fx:id="addPhoto" onAction="#addPhoto" layoutX="225.0" layoutY="78.0" mnemonicParsing="false" text="Add Photo" />
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="598.0" prefWidth="305.0" SplitPane.resizableWithParent="false">
@@ -36,11 +35,10 @@
                   <Button fx:id="quit" layoutX="37.0" layoutY="551.0" mnemonicParsing="false" onAction="#quitAct" prefHeight="25.0" prefWidth="87.0" text="Quit" />
                   <Button fx:id="logout" layoutX="169.0" layoutY="551.0" mnemonicParsing="false" onAction="#logOutAct" prefHeight="25.0" prefWidth="87.0" text="Log Out" />
                   <Label layoutX="30.0" layoutY="263.0" text="Date:" />
-                  <Label id="date" fx:id="numPhotos" layoutX="90.0" layoutY="263.0" text="&lt;Date&gt;" />
-                  <Label id="caption" fx:id="albumName" layoutX="27.0" layoutY="186.0" prefHeight="55.0" prefWidth="245.0" text="&lt;caption&gt;&#10;&lt;caption&gt;&#10;&lt;caption&gt;" />
+                  <Label fx:id="numPhotos" layoutX="90.0" layoutY="263.0" text="&lt;Date&gt;" />
+                  <Label fx:id="albumName" layoutX="27.0" layoutY="186.0" prefHeight="55.0" prefWidth="245.0" text="&lt;caption&gt;&#10;&lt;caption&gt;&#10;&lt;caption&gt;" />
                   <Label layoutX="30.0" layoutY="288.0" text="Tags:" />
-                  <Label id="tags" fx:id="dateCreated" layoutX="91.0" layoutY="288.0" text="&lt;Tags&gt;" />
-                  <ToggleButtonGroup layoutX="36.0" layoutY="389.0" selectionType="SINGLE" />
+                  <Label fx:id="dateCreated" layoutX="91.0" layoutY="288.0" text="&lt;Tags&gt;" />
                   <GridPane layoutX="9.0" layoutY="483.0">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
