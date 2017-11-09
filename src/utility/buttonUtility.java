@@ -27,14 +27,18 @@ public class buttonUtility
 		FXMLLoader loader = new FXMLLoader();
 		loader.setLocation(buttonUtility.class.getResource("/drawing/drawing.fxml"));
 		Parent root = loader.load();
-
-		drawingController controller = loader.getController();
-		controller.start(stage);
+//
+//		drawingController controller = loader.getController();
+//		controller.start(stage);
+//		
+//		//create a new scene with root and set the stage
+//		Scene scene = new Scene(root);
+//		stage.setScene(scene);
+//		stage.show();
 		
-		//create a new scene with root and set the stage
-		Scene scene = new Scene(root);
-		stage.setScene(scene);
-		stage.show();
+		Stage secondStage = new Stage();
+        secondStage.setScene(new Scene(root));
+        secondStage.show();
 	}
 	
 	/**
