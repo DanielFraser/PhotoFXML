@@ -2,10 +2,12 @@ package utility;
 
 import java.io.IOException;
 
+import drawing.drawingController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import nonadmin.AlbumController;
 
 public class buttonUtility
 {
@@ -23,9 +25,12 @@ public class buttonUtility
 	public static void logOut(Stage stage) throws IOException
 	{
 		FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(buttonUtility.class.getResource("/search/search.fxml"));
+		loader.setLocation(buttonUtility.class.getResource("/drawing/drawing.fxml"));
 		Parent root = loader.load();
 
+		drawingController controller = loader.getController();
+		controller.start(stage);
+		
 		//create a new scene with root and set the stage
 		Scene scene = new Scene(root);
 		stage.setScene(scene);
