@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.JFileChooser;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import javafx.event.ActionEvent;
@@ -86,10 +88,7 @@ public class PhotoController
 	public void start(Stage mainStage, Album album) 
 	{
 		currentAlbum = album;
-		VBox vb = createTilePane();
-		fillScrollPane(album.getPhotos());
-		photoDisplayPane.setFitToWidth(true); //prevent horizontal scrolling
-		photoDisplayPane.setContent(vb); //add images to scrollpane
+		fillScrollPane();
 	}
 	
 	/**
@@ -116,13 +115,14 @@ public class PhotoController
 	 *
 	 * @param photos the photos
 	 */
-	private void fillScrollPane(ArrayList<Photo> photos)
+	private void fillScrollPane()
 	{
+		VBox vb = createTilePane();
 		int imageSize = 128;
-		for (Photo p : photos)
+		for (Photo p : currentAlbum.getPhotos())
 		{
 			Label bt2 = new Label();                        
-			Image img2 = new Image(AlbumController.class.getResourceAsStream(p.getLocation()), 
+			Image img2 = new Image(p.getLocation(), 
 					imageSize, 0, true, false);
 			ImageView view2 = new ImageView(img2);
 			bt2.setGraphic(view2);
@@ -131,8 +131,13 @@ public class PhotoController
 			bt2.addEventHandler(MouseEvent.MOUSE_CLICKED, new clickPhoto());
 			tilePane.getChildren().add(bt2);  
 		}
+		
+		photoDisplayPane.setFitToWidth(true); //prevent horizontal scrolling
+		photoDisplayPane.setContent(vb); //add images to scrollpane
 
 	}
+	
+	
 	
 	/**
 	 * in debugging mode.
@@ -165,10 +170,15 @@ public class PhotoController
 	 *
 	 * @param e the e
 	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws UnsupportedLookAndFeelException 
+	 * @throws IllegalAccessException 
+	 * @throws InstantiationException 
+	 * @throws ClassNotFoundException 
 	 */
 	@FXML
-	private void addPhoto(ActionEvent e) throws IOException
+	private void addPhoto(ActionEvent e) throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException
 	{
+		UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
 		FileNameExtensionFilter filter = new FileNameExtensionFilter("Image Files", "jpg", "png", "gif", "jpeg");
 		JFileChooser fc = new JFileChooser();
 		fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
@@ -176,10 +186,12 @@ public class PhotoController
 		fc.setAcceptAllFileFilterUsed(false);
 		int selection = fc.showOpenDialog(fc);
 		
-		if (selection == JFileChooser.APPROVE_OPTION) {
+		if (selection == JFileChooser.APPROVE_OPTION) 
+		{
             File file = fc.getSelectedFile();
             photoDisplay.setImage(new Image(file.toURI().toString()));
-            System.out.println(file);
+            currentAlbum.addPhoto(file.toURI().toString());
+            fillScrollPane();
         }
 	}
 	
