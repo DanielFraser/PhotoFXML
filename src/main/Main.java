@@ -11,6 +11,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import nonadmin.AlbumController;
+import stock.StockUser;
 import users.UserDatabase;
 
 
@@ -26,13 +27,14 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) throws IOException {
 		UserDatabase.loadUserNames(); //load user names
+		StockUser.createStockUser();
 		
 		FXMLLoader loader = new FXMLLoader();
 		loader.setLocation(getClass().getResource("/nonadmin/album.fxml"));
 		AnchorPane root = (AnchorPane) loader.load();
 		
 		AlbumController controller = loader.getController();
-		controller.start(primaryStage, "aa");
+		controller.start(primaryStage, "stock");
 		
 		Scene scene = new Scene(root);
 		primaryStage.setScene(scene);

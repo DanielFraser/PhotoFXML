@@ -12,22 +12,22 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane minHeight="600.0" minWidth="600.0" prefHeight="600.0" prefWidth="643.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="photoDisplay.PhotoController">
+<AnchorPane minHeight="600.0" minWidth="600.0" prefHeight="600.0" prefWidth="643.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="photo.PhotoController">
    <children>
       <SplitPane dividerPositions="0.5" prefHeight="600.0" prefWidth="594.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="350.0">
                <children>
                   <Label fx:id="username" layoutX="14.0" layoutY="567.0" text="&lt;username&gt;" />
-                  <ScrollPane fx:id="albumDisplayPane" layoutX="7.0" layoutY="158.0" prefHeight="391.0" prefWidth="305.0" />
+                  <ScrollPane fx:id="photoDisplayPane" layoutX="7.0" layoutY="158.0" prefHeight="391.0" prefWidth="305.0" />
                   <Label fx:id="albumName" layoutX="14.0" layoutY="14.0" text="&lt;album name&gt;" />
                   <Button fx:id="home" layoutX="237.0" layoutY="19.0" mnemonicParsing="false" text="Home" />
-                  <Button fx:id="addPhoto" onAction="#addPhoto" layoutX="225.0" layoutY="78.0" mnemonicParsing="false" text="Add Photo" />
+                  <Button fx:id="addPhoto" layoutX="225.0" layoutY="78.0" mnemonicParsing="false" onAction="#addPhoto" text="Add Photo" />
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="598.0" prefWidth="305.0" SplitPane.resizableWithParent="false">
                <children>
-                  <ImageView fx:id="albumDisplay" fitHeight="147.0" fitWidth="255.0" layoutX="29.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="photoDisplay" fitHeight="147.0" fitWidth="255.0" layoutX="29.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../../../../../Pictures/ACBF_THEME/ac4_Wallpaper2_1280x720.jpg" />
                      </image>

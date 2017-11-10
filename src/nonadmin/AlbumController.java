@@ -1,12 +1,9 @@
 package nonadmin;
 
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.util.ArrayList;
 
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,17 +12,18 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
-import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import search.SearchController;
+import photo.PhotoController;
+import users.Album;
+import users.User;
+import users.UserDatabase;
 import utility.buttonUtility;
 
 /**
@@ -72,7 +70,7 @@ public class AlbumController
 	@FXML
 	private ScrollPane albumDisplayPane;//will contain the thumbnails of photo albums
 
-
+	private User currentUser;
 	/**
 	 * sets properties to buttons and a few of the labels
 	 * loads list from file.
@@ -81,13 +79,13 @@ public class AlbumController
 	 * @param user the user
 	 */
 	public void start(Stage mainStage, String user) { // Initialization of FXapp
-		//find all user albums
-		//get all their thumbnails and names
+		currentUser = UserDatabase.findUser(user);
 		VBox vb = createTilePane(); //will hold images
-		fillScrollPane(); //add images
+		fillScrollPane(currentUser.getAlbums()); //add images
 		albumDisplayPane.setFitToWidth(true); //prevent horizontal scrolling
 		albumDisplayPane.setContent(vb); //add images to scrollpane
 		username.setText(user); //debug
+		
 	}
 
 	/**
@@ -112,17 +110,17 @@ public class AlbumController
 	/**
 	 * Fill scroll pane.
 	 */
-	private void fillScrollPane()
+	private void fillScrollPane(ArrayList<Album> albums)
 	{
 		int imageSize = 128;
-		for (int i = 1; i <= 8; i++)
+		for (Album a : albums)
 		{
 			Label bt2 = new Label();                        
-			Image img2 = new Image(AlbumController.class.getResourceAsStream("" + ((i%4) + 1) + ".jpg"), 
+			Image img2 = new Image(AlbumController.class.getResourceAsStream(a.getFirst()), 
 					imageSize, 0, true, false);
 			ImageView view2 = new ImageView(img2);
 			bt2.setGraphic(view2);
-			bt2.setText("aaaa"+i);
+			bt2.setText(a.getName());
 			bt2.setContentDisplay(ContentDisplay.TOP);
 			bt2.addEventHandler(MouseEvent.MOUSE_CLICKED, new clickAlbum());
 			tilePane.getChildren().add(bt2);  
@@ -170,7 +168,22 @@ public class AlbumController
 			albumName.setText(lbl.getText());
 			if(event.getClickCount() == 2)
 			{
-				System.out.println("mouse click");
+				Stage stage = (Stage) quit.getScene().getWindow();
+				FXMLLoader loader = new FXMLLoader();
+				loader.setLocation(getClass().getResource("/photo/photo.fxml"));
+				Parent root = null;
+				try {
+					root = loader.load();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				PhotoController controller = loader.getController();
+				controller.start(stage, currentUser.searchAlbums(lbl.getText()));
+				
+				stage.setScene(new Scene(root));
+				stage.show();
 			}
 		}
 		

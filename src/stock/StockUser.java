@@ -1,6 +1,7 @@
 package stock;
 
 import users.Album;
+import users.Photo;
 import users.User;
 import users.UserDatabase;
 
@@ -9,24 +10,20 @@ import users.UserDatabase;
  */
 public class StockUser
 {
-	
 	/**
 	 * Creates the stock user.
 	 */
-	public void createStockUser()
+	public static void createStockUser()
 	{
 		User user = new User("stock");
 		Album a = new Album("stock");
-		a.addPhoto(""); //add 10 photos
-		a.addPhoto("");
-		a.addPhoto("");
-		a.addPhoto("");
-		a.addPhoto("");
-		a.addPhoto("");
-		a.addPhoto("");
-		a.addPhoto("");
-		a.addPhoto("");
-		a.addPhoto("");
+		Photo p;
+		for(int i = 0; i < 10; i++)
+		{
+			p = new Photo("/stock/"+i+".jpg");
+			p.addCaption(i+"!");
+			a.addPhoto(p);
+		}
 		user.addAlbum(a);
 		UserDatabase.addUser(user);
 	}

@@ -40,7 +40,9 @@ public class UserDatabase
             
             while(!users.isEmpty()) //save remaining users then clear them from list
             {
-            	saveUser(users.get(0).getUserName());
+            	String s = users.get(0).getUserName();
+            	if (!s.equals("stock"))
+            		saveUser(s);
             	users.remove(0);
             }
             
@@ -151,6 +153,11 @@ public class UserDatabase
 		users.add(new User(name));
 	}
 	
+	/**
+	 * Adds the user.
+	 *
+	 * @param user the user
+	 */
 	public static void addUser(User user)
 	{
 		users.add(user);
@@ -180,7 +187,7 @@ public class UserDatabase
 	 * @param name the name
 	 * @return the user
 	 */
-	private static User findUser(String name)
+	public static User findUser(String name)
 	{
 		Predicate<User> predicate = c-> c.getUserName().equals(name);
 		User obj = users.stream().filter(predicate).findFirst().get();

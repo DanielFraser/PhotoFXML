@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.function.Predicate;
 
 
 // TODO: Auto-generated Javadoc
@@ -57,13 +58,16 @@ public class Album implements Serializable
 	}
 	
 	/**
-	 * Gets the photos.
+	 * Find photo.
 	 *
-	 * @param photo the photo
-	 * @return the photos
+	 * @param name the name
+	 * @return the string
 	 */
-	public void getPhotos(Photo photo) {
-		photos.add(photo);
+	public String findPhoto(String name)
+	{
+		Predicate<Photo> predicate = c-> c.getName().equals(name);
+		Photo photo = photos.stream().filter(predicate).findFirst().get();
+		return photo.getLocation();
 	}
 	
 	/**
@@ -152,13 +156,33 @@ public class Album implements Serializable
 		this.dateCreated = dateCreated;
 	}
 	
+	/**
+	 * Adds the photo.
+	 *
+	 * @param s the s
+	 */
 	public void addPhoto(String s)
 	{
 		photos.add(new Photo(s));
 	}
 	
+	/**
+	 * Adds the photo.
+	 *
+	 * @param p the p
+	 */
 	public void addPhoto(Photo p)
 	{
 		photos.add(p);
+	}
+	
+	/**
+	 * Gets the first.
+	 *
+	 * @return the first
+	 */
+	public String getFirst()
+	{
+		return photos.get(0).getLocation();
 	}
 }
