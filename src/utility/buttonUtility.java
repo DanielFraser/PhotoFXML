@@ -26,20 +26,14 @@ public class buttonUtility
 	public static void logOut(Stage stage) throws IOException
 	{
 		FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(buttonUtility.class.getResource("/drawing/drawing.fxml"));
+		loader.setLocation(buttonUtility.class.getResource("/login/login.fxml"));
 		Parent root = loader.load();
-//
-//		drawingController controller = loader.getController();
-//		controller.start(stage);
-//		
-//		//create a new scene with root and set the stage
-//		Scene scene = new Scene(root);
-//		stage.setScene(scene);
-//		stage.show();
 		
-		Stage secondStage = new Stage();
-        secondStage.setScene(new Scene(root));
-        secondStage.show();
+//		Stage secondStage = new Stage();
+//        secondStage.setScene(new Scene(root));
+//        secondStage.show();
+		stage.setScene(new Scene(root));
+		stage.show();
 	}
 	
 	/**

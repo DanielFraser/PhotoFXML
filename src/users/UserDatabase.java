@@ -145,10 +145,15 @@ public class UserDatabase
 	 *
 	 * @param name the name
 	 */
-	public void addUser(String name)
+	public static void addUser(String name)
 	{
 		userNames.add(name);
 		users.add(new User(name));
+	}
+	
+	public static void addUser(User user)
+	{
+		users.add(user);
 	}
 	
 	/**

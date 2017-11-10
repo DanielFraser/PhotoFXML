@@ -151,4 +151,14 @@ public class Album implements Serializable
 	private void setDateCreated(String dateCreated) {
 		this.dateCreated = dateCreated;
 	}
+	
+	public void addPhoto(String s)
+	{
+		photos.add(new Photo(s));
+	}
+	
+	public void addPhoto(Photo p)
+	{
+		photos.add(p);
+	}
 }

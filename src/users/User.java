@@ -55,22 +55,15 @@ public class User implements Serializable
 	}
 
 	/**
-	 * Sets the albums.
-	 *
-	 * @param albums the new albums
-	 */
-	public void setAlbums(ArrayList<Album> albums) {
-		this.albums = albums;
-	}
-
-	/**
 	 * Delete album.
 	 *
 	 * @param a the a
 	 */
-	public void deleteAlbum(Album a)
+	public void deleteAlbum(String name)
 	{
-		this.albums.remove(a);
+		Predicate<Album> predicate = c-> c.getName().equals(name);
+		Album alb = albums.stream().filter(predicate).findFirst().get();
+		this.albums.remove(alb);
 	}
 
 	/**
