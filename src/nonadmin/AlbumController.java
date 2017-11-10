@@ -125,8 +125,7 @@ public class AlbumController
 			bt2.setText("aaaa"+i);
 			bt2.setContentDisplay(ContentDisplay.TOP);
 			bt2.addEventHandler(MouseEvent.MOUSE_CLICKED, new clickAlbum());
-			AnchorPane ap2 = new AnchorPane(bt2);
-			tilePane.getChildren().add(ap2);  
+			tilePane.getChildren().add(bt2);  
 		}
 
 	}

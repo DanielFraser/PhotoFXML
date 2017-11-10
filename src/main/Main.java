@@ -11,6 +11,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import nonadmin.AlbumController;
+import users.UserDatabase;
 
 
 // TODO: Auto-generated Javadoc
@@ -24,6 +25,8 @@ public class Main extends Application {
 	 */
 	@Override
 	public void start(Stage primaryStage) throws IOException {
+		UserDatabase.loadUserNames(); //load user names
+		
 		FXMLLoader loader = new FXMLLoader();
 		loader.setLocation(getClass().getResource("/nonadmin/album.fxml"));
 		AnchorPane root = (AnchorPane) loader.load();

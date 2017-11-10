@@ -8,6 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import nonadmin.AlbumController;
+import users.UserDatabase;
 
 public class buttonUtility
 {
@@ -42,7 +43,7 @@ public class buttonUtility
 	}
 	
 	/**
-	 * have someone implement save on quit
+	 * saves list of usernames
 	 * 
 	 * @param stage
 	 * @param root
@@ -50,13 +51,6 @@ public class buttonUtility
 	 */
 	public static void quit(Stage stage) throws IOException
 	{
-		FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(buttonUtility.class.getResource("/photoDisplay/photo.fxml"));
-		Parent root = loader.load();
-		
-		//create a new scene with root and set the stage
-		Scene scene = new Scene(root);
-		stage.setScene(scene);
-		stage.show();
+		UserDatabase.saveUsernames();
 	}
 }

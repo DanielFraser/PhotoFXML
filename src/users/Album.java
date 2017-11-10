@@ -42,7 +42,6 @@ public class Album implements Serializable
 		setName(initName);
 		cal = Calendar.getInstance();
 		setDateCreated(dateFormat.format(cal.getTime()));
-		//dateCreated.set
 	}
 	
 	
@@ -55,6 +54,16 @@ public class Album implements Serializable
 	public Album(String initName,  ArrayList<Photo> initPhotos) {
 		setName(initName);
 		photos = initPhotos;
+	}
+	
+	/**
+	 * Gets the photos.
+	 *
+	 * @param photo the photo
+	 * @return the photos
+	 */
+	public void getPhotos(Photo photo) {
+		photos.add(photo);
 	}
 	
 	/**
@@ -94,7 +103,6 @@ public class Album implements Serializable
 		}
 	}
 
-
 	/**
 	 * Gets the name.
 	 *
@@ -125,12 +133,22 @@ public class Album implements Serializable
 	}
 
 
+	/**
+	 * Gets the date created.
+	 *
+	 * @return the date created
+	 */
 	public String getDateCreated() {
 		return dateCreated;
 	}
 
 
-	public void setDateCreated(String dateCreated) {
+	/**
+	 * Sets the date created.
+	 *
+	 * @param dateCreated the new date created
+	 */
+	private void setDateCreated(String dateCreated) {
 		this.dateCreated = dateCreated;
 	}
 }

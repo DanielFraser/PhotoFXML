@@ -2,33 +2,35 @@ package users;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.function.Predicate;
 
+// TODO: Auto-generated Javadoc
 /**
  * each user has 0 or more albums
  * each user can will search its own list of albums given a name.
  *
  * @author Daniel Fraser
  */
-public class user implements Serializable
+public class User implements Serializable
 {
-	
+
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 4353768237255205291L;
 
 	/** The albums. */
 	private ArrayList<Album> albums = new ArrayList<>();
-	
+
 	/** The user name. */
 	private String userName;
-	
+
 	/**
 	 * Instantiates a new user.
 	 *
 	 * @param name the name
 	 */
-	public user(String name) 
+	public User(String name) 
 	{
-		setUserName(name);
+		userName = name;
 	}
 
 	/**
@@ -39,7 +41,7 @@ public class user implements Serializable
 	public ArrayList<Album> getAlbums() {
 		return albums;
 	}
-	
+
 	/**
 	 * Search albums.
 	 *
@@ -47,7 +49,9 @@ public class user implements Serializable
 	 * @return the album
 	 */
 	public Album searchAlbums(String name) {
-		return albums.get(albums.indexOf(name));
+		Predicate<Album> predicate = c-> c.getName().equals(name);
+		Album obj = albums.stream().filter(predicate).findFirst().get();
+		return obj;
 	}
 
 	/**
@@ -58,7 +62,7 @@ public class user implements Serializable
 	public void setAlbums(ArrayList<Album> albums) {
 		this.albums = albums;
 	}
-	
+
 	/**
 	 * Delete album.
 	 *
@@ -67,6 +71,27 @@ public class user implements Serializable
 	public void deleteAlbum(Album a)
 	{
 		this.albums.remove(a);
+	}
+
+	/**
+	 * Adds the album.
+	 *
+	 * @param name the name
+	 */
+	public void addAlbum(String name)
+	{
+		albums.add(new Album(name));
+	}
+	
+	/**
+	 * Adds the album.
+	 *
+	 * @param a the a
+	 * @param name the name
+	 */
+	public void addAlbum(ArrayList<Photo> a, String name)
+	{
+		albums.add(new Album(name, a));
 	}
 	
 	/**
@@ -86,14 +111,5 @@ public class user implements Serializable
 	 */
 	public String getUserName() {
 		return userName;
-	}
-
-	/**
-	 * Sets the user name.
-	 *
-	 * @param userName the new user name
-	 */
-	public void setUserName(String userName) {
-		this.userName = userName;
 	}
 }
