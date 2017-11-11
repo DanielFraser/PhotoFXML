@@ -1,11 +1,15 @@
 package login;
 
 import java.awt.TextField;
+import java.io.IOException;
 
+import admin.AdminController;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
-
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Control;
 import javafx.stage.Stage;
@@ -26,15 +30,24 @@ public class LoginController {
 		
 	}
 	
-	public void login() {
+	public void login(Stage stage, ActionEvent E) throws IOException  {
 		
 		String username = userNameInput.getText();
 		
-		if(username == "admin") {
+		if(username.equals("admin")) {// User is admin
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(buttonUtility.class.getResource("/admin/admin.fxml"));
+			Parent root = null;
+					try {
+						root = loader.load();
+					} catch(IOException e) {
+						e.printStackTrace();
+					}
 			
-		}
-		else {
-			
+			AdminController controller = loader.getController();
+			controller.start(stage);
+			stage.setScene(new Scene(root));
+			stage.show();
 		}
 	}
 

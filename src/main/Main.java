@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import login.LoginController;
 import nonadmin.AlbumController;
 import stock.StockUser;
 import users.UserDatabase;
@@ -30,15 +31,20 @@ public class Main extends Application {
 		StockUser.createStockUser();
 		
 		FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(getClass().getResource("/nonadmin/album.fxml"));
+//		loader.setLocation(getClass().getResource("/nonadmin/album.fxml"));
+		loader.setLocation(getClass().getResource("/login/login.fxml"));
 		AnchorPane root = (AnchorPane) loader.load();
 		
-		AlbumController controller = loader.getController();
-		controller.start(primaryStage, "stock");
+//		AlbumController controller = loader.getController();
+//		controller.start(primaryStage, "stock");
+		
+		LoginController controller = loader.getController();
+		controller.start(primaryStage);
 		
 		Scene scene = new Scene(root);
 		primaryStage.setScene(scene);
-		primaryStage.setTitle("Non-admin homepage");
+//		primaryStage.setTitle("Non-admin homepage");
+		primaryStage.setTitle("Login");
 		primaryStage.setResizable(false);
 		primaryStage.show();
 		
