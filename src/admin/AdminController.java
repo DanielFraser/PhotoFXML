@@ -16,7 +16,7 @@ public class AdminController {
 	private TextField CreateUserInput;
 	
 	@FXML
-	private Label UserNameLabel;
+	private Label UsernameLabel;
 	
 	@FXML
 	private Label NumAlbumsLabel;
@@ -35,6 +35,12 @@ public class AdminController {
 	
 	@FXML
 	private Button QuitButton;
+	
+	public Stage adminStage;
+	
+	public void setStage(Stage stage) {
+		this.adminStage = stage;
+	}
 	
 	public void start(Stage MainStage) {
 		

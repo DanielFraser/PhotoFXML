@@ -31,30 +31,11 @@ public class LoginController {
 		userNameInput.setText("test");
 	}
 	
-	public void login(Stage stage, ActionEvent E) throws IOException  {
+	public void login(ActionEvent E) throws IOException  {
 		
 		String username = userNameInput.getText();
+		buttonUtility.logIn(username);
 		
-		if(username.equals("admin")) {// User is admin
-			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(buttonUtility.class.getResource("/admin/admin.fxml"));
-			Parent root = null;
-					try {
-						root = loader.load();
-					} catch(IOException e) {
-						e.printStackTrace();
-					}
-			
-			AdminController controller = loader.getController();
-			controller.start(stage);
-			stage.setScene(new Scene(root));
-			stage.show();
-		}
-	}
-
-	public LoginController() {
-		
-		// TODO Auto-generated constructor stub
 	}
 
 }
