@@ -1,6 +1,6 @@
 package login;
 
-import java.awt.TextField;
+
 import java.io.IOException;
 
 import admin.AdminController;
@@ -12,6 +12,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Control;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import utility.buttonUtility;
 
@@ -21,13 +22,13 @@ public class LoginController {
 	private TextField userNameInput;
 	
 	@FXML
-	private Button loginButton;
+	private Button LoginButton;
 	
 	@FXML
-	private Button quitButton;
+	private Button QuitButton;
 	
 	public void start(Stage mainStage) {
-		
+		userNameInput.setText("test");
 	}
 	
 	public void login(Stage stage, ActionEvent E) throws IOException  {
