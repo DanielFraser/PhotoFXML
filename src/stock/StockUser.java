@@ -20,7 +20,7 @@ public class StockUser
 		Photo p;
 		for(int i = 0; i < 10; i++)
 		{
-			p = new Photo("/stock/"+i+".jpg");
+			p = new Photo("/stock/"+i+".jpg", "11/10/2017 15:12:22");
 			p.addCaption(i+"!");
 			a.addPhoto(p);
 		}

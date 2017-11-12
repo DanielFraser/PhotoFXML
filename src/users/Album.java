@@ -63,11 +63,22 @@ public class Album implements Serializable
 	 * @param name the name
 	 * @return the string
 	 */
-	public String findPhoto(String name)
+	public Photo findPhoto(String name)
 	{
 		Predicate<Photo> predicate = c-> c.getName().equals(name);
 		Photo photo = photos.stream().filter(predicate).findFirst().get();
-		return photo.getLocation();
+		return photo;
+	}
+	
+	/**
+	 * Find photo.
+	 *
+	 * @param photo the photo
+	 * @return the int
+	 */
+	public int findPhoto(Photo photo)
+	{
+		return photos.indexOf(photo);
 	}
 	
 	/**
@@ -161,9 +172,9 @@ public class Album implements Serializable
 	 *
 	 * @param s the s
 	 */
-	public void addPhoto(String s)
+	public void addPhoto(String s, String d)
 	{
-		photos.add(new Photo(s));
+		photos.add(new Photo(s,d));
 	}
 	
 	/**

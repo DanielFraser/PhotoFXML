@@ -2,6 +2,7 @@ package photo;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.swing.JFileChooser;
@@ -20,6 +21,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -66,18 +68,34 @@ public class PhotoController
 	@FXML
 	private Label username;
 	
+	/** The date. */
+	@FXML
+	private Label date;
+	
 	/** The num photos. */
 	@FXML
-	private Label numPhotos;
+	private Label caption;
 	
 	/** The date created. */
 	@FXML
-	private Label dateCreated;
+	private Label tags;
 
+	/** The prev. */
+	@FXML
+	private Button prev;
+	
+	/** The next. */
+	@FXML
+	private Button next;
+	
 	/** The tile pane. */
 	private TilePane tilePane;
 	
+	/** The current album. */
 	private Album currentAlbum;
+	
+	/** The prev P. */
+	private int nextP, prevP;
 	
 	/**
 	 * Start.
@@ -112,8 +130,6 @@ public class PhotoController
 	
 	/**
 	 * Fill scroll pane.
-	 *
-	 * @param photos the photos
 	 */
 	private void fillScrollPane()
 	{
@@ -126,9 +142,11 @@ public class PhotoController
 					imageSize, 0, true, false);
 			ImageView view2 = new ImageView(img2);
 			bt2.setGraphic(view2);
-			bt2.setText(p.getName());
+			//bt2.setText(p.);
 			bt2.setContentDisplay(ContentDisplay.TOP);
 			bt2.addEventHandler(MouseEvent.MOUSE_CLICKED, new clickPhoto());
+			bt2.setWrapText(true);
+			//AnchorPane ap = new AnchorPane(bt2);
 			tilePane.getChildren().add(bt2);  
 		}
 		
@@ -165,15 +183,45 @@ public class PhotoController
 		buttonUtility.logOut(stage);
 	}
 	
+	@FXML
+	private void home(ActionEvent e)
+	{
+		//save changes
+	}
+	
+	/**
+	 * Next photo.
+	 *
+	 * @param e the e
+	 */
+	@FXML
+	private void nextPhoto(ActionEvent e)
+	{
+		if(nextP != -1)
+			setInfo(currentAlbum.getPhotos().get(nextP));
+	}
+	
+	/**
+	 * Prev photo.
+	 *
+	 * @param e the e
+	 */
+	@FXML
+	private void prevPhoto(ActionEvent e)
+	{
+		if(prevP != -1)
+			setInfo(currentAlbum.getPhotos().get(prevP));
+	}
+	
 	/**
 	 * Adds the photo.
 	 *
 	 * @param e the e
 	 * @throws IOException Signals that an I/O exception has occurred.
-	 * @throws UnsupportedLookAndFeelException 
-	 * @throws IllegalAccessException 
-	 * @throws InstantiationException 
-	 * @throws ClassNotFoundException 
+	 * @throws ClassNotFoundException the class not found exception
+	 * @throws InstantiationException the instantiation exception
+	 * @throws IllegalAccessException the illegal access exception
+	 * @throws UnsupportedLookAndFeelException the unsupported look and feel exception
 	 */
 	@FXML
 	private void addPhoto(ActionEvent e) throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException
@@ -190,10 +238,38 @@ public class PhotoController
 		{
             File file = fc.getSelectedFile();
             photoDisplay.setImage(new Image(file.toURI().toString()));
-            currentAlbum.addPhoto(file.toURI().toString());
+            SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+
+            currentAlbum.addPhoto(file.toURI().toString(), sdf.format(file.lastModified()));
+            
             fillScrollPane();
         }
 	}
+	
+	/**
+	 * Sets the info.
+	 *
+	 * @param p the new info
+	 */
+	private void setInfo(Photo p)
+	{
+		photoDisplay.setImage(new Image(p.getLocation()));
+		tags.setText(p.printTags());
+		caption.setText(p.getCaption());
+		date.setText(p.getDate());
+		int length = currentAlbum.getPhotos().size();
+		int i = currentAlbum.getPhotos().indexOf(p);
+		prevP = -1;
+		nextP = -1;
+		if(i > 0)
+			prevP = i-1;
+		if(i < length - 1)
+			nextP = i+1;
+	}
+	
+//	Stage secondStage = new Stage();
+//  secondStage.setScene(new Scene(root));
+//  secondStage.show();
 	
 	/**
 	 * The Class clickAlbum.
@@ -207,7 +283,8 @@ public class PhotoController
 		public void handle(MouseEvent event) {
 			Label lbl = (Label) event.getSource();
 			albumName.setText(lbl.getText());
-			photoDisplay.setImage(new Image(currentAlbum.findPhoto(lbl.getText())));
+			setInfo(currentAlbum.findPhoto(lbl.getText()));
+			//photoDisplay.setImage(new Image(currentAlbum.findPhoto(lbl.getText()).getLocation()));
 		}
 		
 	}

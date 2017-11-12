@@ -35,10 +35,10 @@
                   <Button fx:id="quit" layoutX="37.0" layoutY="551.0" mnemonicParsing="false" onAction="#quitAct" prefHeight="25.0" prefWidth="87.0" text="Quit" />
                   <Button fx:id="logout" layoutX="169.0" layoutY="551.0" mnemonicParsing="false" onAction="#logOutAct" prefHeight="25.0" prefWidth="87.0" text="Log Out" />
                   <Label layoutX="30.0" layoutY="263.0" text="Date:" />
-                  <Label fx:id="numPhotos" layoutX="90.0" layoutY="263.0" text="&lt;Date&gt;" />
-                  <Label fx:id="albumName" layoutX="27.0" layoutY="186.0" prefHeight="55.0" prefWidth="245.0" text="&lt;caption&gt;&#10;&lt;caption&gt;&#10;&lt;caption&gt;" />
+                  <Label fx:id="date" layoutX="90.0" layoutY="263.0" text="&lt;Date&gt;" />
+                  <Label fx:id="caption" layoutX="27.0" layoutY="186.0" prefHeight="55.0" prefWidth="245.0" text="&lt;caption&gt;&#10;&lt;caption&gt;&#10;&lt;caption&gt;" />
                   <Label layoutX="30.0" layoutY="288.0" text="Tags:" />
-                  <Label fx:id="dateCreated" layoutX="91.0" layoutY="288.0" text="&lt;Tags&gt;" />
+                  <Label fx:id="tags" layoutX="91.0" layoutY="288.0" text="&lt;Tags&gt;" />
                   <GridPane layoutX="9.0" layoutY="483.0">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -56,11 +56,11 @@
                         <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Delete" GridPane.rowIndex="1" />
                      </children>
                   </GridPane>
-                  <Button layoutX="25.0" layoutY="377.0" mnemonicParsing="false" text="Add tag(s)" />
-                  <Button layoutX="113.0" layoutY="377.0" mnemonicParsing="false" text="Remove tag(s)" />
-                  <Button layoutX="216.0" layoutY="377.0" mnemonicParsing="false" text="Edit Caption" />
-                  <Button fx:id="prev" layoutX="2.0" layoutY="70.0" mnemonicParsing="false" text="&lt;" />
-                  <Button fx:id="next" layoutX="285.0" layoutY="70.0" mnemonicParsing="false" text="&gt;" />
+                  <Button fx:id="addTag" layoutX="25.0" layoutY="377.0" mnemonicParsing="false" text="Add tag(s)" />
+                  <Button fx:id="removeTag" layoutX="113.0" layoutY="377.0" mnemonicParsing="false" text="Remove tag(s)" />
+                  <Button fx:id="editCaption" layoutX="216.0" layoutY="377.0" mnemonicParsing="false" text="Edit Caption" />
+                  <Button fx:id="prev" layoutX="2.0" layoutY="70.0" mnemonicParsing="false" onAction="#prevPhoto" text="&lt;" />
+                  <Button fx:id="next" layoutX="285.0" layoutY="70.0" mnemonicParsing="false" onAction="#nextPhoto" text="&gt;" />
                </children>
             </AnchorPane>
         </items>

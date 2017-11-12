@@ -30,9 +30,6 @@ public class buttonUtility
 		loader.setLocation(buttonUtility.class.getResource("/login/login.fxml"));
 		Parent root = loader.load();
 		
-//		Stage secondStage = new Stage();
-//        secondStage.setScene(new Scene(root));
-//        secondStage.show();
 		stage.setScene(new Scene(root));
 		stage.show();
 	}
@@ -47,5 +44,6 @@ public class buttonUtility
 	public static void quit(Stage stage) throws IOException
 	{
 		UserDatabase.saveUsernames();
+		stage.close();
 	}
 }
