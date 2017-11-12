@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -34,7 +35,21 @@ public class LoginController {
 	public void login(ActionEvent E) throws IOException  {
 		
 		String username = userNameInput.getText();
-		buttonUtility.logIn(username);
+		System.out.println(username);
+
+		if(username.equals("admin")) {// User is admin
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(buttonUtility.class.getResource("/admin/admin.fxml"));
+			Parent root = loader.load();
+			Scene scene = new Scene(root);
+			Stage stage = (Stage) ((Node) E.getSource()).getScene().getWindow();
+	
+		
+			AdminController controller = loader.getController();
+			controller.start(stage);
+			stage.setScene(scene);
+			stage.show();
+		}
 		
 	}
 

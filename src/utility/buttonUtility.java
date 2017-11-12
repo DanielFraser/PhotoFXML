@@ -16,24 +16,6 @@ public class buttonUtility
 	/*
 	 * creates method for all guis to log out and to safely quit
 	 */
-	public static void logIn(String username) throws IOException {
-		
-		System.out.println(username);
-
-		if(username.equals("admin")) {// User is admin
-			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(buttonUtility.class.getResource("/admin/admin.fxml"));
-			System.out.println();
-			
-		    Parent root = loader.load();
-	
-			
-			AdminController controller = loader.getController();
-			controller.start(stage);
-			stage.setScene(new Scene(root));
-			stage.show();
-		}
-	}
 	
 	/**
 	 * edit to login screen when done
