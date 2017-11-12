@@ -13,7 +13,10 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
@@ -28,6 +31,7 @@ import javafx.stage.Stage;
 import nonadmin.AlbumController;
 import users.Album;
 import users.Photo;
+import users.User;
 import utility.buttonUtility;
 
 // TODO: Auto-generated Javadoc
@@ -96,16 +100,17 @@ public class PhotoController
 	
 	/** The prev P. */
 	private int nextP, prevP;
-	
+	private User curUser;
 	/**
 	 * Start.
 	 *
 	 * @param mainStage the main stage
 	 * @param album the album
 	 */
-	public void start(Stage mainStage, Album album) 
+	public void start(Stage mainStage, Album album, User user) 
 	{
 		currentAlbum = album;
+		curUser = user;
 		fillScrollPane();
 	}
 	
@@ -183,10 +188,30 @@ public class PhotoController
 		buttonUtility.logOut(stage);
 	}
 	
+	/**
+	 * Home.
+	 *
+	 * @param e the e
+	 */
 	@FXML
 	private void home(ActionEvent e)
 	{
-		//save changes
+		Stage stage = (Stage) quit.getScene().getWindow();
+		FXMLLoader loader = new FXMLLoader();
+		loader.setLocation(getClass().getResource("/nonadmin/album.fxml"));
+		Parent root = null;
+		try {
+			root = loader.load();
+		} catch (IOException ex) {
+			// TODO Auto-generated catch block
+			ex.printStackTrace();
+		}
+		
+		AlbumController controller = loader.getController();
+		controller.start(stage, curUser.getUserName());
+		
+		stage.setScene(new Scene(root));
+		stage.show();
 	}
 	
 	/**
@@ -284,7 +309,6 @@ public class PhotoController
 			Label lbl = (Label) event.getSource();
 			albumName.setText(lbl.getText());
 			setInfo(currentAlbum.findPhoto(lbl.getText()));
-			//photoDisplay.setImage(new Image(currentAlbum.findPhoto(lbl.getText()).getLocation()));
 		}
 		
 	}

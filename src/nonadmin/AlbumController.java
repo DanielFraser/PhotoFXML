@@ -180,7 +180,7 @@ public class AlbumController
 				}
 				
 				PhotoController controller = loader.getController();
-				controller.start(stage, currentUser.searchAlbums(lbl.getText()));
+				controller.start(stage, currentUser.searchAlbums(lbl.getText()), currentUser);
 				
 				stage.setScene(new Scene(root));
 				stage.show();
