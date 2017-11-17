@@ -8,6 +8,9 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.function.Predicate;
 
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class UserDatabase.
@@ -46,6 +49,7 @@ public class UserDatabase
 	/**
 	 * Load usernames.
 	 */
+	@SuppressWarnings("unchecked")
 	public static void loadUserNames()
 	{
 		try
@@ -70,16 +74,6 @@ public class UserDatabase
         {
             e.printStackTrace();
         }
-	}
-
-	/**
-	 * Adds the user.
-	 *
-	 * @param name the name
-	 */
-	public static void addUser(String name)
-	{
-		users.add(new User(name));
 	}
 	
 	/**
@@ -106,8 +100,19 @@ public class UserDatabase
 	 *
 	 * @param name the name
 	 */
-	public static void addUsers(String name) {
-		users.add(new User(name));
+	public static void addUser(String name) 
+	{
+		Predicate<User> predicate = c-> c.getUserName().equals(name);
+		User user = users.stream().filter(predicate).findFirst().get();
+		if(user == null)
+			users.add(new User(name));
+		else
+		{
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Error");
+			alert.setHeaderText("Username already exists");
+			alert.showAndWait();
+		}
 	}
 	
 	/**
