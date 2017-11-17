@@ -18,9 +18,6 @@ public class UserDatabase
 	/** The users. */
 	private static ArrayList<User> users = new ArrayList<>(); //list of current loaded users
 	
-	/** The user names. */
-	private static ArrayList<String> userNames = new ArrayList<>();
-	
 	/**
 	 * Save usernames.
 	 */
@@ -33,18 +30,10 @@ public class UserDatabase
             ObjectOutputStream out = new ObjectOutputStream(file);
              
             // Method for serialization of object
-            out.writeObject(userNames);
+            out.writeObject(users);
              
             out.close();
             file.close();
-            
-            while(!users.isEmpty()) //save remaining users then clear them from list
-            {
-            	String s = users.get(0).getUserName();
-            	if (!s.equals("stock"))
-            		saveUser(s);
-            	users.remove(0);
-            }
             
             System.out.println("usernames has been serialized");
         }
@@ -55,7 +44,7 @@ public class UserDatabase
 	}
 	
 	/**
-	 * Load user names.
+	 * Load usernames.
 	 */
 	public static void loadUserNames()
 	{
@@ -66,7 +55,7 @@ public class UserDatabase
             ObjectInputStream in = new ObjectInputStream(file);
              
             // Method for deserialization of object
-            userNames = (ArrayList<String>)in.readObject();
+            users = (ArrayList<User>)in.readObject();
              
             in.close();
             file.close();
@@ -82,65 +71,6 @@ public class UserDatabase
             e.printStackTrace();
         }
 	}
-	
-	/**
-	 * Save user.
-	 *
-	 * @param name the name
-	 */
-	public static void saveUser(String name)
-	{
-		try
-        {   
-            //Saving of object in a file
-            FileOutputStream file = new FileOutputStream(name+".ser");
-            ObjectOutputStream out = new ObjectOutputStream(file);
-             
-            // Method for serialization of object
-            out.writeObject(findUser(name));
-             
-            out.close();
-            file.close();
-             
-            System.out.println(name + " has been serialized");
-        }
-        catch(Exception e)
-        {
-        	e.printStackTrace();
-        }
- 
-	}
-	
-	/**
-	 * Load user.
-	 *
-	 * @param name the name
-	 * @return the user
-	 */
-	public static User loadUser(String name)
-	{
-		User user = null;
-		try
-        {   
-            // Reading the object from a file
-            FileInputStream file = new FileInputStream(name+".ser");
-            ObjectInputStream in = new ObjectInputStream(file);
-             
-            // Method for deserialization of object
-            user = (User)in.readObject();
-             
-            in.close();
-            file.close();
-             
-            System.out.println(name + " has been deserialized ");
-        }
-        catch(Exception e)
-        {
-            e.printStackTrace();
-        }
-		users.add(user); //give it to list of loaded users
-        return user;
-	}
 
 	/**
 	 * Adds the user.
@@ -149,7 +79,6 @@ public class UserDatabase
 	 */
 	public static void addUser(String name)
 	{
-		userNames.add(name);
 		users.add(new User(name));
 	}
 	
@@ -192,5 +121,18 @@ public class UserDatabase
 		Predicate<User> predicate = c-> c.getUserName().equals(name);
 		User obj = users.stream().filter(predicate).findFirst().get();
 		return obj;
+	}
+	
+	/**
+	 * Find user B.
+	 *
+	 * @param name the name
+	 * @return true, if successful
+	 */
+	public static boolean findUserB(String name)
+	{
+		Predicate<User> predicate = c-> c.getUserName().equals(name);
+		User obj = users.stream().filter(predicate).findFirst().get();
+		return obj == null;
 	}
 }

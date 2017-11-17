@@ -1,10 +1,15 @@
 package stock;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
+
 import users.Album;
 import users.Photo;
 import users.User;
 import users.UserDatabase;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class StockUser.
  */
@@ -20,9 +25,10 @@ public class StockUser
 		Photo p;
 		for(int i = 0; i < 10; i++)
 		{
-			p = new Photo("/stock/"+i+".jpg", "11/10/2017 15:12:22");
+			p = new Photo("/stock/"+i+".jpg", LocalDateTime.parse("11/10/2017 15:12:22"));
 			p.addCaption(i+"!");
-			a.addPhoto(p);
+			user.addPhoto(p);
+			a.addPhoto(p.getId());
 		}
 		user.addAlbum(a);
 		UserDatabase.addUser(user);

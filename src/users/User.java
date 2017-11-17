@@ -1,6 +1,7 @@
 package users;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.function.Predicate;
 
@@ -20,6 +21,9 @@ public class User implements Serializable
 	/** The albums. */
 	private ArrayList<Album> albums = new ArrayList<>();
 
+	/** The user photos. */
+	private ArrayList<Photo> userPhotos = new ArrayList<>();
+	
 	/** The user name. */
 	private String userName;
 
@@ -57,7 +61,7 @@ public class User implements Serializable
 	/**
 	 * Delete album.
 	 *
-	 * @param a the a
+	 * @param name the name
 	 */
 	public void deleteAlbum(String name)
 	{
@@ -80,17 +84,6 @@ public class User implements Serializable
 	 * Adds the album.
 	 *
 	 * @param a the a
-	 * @param name the name
-	 */
-	public void addAlbum(ArrayList<Photo> a, String name)
-	{
-		albums.add(new Album(name, a));
-	}
-	
-	/**
-	 * Adds the album.
-	 *
-	 * @param a the a
 	 */
 	public void addAlbum(Album a)
 	{
@@ -104,5 +97,65 @@ public class User implements Serializable
 	 */
 	public String getUserName() {
 		return userName;
+	}
+	
+	/**
+	 * Adds the photo.
+	 *
+	 * @param p the p
+	 */
+	public void addPhoto(Photo p)
+	{
+		userPhotos.add(p);
+	}
+	
+	/**
+	 * Adds the photo.
+	 *
+	 * @param s the s
+	 * @param ld the ld
+	 */
+	public void addPhoto(String s, LocalDateTime ld)
+	{
+		userPhotos.add(new Photo(s, ld));
+	}
+	
+	/**
+	 * Edits the photo.
+	 *
+	 * @param i the i
+	 * @param p the p
+	 */
+	public void editPhoto(Integer i, Photo p)
+	{
+		Predicate<Photo> predicate = c-> c.getId() == i;
+		Photo photo = userPhotos.stream().filter(predicate).findFirst().get();
+		photo.addCaption(p.getCaption());
+		photo.setTags(p.getTags());
+	}
+	
+	/**
+	 * Gets the photo.
+	 *
+	 * @param photoInt the photo int
+	 * @return the photo
+	 */
+	public Photo getPhoto(Integer photoInt)
+	{
+		return userPhotos.get(photoInt);
+	}
+	
+	/**
+	 * Gets the photo.
+	 *
+	 * @param album the album
+	 * @return the photo
+	 */
+	public ArrayList<Photo> getPhoto(Album album)
+	{
+		ArrayList<Photo> photos = new ArrayList<>();
+		for(int i : album.getPhotos())
+			photos.add(getPhoto(i));
+		return photos;
 	}
 }

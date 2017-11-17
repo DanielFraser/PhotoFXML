@@ -3,6 +3,9 @@ package photo;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 
 import javax.swing.JFileChooser;
@@ -100,12 +103,16 @@ public class PhotoController
 	
 	/** The prev P. */
 	private int nextP, prevP;
+	
+	/** The cur user. */
 	private User curUser;
+	
 	/**
 	 * Start.
 	 *
 	 * @param mainStage the main stage
 	 * @param album the album
+	 * @param user the user
 	 */
 	public void start(Stage mainStage, Album album, User user) 
 	{
@@ -140,18 +147,15 @@ public class PhotoController
 	{
 		VBox vb = createTilePane();
 		int imageSize = 128;
-		for (Photo p : currentAlbum.getPhotos())
+		for (Photo p : curUser.getPhoto(currentAlbum))
 		{
-			Label bt2 = new Label();                        
-			Image img2 = new Image(p.getLocation(), 
-					imageSize, 0, true, false);
+			Label bt2 = new Label(String.valueOf(p.getId()));                        
+			Image img2 = new Image(p.getLocation(), imageSize, 0, true, false);
 			ImageView view2 = new ImageView(img2);
 			bt2.setGraphic(view2);
-			//bt2.setText(p.);
 			bt2.setContentDisplay(ContentDisplay.TOP);
 			bt2.addEventHandler(MouseEvent.MOUSE_CLICKED, new clickPhoto());
 			bt2.setWrapText(true);
-			//AnchorPane ap = new AnchorPane(bt2);
 			tilePane.getChildren().add(bt2);  
 		}
 		
@@ -223,7 +227,7 @@ public class PhotoController
 	private void nextPhoto(ActionEvent e)
 	{
 		if(nextP != -1)
-			setInfo(currentAlbum.getPhotos().get(nextP));
+			setInfo(curUser.getPhoto(currentAlbum.getPhotos().get(nextP)));
 	}
 	
 	/**
@@ -235,7 +239,7 @@ public class PhotoController
 	private void prevPhoto(ActionEvent e)
 	{
 		if(prevP != -1)
-			setInfo(currentAlbum.getPhotos().get(prevP));
+			setInfo(curUser.getPhoto(currentAlbum.getPhotos().get(prevP)));
 	}
 	
 	/**
@@ -263,9 +267,9 @@ public class PhotoController
 		{
             File file = fc.getSelectedFile();
             photoDisplay.setImage(new Image(file.toURI().toString()));
-            SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-
-            currentAlbum.addPhoto(file.toURI().toString(), sdf.format(file.lastModified()));
+            //SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+            //file.lastModified()
+            curUser.addPhoto(file.toURI().toString(),  LocalDateTime.ofInstant(Instant.ofEpochMilli(file.lastModified()), ZoneId.systemDefault()));
             
             fillScrollPane();
         }
@@ -281,9 +285,9 @@ public class PhotoController
 		photoDisplay.setImage(new Image(p.getLocation()));
 		tags.setText(p.printTags());
 		caption.setText(p.getCaption());
-		date.setText(p.getDate());
+		date.setText(p.getDateS());
 		int length = currentAlbum.getPhotos().size();
-		int i = currentAlbum.getPhotos().indexOf(p);
+		int i = currentAlbum.getPhotos().indexOf(p.getId());
 		prevP = -1;
 		nextP = -1;
 		if(i > 0)
@@ -308,7 +312,7 @@ public class PhotoController
 		public void handle(MouseEvent event) {
 			Label lbl = (Label) event.getSource();
 			albumName.setText(lbl.getText());
-			setInfo(currentAlbum.findPhoto(lbl.getText()));
+			setInfo(curUser.getPhoto(Integer.parseInt(lbl.getText())));
 		}
 		
 	}

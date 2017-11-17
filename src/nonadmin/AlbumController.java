@@ -85,7 +85,6 @@ public class AlbumController
 		albumDisplayPane.setFitToWidth(true); //prevent horizontal scrolling
 		albumDisplayPane.setContent(vb); //add images to scrollpane
 		username.setText(user); //debug
-		
 	}
 
 	/**

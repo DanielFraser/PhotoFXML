@@ -6,7 +6,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.function.Predicate;
 
 
 // TODO: Auto-generated Javadoc
@@ -20,7 +19,7 @@ public class Album implements Serializable
 	private static final long serialVersionUID = -8132144142964125790L;
 
 	/** The photos. */
-	private ArrayList<Photo> photos = new ArrayList<>();
+	private ArrayList<Integer> photos = new ArrayList<>();
 	
 	/** The name. */
 	private String name;
@@ -32,7 +31,7 @@ public class Album implements Serializable
 	private Calendar cal;
 	
 	/** The date created. */
-	private String dateCreated;
+	private Date dateCreated;
 	
 	/**
 	 * Instantiates a new album.
@@ -42,7 +41,8 @@ public class Album implements Serializable
 	public Album(String initName) {
 		setName(initName);
 		cal = Calendar.getInstance();
-		setDateCreated(dateFormat.format(cal.getTime()));
+		//dateCreated = cal.getTime();
+		//setDateCreated(dateFormat.format(cal.getTime()));
 	}
 	
 	
@@ -52,22 +52,9 @@ public class Album implements Serializable
 	 * @param initName the init name
 	 * @param initPhotos the init photos
 	 */
-	public Album(String initName,  ArrayList<Photo> initPhotos) {
+	public Album(String initName,  ArrayList<Integer> initPhotos) {
 		setName(initName);
 		photos = initPhotos;
-	}
-	
-	/**
-	 * Find photo.
-	 *
-	 * @param name the name
-	 * @return the string
-	 */
-	public Photo findPhoto(String name)
-	{
-		Predicate<Photo> predicate = c-> c.getName().equals(name);
-		Photo photo = photos.stream().filter(predicate).findFirst().get();
-		return photo;
 	}
 	
 	/**
@@ -86,7 +73,7 @@ public class Album implements Serializable
 	 *
 	 * @return the photos
 	 */
-	public ArrayList<Photo> getPhotos() {
+	public ArrayList<Integer> getPhotos() {
 		return photos;
 	}
 
@@ -95,7 +82,7 @@ public class Album implements Serializable
 	 *
 	 * @param photos the new photos
 	 */
-	public void setPhotos(ArrayList<Photo> photos) {
+	public void setPhotos(ArrayList<Integer> photos) {
 		this.photos = photos;
 	}
 	
@@ -154,46 +141,16 @@ public class Album implements Serializable
 	 * @return the date created
 	 */
 	public String getDateCreated() {
-		return dateCreated;
-	}
-
-
-	/**
-	 * Sets the date created.
-	 *
-	 * @param dateCreated the new date created
-	 */
-	private void setDateCreated(String dateCreated) {
-		this.dateCreated = dateCreated;
+		return dateFormat.format(cal.getTime());
 	}
 	
 	/**
 	 * Adds the photo.
 	 *
-	 * @param s the s
+	 * @param i the i
 	 */
-	public void addPhoto(String s, String d)
+	public void addPhoto(Integer i)
 	{
-		photos.add(new Photo(s,d));
-	}
-	
-	/**
-	 * Adds the photo.
-	 *
-	 * @param p the p
-	 */
-	public void addPhoto(Photo p)
-	{
-		photos.add(p);
-	}
-	
-	/**
-	 * Gets the first.
-	 *
-	 * @return the first
-	 */
-	public String getFirst()
-	{
-		return photos.get(0).getLocation();
+		photos.add(i);
 	}
 }
