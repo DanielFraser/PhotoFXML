@@ -119,8 +119,8 @@ public class UserDatabase
 	public static User findUser(String name)
 	{
 		Predicate<User> predicate = c-> c.getUserName().equals(name);
-		User obj = users.stream().filter(predicate).findFirst().get();
-		return obj;
+		User user = users.stream().filter(predicate).findFirst().get();
+		return user;
 	}
 	
 	/**
@@ -132,7 +132,22 @@ public class UserDatabase
 	public static boolean findUserB(String name)
 	{
 		Predicate<User> predicate = c-> c.getUserName().equals(name);
-		User obj = users.stream().filter(predicate).findFirst().get();
-		return obj == null;
+		User user = users.stream().filter(predicate).findFirst().get();
+		return user == null;
+	}
+	
+	public ArrayList<String> getUsernames()
+	{
+		ArrayList<String> usernames = new ArrayList<>();
+		for(User u : users)
+			usernames.add(u.getUserName());
+		return usernames;
+	}
+	
+	public void deleteUsername(String name)
+	{
+		Predicate<User> predicate = c-> c.getUserName().equals(name);
+		User user = users.stream().filter(predicate).findFirst().get();
+		users.remove(user);
 	}
 }

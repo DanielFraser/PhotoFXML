@@ -115,8 +115,7 @@ public class AlbumController
 		for (Album a : albums)
 		{
 			Label bt2 = new Label();                        
-			Image img2 = new Image(AlbumController.class.getResourceAsStream(a.getFirst()), 
-					imageSize, 0, true, false);
+			Image img2 = new Image(AlbumController.class.getResourceAsStream("/nonadmin/folder.png"),imageSize, 0, true, false);
 			ImageView view2 = new ImageView(img2);
 			bt2.setGraphic(view2);
 			bt2.setText(a.getName());
