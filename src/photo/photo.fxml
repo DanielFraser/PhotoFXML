@@ -56,8 +56,8 @@
                         <Button fx:id="delete" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#delete" text="Delete" GridPane.rowIndex="1" />
                      </children>
                   </GridPane>
-                  <Button fx:id="addTag" layoutX="25.0" layoutY="377.0" mnemonicParsing="false" text="Add tag(s)" />
-                  <Button fx:id="removeTag" layoutX="113.0" layoutY="377.0" mnemonicParsing="false" text="Remove tag(s)" />
+                  <Button fx:id="addTag" layoutX="25.0" layoutY="377.0" mnemonicParsing="false" onAction="#addTag" text="Add tag(s)" />
+                  <Button fx:id="removeTag" layoutX="113.0" layoutY="377.0" mnemonicParsing="false" onAction="#rmTag" text="Remove tag(s)" />
                   <Button fx:id="editCapt" layoutX="216.0" layoutY="377.0" mnemonicParsing="false" onAction="#editCaption" text="Edit Caption" />
                   <Button fx:id="prev" layoutX="2.0" layoutY="70.0" mnemonicParsing="false" onAction="#prevPhoto" text="&lt;" />
                   <Button fx:id="next" layoutX="285.0" layoutY="70.0" mnemonicParsing="false" onAction="#nextPhoto" text="&gt;" />

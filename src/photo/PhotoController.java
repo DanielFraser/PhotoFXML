@@ -6,6 +6,8 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Optional;
 
 import javax.swing.JFileChooser;
@@ -13,28 +15,46 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import javafx.application.Platform;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceDialog;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContentDisplay;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.Callback;
+import javafx.util.Pair;
 import nonadmin.AlbumController;
 import users.Album;
 import users.Photo;
@@ -100,6 +120,7 @@ public class PhotoController
 	@FXML
 	private Button next;
 	
+	/** The edit capt. */
 	@FXML
 	private Button editCapt;
 	
@@ -115,7 +136,14 @@ public class PhotoController
 	/** The cur user. */
 	private User curUser;
 	
+	/** The id. */
 	private int id;
+	
+	/** The old text. */
+	private String oldText;
+	
+	/** The edit cap. */
+	private boolean editCap = true;
 	/**
 	 * Start.
 	 *
@@ -125,11 +153,22 @@ public class PhotoController
 	 */
 	public void start(Stage mainStage, Album album, User user) 
 	{
+		caption.setEditable(false);
 		currentAlbum = album;
 		albumName.setText(album.getName());
 		curUser = user;
 		fillScrollPane();
 		username.setText(user.getUserName());
+		caption.setOnKeyPressed(new EventHandler<KeyEvent>() {  
+			public void handle(KeyEvent key) {
+			    if (key.getCode() == KeyCode.ESCAPE) {
+			      caption.setEditable(false);
+			      editCap = true;
+			      caption.setText(oldText);
+			      editCapt.setText("Edit Caption");
+			    }
+			  }
+			});
 	}
 	
 	/**
@@ -328,6 +367,11 @@ public class PhotoController
 		
 	}
 	
+	/**
+	 * Delete.
+	 *
+	 * @param e the e
+	 */
 	@FXML
 	private void delete(ActionEvent e)
 	{
@@ -343,6 +387,11 @@ public class PhotoController
 		}
 	}
 	
+	/**
+	 * Move.
+	 *
+	 * @param e the e
+	 */
 	@FXML
 	private void move(ActionEvent e)
 	{
@@ -363,6 +412,11 @@ public class PhotoController
 		}
 	}
 	
+	/**
+	 * Copy.
+	 *
+	 * @param e the e
+	 */
 	@FXML
 	private void copy(ActionEvent e)
 	{
@@ -380,7 +434,12 @@ public class PhotoController
 		    a.addPhoto(id);
 		}
 	}
-	boolean editCap = false;
+	
+	/**
+	 * Edits the caption.
+	 *
+	 * @param e the e
+	 */
 	@FXML
 	private void editCaption(ActionEvent e)
 	{
@@ -389,6 +448,7 @@ public class PhotoController
 			caption.setEditable(true);
 			editCap = !editCap;
 			editCapt.setText("Save caption");
+			oldText = caption.getText();
 		}
 		else
 		{
@@ -396,5 +456,122 @@ public class PhotoController
 			editCap = !editCap;
 			editCapt.setText("Edit Caption");
 		}
+	}
+	
+	/**
+	 * Adds the tag.
+	 *
+	 * @param e the e
+	 */
+	@FXML
+	private void addTag(ActionEvent e)
+	{
+		Dialog<Pair<String, String>> dialog = new Dialog<>();
+		dialog.setTitle("add Tag");
+
+		ButtonType addTBtn = new ButtonType("Add tag", ButtonData.OK_DONE);
+		dialog.getDialogPane().getButtonTypes().addAll(addTBtn, ButtonType.CANCEL);
+
+		GridPane grid = new GridPane();
+		grid.setHgap(10);
+		grid.setVgap(10);
+		grid.setPadding(new Insets(20, 150, 10, 10));
+
+		TextField type = new TextField();
+		type.setPromptText("Enter type");
+		TextField value = new TextField();
+		value.setPromptText("Enter value");
+
+		grid.add(new Label("Enter type:"), 0, 0);
+		grid.add(type, 1, 0);
+		grid.add(new Label("Enter value:"), 0, 1);
+		grid.add(value, 1, 1);
+
+		Node loginButton = dialog.getDialogPane().lookupButton(addTBtn);
+		loginButton.setDisable(true);
+
+		type.textProperty().addListener((observable, oldValue, newValue) -> {
+		    loginButton.setDisable(newValue.trim().isEmpty());
+		});
+
+		dialog.getDialogPane().setContent(grid);
+
+		// Convert the result to a username-password-pair when the login button is clicked.
+		dialog.setResultConverter(dialogButton -> {
+		    if (dialogButton == addTBtn) {
+		        return new Pair<>(type.getText(), value.getText());
+		    }
+		    return null;
+		});
+
+		Optional<Pair<String, String>> result = dialog.showAndWait();
+
+		result.ifPresent(valueAndType -> {
+		    curUser.getPhoto(id).addTag(valueAndType.getKey(), valueAndType.getValue());
+		    fillScrollPane();
+		});
+	}
+	
+	/**
+	 * Rm tag.
+	 *
+	 * @param e the e
+	 */
+	@FXML
+	private void rmTag(ActionEvent e)
+	{
+		Dialog<Pair<String, String>> dialog = new Dialog<>();
+		dialog.setTitle("Remove Tag(s)");
+
+		ButtonType rmBtn = new ButtonType("Remove tag", ButtonData.OK_DONE);
+		dialog.getDialogPane().getButtonTypes().addAll(rmBtn, ButtonType.CANCEL);
+
+		GridPane grid = new GridPane();
+		grid.setHgap(10);
+		grid.setVgap(10);
+		grid.setPadding(new Insets(20, 150, 10, 10));
+
+		Map<String, String> map = curUser.getPhoto(id).getTags();
+		
+		TableColumn<Map.Entry<String, String>, String> value = new TableColumn<Map.Entry<String, String>, String>("Value");
+		value.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Map.Entry<String, String>, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<Map.Entry<String, String>, String> p) {
+                return new SimpleStringProperty(p.getValue().getValue());
+            }
+        });
+		TableColumn<Map.Entry<String, String>, String> type = new TableColumn<Map.Entry<String, String>, String>("Type");
+		type.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Map.Entry<String, String>, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<Map.Entry<String, String>, String> p) {
+                return new SimpleStringProperty(p.getValue().getKey());
+            }
+        });
+		
+		ObservableList<Map.Entry<String, String>> items = FXCollections.observableArrayList(map.entrySet());
+        final TableView<Map.Entry<String,String>> tags = new TableView<>(items);
+        tags.setEditable(false);
+        tags.getColumns().setAll(value, type);
+        
+		grid.add(tags, 0, 0);
+
+		Node rmT = dialog.getDialogPane().lookupButton(rmBtn);
+		rmT.setDisable(true);
+
+		type.textProperty().addListener((observable, oldValue, newValue) -> {
+			rmT.setDisable(tags.getSelectionModel().getSelectedItem() == null);
+		});
+		
+		dialog.getDialogPane().setContent(grid);
+		
+		dialog.setResultConverter(dialogButton -> {
+		    if (dialogButton == rmBtn) {
+		    	Photo p = curUser.getPhoto(id);
+		    	Entry<String, String> temp = tags.getSelectionModel().getSelectedItem();
+		    	p.removeTag(temp.getKey(), temp.getValue());
+		    }
+		    return null;
+		});
+		
 	}
 }
