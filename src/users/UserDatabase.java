@@ -136,9 +136,12 @@ public class UserDatabase
 	 */
 	public static boolean findUserB(String name)
 	{
-		Predicate<User> predicate = c-> c.getUserName().equals(name);
-		User user = users.stream().filter(predicate).findFirst().get();
-		return user == null;
+		for(User u: users)
+		{
+			if(u.getUserName().equalsIgnoreCase(name))
+				return true;
+		}
+		return false;
 	}
 	
 	public ArrayList<String> getUsernames()
