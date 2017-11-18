@@ -16,6 +16,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import javafx.application.Platform;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -75,11 +76,11 @@ public class PhotoController
 	/** The quit. */
 	@FXML
 	private Button quit;
-	
+
 	/** The album display. */
 	@FXML
 	ImageView photoDisplay;
-	
+
 	/** The add photo. */
 	@FXML
 	private Button addPhoto;
@@ -87,27 +88,27 @@ public class PhotoController
 	/** The quit. */
 	@FXML
 	private Button home;
-	
+
 	/** The username. */
 	@FXML
 	private Label albumName;
-	
+
 	/** The quit. */
 	@FXML
 	private ScrollPane photoDisplayPane;
-	
+
 	/** The username. */
 	@FXML
 	private Label username;
-	
+
 	/** The date. */
 	@FXML
 	private Label date;
-	
+
 	/** The num photos. */
 	@FXML
 	private TextArea caption;
-	
+
 	/** The date created. */
 	@FXML
 	private Label tags;
@@ -115,33 +116,33 @@ public class PhotoController
 	/** The prev. */
 	@FXML
 	private Button prev;
-	
+
 	/** The next. */
 	@FXML
 	private Button next;
-	
+
 	/** The edit capt. */
 	@FXML
 	private Button editCapt;
-	
+
 	/** The tile pane. */
 	private TilePane tilePane;
-	
+
 	/** The current album. */
 	private Album currentAlbum;
-	
+
 	/** The prev P. */
 	private int nextP, prevP;
-	
+
 	/** The cur user. */
 	private User curUser;
-	
+
 	/** The id. */
 	private int id;
-	
+
 	/** The old text. */
 	private String oldText;
-	
+
 	/** The edit cap. */
 	private boolean editCap = true;
 	/**
@@ -161,16 +162,16 @@ public class PhotoController
 		username.setText(user.getUserName());
 		caption.setOnKeyPressed(new EventHandler<KeyEvent>() {  
 			public void handle(KeyEvent key) {
-			    if (key.getCode() == KeyCode.ESCAPE) {
-			      caption.setEditable(false);
-			      editCap = true;
-			      caption.setText(oldText);
-			      editCapt.setText("Edit Caption");
-			    }
-			  }
-			});
+				if (key.getCode() == KeyCode.ESCAPE) {
+					caption.setEditable(false);
+					editCap = true;
+					caption.setText(oldText);
+					editCapt.setText("Edit Caption");
+				}
+			}
+		});
 	}
-	
+
 	/**
 	 * Creates the tile pane.
 	 *
@@ -189,7 +190,7 @@ public class PhotoController
 
 		return vbox;
 	}
-	
+
 	/**
 	 * Fill scroll pane.
 	 */
@@ -209,13 +210,13 @@ public class PhotoController
 			tilePane.getChildren().add(bt2);
 			System.out.println(p.getLocation() + " " + p.getId());
 		}
-		
+
 		photoDisplayPane.setFitToWidth(true); //prevent horizontal scrolling
 		photoDisplayPane.setContent(vb); //add images to scrollpane
 	}
-	
-	
-	
+
+
+
 	/**
 	 * in debugging mode.
 	 *
@@ -241,7 +242,7 @@ public class PhotoController
 		Stage stage = (Stage) quit.getScene().getWindow();
 		buttonUtility.logOut(stage);
 	}
-	
+
 	/**
 	 * Home.
 	 *
@@ -261,14 +262,14 @@ public class PhotoController
 			// TODO Auto-generated catch block
 			ex.printStackTrace();
 		}
-		
+
 		AlbumController controller = loader.getController();
 		controller.start(stage, curUser.getUserName());
-		
+
 		stage.setScene(new Scene(root));
 		stage.show();
 	}
-	
+
 	/**
 	 * Next photo.
 	 *
@@ -280,7 +281,7 @@ public class PhotoController
 		if(nextP != -1)
 			setInfo(curUser.getPhoto(currentAlbum.getPhotos().get(nextP)));
 	}
-	
+
 	/**
 	 * Prev photo.
 	 *
@@ -292,7 +293,7 @@ public class PhotoController
 		if(prevP != -1)
 			setInfo(curUser.getPhoto(currentAlbum.getPhotos().get(prevP)));
 	}
-	
+
 	/**
 	 * Adds the photo.
 	 *
@@ -313,18 +314,18 @@ public class PhotoController
 		fc.setFileFilter(filter);
 		fc.setAcceptAllFileFilterUsed(false);
 		int selection = fc.showOpenDialog(fc);
-		
+
 		if (selection == JFileChooser.APPROVE_OPTION) 
 		{
-            File file = fc.getSelectedFile();
-            photoDisplay.setImage(new Image(file.toURI().toString()));
-            int id = curUser.addPhoto(file.toURI().toString(),  LocalDateTime.ofInstant(Instant.ofEpochMilli(file.lastModified()), ZoneId.systemDefault()));
-     
-            currentAlbum.addPhoto(id);
-            fillScrollPane();
-        }
+			File file = fc.getSelectedFile();
+			photoDisplay.setImage(new Image(file.toURI().toString()));
+			int id = curUser.addPhoto(file.toURI().toString(),  LocalDateTime.ofInstant(Instant.ofEpochMilli(file.lastModified()), ZoneId.systemDefault()));
+
+			currentAlbum.addPhoto(id);
+			fillScrollPane();
+		}
 	}
-	
+
 	/**
 	 * Sets the info.
 	 *
@@ -346,16 +347,16 @@ public class PhotoController
 		if(i < length - 1)
 			nextP = i+1;
 	}
-	
-//	Stage secondStage = new Stage();
-//  secondStage.setScene(new Scene(root));
-//  secondStage.show();
-	
+
+	//	Stage secondStage = new Stage();
+	//  secondStage.setScene(new Scene(root));
+	//  secondStage.show();
+
 	/**
 	 * The Class clickAlbum.
 	 */
 	private class clickPhoto implements EventHandler<MouseEvent>{
-		
+
 		/* (non-Javadoc)
 		 * @see javafx.event.EventHandler#handle(javafx.event.Event)
 		 */
@@ -364,9 +365,9 @@ public class PhotoController
 			customLabel lbl = (customLabel) event.getSource();
 			setInfo(curUser.getPhoto(lbl.getIdI()));
 		}
-		
+
 	}
-	
+
 	/**
 	 * Delete.
 	 *
@@ -386,7 +387,7 @@ public class PhotoController
 			fillScrollPane();
 		}
 	}
-	
+
 	/**
 	 * Move.
 	 *
@@ -397,21 +398,21 @@ public class PhotoController
 	{
 		ArrayList<String> choices = curUser.getAlbumNames();
 		choices.remove(currentAlbum.getName());
-		
+
 		ChoiceDialog<String> dialog = new ChoiceDialog<>(choices.get(0), choices);
 		dialog.setTitle("Move Photo");
 		dialog.setContentText("Choose album:");
 		Optional<String> result = dialog.showAndWait();
-		
+
 		if (result.isPresent())
 		{
-		    currentAlbum.getPhotos().remove(new Integer(id));
-		    Album a = curUser.getAlbum(result.get());
-		    a.addPhoto(id);
-		    fillScrollPane();
+			currentAlbum.getPhotos().remove(new Integer(id));
+			Album a = curUser.getAlbum(result.get());
+			a.addPhoto(id);
+			fillScrollPane();
 		}
 	}
-	
+
 	/**
 	 * Copy.
 	 *
@@ -422,19 +423,19 @@ public class PhotoController
 	{
 		ArrayList<String> choices = curUser.getAlbumNames();
 		choices.remove(currentAlbum.getName());
-		
+
 		ChoiceDialog<String> dialog = new ChoiceDialog<>(choices.get(0), choices);
 		dialog.setTitle("Copy Photo");
 		dialog.setContentText("Choose album:");
 		Optional<String> result = dialog.showAndWait();
-		
+
 		if (result.isPresent())
 		{
-		    Album a = curUser.getAlbum(result.get());
-		    a.addPhoto(id);
+			Album a = curUser.getAlbum(result.get());
+			a.addPhoto(id);
 		}
 	}
-	
+
 	/**
 	 * Edits the caption.
 	 *
@@ -457,7 +458,7 @@ public class PhotoController
 			editCapt.setText("Edit Caption");
 		}
 	}
-	
+
 	/**
 	 * Adds the tag.
 	 *
@@ -491,27 +492,27 @@ public class PhotoController
 		loginButton.setDisable(true);
 
 		type.textProperty().addListener((observable, oldValue, newValue) -> {
-		    loginButton.setDisable(newValue.trim().isEmpty());
+			loginButton.setDisable(newValue.trim().isEmpty());
 		});
 
 		dialog.getDialogPane().setContent(grid);
 
 		// Convert the result to a username-password-pair when the login button is clicked.
 		dialog.setResultConverter(dialogButton -> {
-		    if (dialogButton == addTBtn) {
-		        return new Pair<>(type.getText(), value.getText());
-		    }
-		    return null;
+			if (dialogButton == addTBtn) {
+				return new Pair<>(type.getText(), value.getText());
+			}
+			return null;
 		});
 
 		Optional<Pair<String, String>> result = dialog.showAndWait();
 
 		result.ifPresent(valueAndType -> {
-		    curUser.getPhoto(id).addTag(valueAndType.getKey(), valueAndType.getValue());
-		    fillScrollPane();
+			curUser.getPhoto(id).addTag(valueAndType.getKey(), valueAndType.getValue());
+			fillScrollPane();
 		});
 	}
-	
+
 	/**
 	 * Rm tag.
 	 *
@@ -524,7 +525,7 @@ public class PhotoController
 		dialog.setTitle("Remove Tag(s)");
 
 		ButtonType rmBtn = new ButtonType("Remove tag", ButtonData.OK_DONE);
-		dialog.getDialogPane().getButtonTypes().addAll(rmBtn, ButtonType.CANCEL);
+		dialog.getDialogPane().getButtonTypes().addAll(rmBtn, new ButtonType("Done", ButtonData.CANCEL_CLOSE));
 
 		GridPane grid = new GridPane();
 		grid.setHgap(10);
@@ -532,46 +533,51 @@ public class PhotoController
 		grid.setPadding(new Insets(20, 150, 10, 10));
 
 		Map<String, String> map = curUser.getPhoto(id).getTags();
-		
+
 		TableColumn<Map.Entry<String, String>, String> value = new TableColumn<Map.Entry<String, String>, String>("Value");
 		value.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Map.Entry<String, String>, String>, ObservableValue<String>>() {
-            @Override
-            public ObservableValue<String> call(TableColumn.CellDataFeatures<Map.Entry<String, String>, String> p) {
-                return new SimpleStringProperty(p.getValue().getValue());
-            }
-        });
+			@Override
+			public ObservableValue<String> call(TableColumn.CellDataFeatures<Map.Entry<String, String>, String> p) {
+				return new SimpleStringProperty(p.getValue().getValue());
+			}
+		});
 		TableColumn<Map.Entry<String, String>, String> type = new TableColumn<Map.Entry<String, String>, String>("Type");
 		type.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Map.Entry<String, String>, String>, ObservableValue<String>>() {
-            @Override
-            public ObservableValue<String> call(TableColumn.CellDataFeatures<Map.Entry<String, String>, String> p) {
-                return new SimpleStringProperty(p.getValue().getKey());
-            }
-        });
-		
+			@Override
+			public ObservableValue<String> call(TableColumn.CellDataFeatures<Map.Entry<String, String>, String> p) {
+				return new SimpleStringProperty(p.getValue().getKey());
+			}
+		});
+
 		ObservableList<Map.Entry<String, String>> items = FXCollections.observableArrayList(map.entrySet());
-        final TableView<Map.Entry<String,String>> tags = new TableView<>(items);
-        tags.setEditable(false);
-        tags.getColumns().setAll(value, type);
-        
+		final TableView<Map.Entry<String,String>> tags = new TableView<>(items);
+		tags.setEditable(false);
+		tags.getColumns().setAll(value, type);
+
 		grid.add(tags, 0, 0);
 
 		Node rmT = dialog.getDialogPane().lookupButton(rmBtn);
-		rmT.setDisable(true);
-
-		type.textProperty().addListener((observable, oldValue, newValue) -> {
-			rmT.setDisable(tags.getSelectionModel().getSelectedItem() == null);
-		});
+		rmT.disableProperty().bind(Bindings.isEmpty(tags.getSelectionModel().getSelectedItems()));
+		rmT.addEventFilter(ActionEvent.ACTION, (event) -> {
+			Photo p = curUser.getPhoto(id);
+			Entry<String, String> temp = tags.getSelectionModel().getSelectedItem();
+			p.removeTag(temp.getKey(), temp.getValue());
+			items.remove(temp);
+			event.consume(); 
+		}); 
 		
 		dialog.getDialogPane().setContent(grid);
-		
+
 		dialog.setResultConverter(dialogButton -> {
-		    if (dialogButton == rmBtn) {
-		    	Photo p = curUser.getPhoto(id);
-		    	Entry<String, String> temp = tags.getSelectionModel().getSelectedItem();
-		    	p.removeTag(temp.getKey(), temp.getValue());
-		    }
-		    return null;
+			if (dialogButton == rmBtn) {
+				Photo p = curUser.getPhoto(id);
+				Entry<String, String> temp = tags.getSelectionModel().getSelectedItem();
+				p.removeTag(temp.getKey(), temp.getValue());
+			}
+			return null;
 		});
+
+		dialog.showAndWait();
 		
 	}
 }
