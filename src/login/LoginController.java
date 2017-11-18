@@ -15,6 +15,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Control;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import nonadmin.AlbumController;
+import users.UserDatabase;
 import utility.buttonUtility;
 
 public class LoginController {
@@ -29,7 +31,7 @@ public class LoginController {
 	private Button QuitButton;
 	
 	public void start(Stage mainStage) {
-		userNameInput.setText("test");
+		
 	}
 	
 	public void login(ActionEvent E) throws IOException  {
@@ -47,6 +49,25 @@ public class LoginController {
 		
 			AdminController controller = loader.getController();
 			controller.start(stage);
+			stage.setScene(scene);
+			stage.show();
+ 		}
+		else {
+ 			
+ 			if(!UserDatabase.findUserB(username)) {
+ 				UserDatabase.addUser(username);	
+ 				System.out.println("username debug");
+ 			}
+ 			
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(buttonUtility.class.getResource("/nonadmin/album.fxml"));
+			Parent root = loader.load();
+			Scene scene = new Scene(root);
+			Stage stage = (Stage) ((Node) E.getSource()).getScene().getWindow();
+	
+		
+			AlbumController controller = loader.getController();
+			controller.start(stage, username);
 			stage.setScene(scene);
 			stage.show();
 		}
