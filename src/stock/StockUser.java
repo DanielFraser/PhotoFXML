@@ -25,7 +25,7 @@ public class StockUser
 		Photo p;
 		for(int i = 0; i < 10; i++)
 		{
-			p = new Photo("/stock/"+i+".jpg", LocalDateTime.parse("11/10/2017 15:12:22"));
+			p = new Photo("/stock/"+i+".jpg", LocalDateTime.parse("2017-11-10T15:12:22"));
 			p.addCaption(i+"!");
 			user.addPhoto(p);
 			a.addPhoto(p.getId());
