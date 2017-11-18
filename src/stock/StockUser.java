@@ -1,8 +1,6 @@
 package stock;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 import users.Album;
 import users.Photo;
@@ -21,7 +19,7 @@ public class StockUser
 	public static void createStockUser()
 	{
 		User user = new User("stock");
-		Album a = new Album("stock");
+		Album a = new Album("stock", user);
 		Photo p;
 		for(int i = 0; i < 10; i++)
 		{

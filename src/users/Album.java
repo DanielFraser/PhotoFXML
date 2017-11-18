@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+
 
 // TODO: Auto-generated Javadoc
 /**
@@ -33,16 +36,16 @@ public class Album implements Serializable
 	/** The date created. */
 	private Date dateCreated;
 	
+	User owner;
 	/**
 	 * Instantiates a new album.
 	 *
 	 * @param initName the init name
 	 */
-	public Album(String initName) {
+	public Album(String initName, User initOwner) {
 		setName(initName);
 		cal = Calendar.getInstance();
-		//dateCreated = cal.getTime();
-		//setDateCreated(dateFormat.format(cal.getTime()));
+		owner = initOwner;
 	}
 	
 	
@@ -55,17 +58,6 @@ public class Album implements Serializable
 	public Album(String initName,  ArrayList<Integer> initPhotos) {
 		setName(initName);
 		photos = initPhotos;
-	}
-	
-	/**
-	 * Find photo.
-	 *
-	 * @param photo the photo
-	 * @return the int
-	 */
-	public int findPhoto(Photo photo)
-	{
-		return photos.indexOf(photo);
 	}
 	
 	/**
@@ -120,7 +112,20 @@ public class Album implements Serializable
 	 *
 	 * @param name the new name
 	 */
-	public void setName(String name) {
+	public void setName(String name) 
+	{
+		if(owner != null)
+		{
+			if(!owner.sameName(name))
+				this.name = name;
+			else
+			{
+				Alert alert = new Alert(AlertType.ERROR);
+				alert.setTitle("Error");
+				alert.setHeaderText("Album name already exists");
+				alert.showAndWait();
+			}
+		}
 		this.name = name;
 	}
 	

@@ -2,20 +2,25 @@ package nonadmin;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Optional;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
@@ -26,6 +31,7 @@ import users.User;
 import users.UserDatabase;
 import utility.buttonUtility;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class AlbumController.
  */
@@ -70,6 +76,19 @@ public class AlbumController
 	@FXML
 	private ScrollPane albumDisplayPane;//will contain the thumbnails of photo albums
 
+	/** The delete. */
+	@FXML
+	private Button delete;
+	
+	/** The edit. */
+	@FXML
+	private Button edit;
+	
+	/** The open. */
+	@FXML
+	private Button open;
+	
+	/** The current user. */
 	private User currentUser;
 	/**
 	 * sets properties to buttons and a few of the labels
@@ -108,6 +127,8 @@ public class AlbumController
 
 	/**
 	 * Fill scroll pane.
+	 *
+	 * @param albums the albums
 	 */
 	private void fillScrollPane(ArrayList<Album> albums)
 	{
@@ -143,7 +164,7 @@ public class AlbumController
 	 * in debugging mode.
 	 *
 	 * @param e the e
-	 * @throws IOException 
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	@FXML
 	private void logOutAct(ActionEvent e) throws IOException
@@ -164,6 +185,8 @@ public class AlbumController
 		public void handle(MouseEvent event) {
 			Label lbl = (Label) event.getSource();
 			albumName.setText(lbl.getText());
+			albumDisplay.setImage( new Image(currentUser.getPhoto(currentUser.getAlbum(albumName.getText()).getPhotos().get(0)).getLocation(),128, 0, true, false));
+			albumDisplay.setPreserveRatio(true);
 			if(event.getClickCount() == 2)
 			{
 				Stage stage = (Stage) quit.getScene().getWindow();
@@ -184,6 +207,81 @@ public class AlbumController
 				stage.show();
 			}
 		}
+	}
+	
+
+	/**
+	 * Delete album.
+	 *
+	 * @param e the e
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
+	@FXML
+	private void deleteAlbum(ActionEvent e) throws IOException
+	{
+		currentUser.deleteAlbum(albumName.getText());
+	}
+	
+	
+	/**
+	 * Edits the album.
+	 *
+	 * @param e the e
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
+	@FXML
+	private void editAlbum(ActionEvent e) throws IOException
+	{
 		
+		TextInputDialog dialog = new TextInputDialog(albumName.getText());
+		dialog.setTitle("Edit album name");
+		dialog.setContentText("Enter new name for album:");
+		Optional<String> result = dialog.showAndWait();
+		
+		if (result.isPresent())
+		{
+			boolean b = currentUser.setAlbumName(result.get(), albumName.getText());
+			if(b)
+			{
+				for(int i = 0; i < tilePane.getChildren().size(); i++)
+				{
+					if(((Label) tilePane.getChildren().get(i)).getText().equals(albumName.getText()))
+					{
+						Label lbl = (Label) tilePane.getChildren().get(i);
+						lbl.setText(result.get());
+						tilePane.getChildren().set(i, lbl);
+					}
+				}
+				albumName.setText(result.get());
+			}
+		}
+	}
+	
+	
+	/**
+	 * View album.
+	 *
+	 * @param e the e
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
+	@FXML
+	private void viewAlbum(ActionEvent e) throws IOException
+	{
+		Stage stage = (Stage) quit.getScene().getWindow();
+		FXMLLoader loader = new FXMLLoader();
+		loader.setLocation(getClass().getResource("/photo/photo.fxml"));
+		Parent root = null;
+		try {
+			root = loader.load();
+		} catch (IOException ex) {
+			// TODO Auto-generated catch block
+			ex.printStackTrace();
+		}
+		
+		PhotoController controller = loader.getController();
+		controller.start(stage, currentUser.searchAlbums(albumName.getText()), currentUser);
+		
+		stage.setScene(new Scene(root));
+		stage.show();
 	}
 }

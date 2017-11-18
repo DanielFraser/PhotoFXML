@@ -28,6 +28,11 @@ public class UserDatabase
 	{
 		try
         {   
+			//remove stock user
+			Predicate<User> predicate = c-> c.getUserName().equals("stock");
+			User user = users.stream().filter(predicate).findFirst().get();
+			users.remove(user);
+			
             //Saving of object in a file
             FileOutputStream file = new FileOutputStream("usernames.ser");
             ObjectOutputStream out = new ObjectOutputStream(file);

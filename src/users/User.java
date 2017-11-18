@@ -3,7 +3,12 @@ package users;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.function.Predicate;
+
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -67,7 +72,16 @@ public class User implements Serializable
 	{
 		Predicate<Album> predicate = c-> c.getName().equals(name);
 		Album alb = albums.stream().filter(predicate).findFirst().get();
-		this.albums.remove(alb);
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("Confirmation Dialog");
+		alert.setContentText("Are you sure you want to delete " + name);
+		
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.get() == ButtonType.OK)
+		{
+			this.albums.remove(alb);
+		} 
+		
 	}
 
 	/**
@@ -77,7 +91,7 @@ public class User implements Serializable
 	 */
 	public void addAlbum(String name)
 	{
-		albums.add(new Album(name));
+		albums.add(new Album(name, this));
 	}
 	
 	/**
@@ -142,7 +156,12 @@ public class User implements Serializable
 	 */
 	public Photo getPhoto(Integer photoInt)
 	{
-		return userPhotos.get(photoInt);
+		for(Photo p : userPhotos)
+		{
+			if(p.getId() == photoInt)
+				return p;
+		}
+		return null;
 	}
 	
 	/**
@@ -157,5 +176,40 @@ public class User implements Serializable
 		for(int i : album.getPhotos())
 			photos.add(getPhoto(i));
 		return photos;
+	}
+	
+	protected boolean sameName(String name)
+	{
+		for(Album a : albums)
+		{
+			if(a.getName().equalsIgnoreCase(name))
+				return true;
+		}
+		return false;
+	}
+	
+	public boolean setAlbumName(String name, String album)
+	{
+		for(Album a : albums)
+		{
+			if(a.getName().equalsIgnoreCase(album))
+			{
+				a.setName(name);
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public Album getAlbum(String name)
+	{
+		for(Album a : albums)
+		{
+			if(a.getName().equalsIgnoreCase(name))
+			{
+				return a;
+			}
+		}
+		return null;
 	}
 }

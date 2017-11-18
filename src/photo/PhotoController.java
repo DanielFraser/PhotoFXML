@@ -33,6 +33,7 @@ import users.Album;
 import users.Photo;
 import users.User;
 import utility.buttonUtility;
+import utility.customLabel;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -146,7 +147,7 @@ public class PhotoController
 		int imageSize = 128;
 		for (Photo p : curUser.getPhoto(currentAlbum))
 		{
-			Label bt2 = new Label(String.valueOf(p.getId()));                        
+			customLabel bt2 = new customLabel(p.getCaption(), p.getId());                        
 			Image img2 = new Image(p.getLocation(), imageSize, 0, true, false);
 			ImageView view2 = new ImageView(img2);
 			bt2.setGraphic(view2);
@@ -158,7 +159,6 @@ public class PhotoController
 		
 		photoDisplayPane.setFitToWidth(true); //prevent horizontal scrolling
 		photoDisplayPane.setContent(vb); //add images to scrollpane
-
 	}
 	
 	
@@ -307,9 +307,9 @@ public class PhotoController
 		 */
 		@Override
 		public void handle(MouseEvent event) {
-			Label lbl = (Label) event.getSource();
+			customLabel lbl = (customLabel) event.getSource();
 			albumName.setText(lbl.getText());
-			setInfo(curUser.getPhoto(Integer.parseInt(lbl.getText())));
+			setInfo(curUser.getPhoto(lbl.getIdI()));
 		}
 		
 	}

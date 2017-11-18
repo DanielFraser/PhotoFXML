@@ -3,6 +3,7 @@ package users;
 import java.io.File;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -140,7 +141,8 @@ public class Photo implements Serializable
 	 */
 	public String getDateS()
 	{
-		return dateCreated.toString();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return dateCreated.format(formatter);
 	}
 
 	/**
