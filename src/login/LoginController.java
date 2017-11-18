@@ -52,12 +52,9 @@ public class LoginController {
 			stage.setScene(scene);
 			stage.show();
  		}
-		else {
- 			
- 			if(!UserDatabase.findUserB(username)) {
- 				UserDatabase.addUser(username);	
- 				System.out.println("username debug");
- 			}
+		else if(!UserDatabase.findUserB(username)) {
+				System.out.println("User Does not Exist");
+		} else {
  			
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(buttonUtility.class.getResource("/nonadmin/album.fxml"));
@@ -72,6 +69,11 @@ public class LoginController {
 			stage.show();
 		}
 		
+	}
+	
+	public void quit(ActionEvent E) throws IOException {
+		Stage stage = (Stage) QuitButton.getScene().getWindow();
+		buttonUtility.quit(stage);
 	}
 
 }
