@@ -115,8 +115,10 @@ public class PhotoController
 	public void start(Stage mainStage, Album album, User user) 
 	{
 		currentAlbum = album;
+		albumName.setText(album.getName());
 		curUser = user;
 		fillScrollPane();
+		username.setText(user.getUserName());
 	}
 	
 	/**
@@ -154,7 +156,8 @@ public class PhotoController
 			bt2.setContentDisplay(ContentDisplay.TOP);
 			bt2.addEventHandler(MouseEvent.MOUSE_CLICKED, new clickPhoto());
 			bt2.setWrapText(true);
-			tilePane.getChildren().add(bt2);  
+			tilePane.getChildren().add(bt2);
+			System.out.println(p.getLocation() + " " + p.getId());
 		}
 		
 		photoDisplayPane.setFitToWidth(true); //prevent horizontal scrolling
@@ -197,6 +200,7 @@ public class PhotoController
 	@FXML
 	private void home(ActionEvent e)
 	{
+		System.out.println("home");
 		Stage stage = (Stage) quit.getScene().getWindow();
 		FXMLLoader loader = new FXMLLoader();
 		loader.setLocation(getClass().getResource("/nonadmin/album.fxml"));
@@ -266,8 +270,10 @@ public class PhotoController
             photoDisplay.setImage(new Image(file.toURI().toString()));
             //SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
             //file.lastModified()
-            curUser.addPhoto(file.toURI().toString(),  LocalDateTime.ofInstant(Instant.ofEpochMilli(file.lastModified()), ZoneId.systemDefault()));
-            
+            int id = curUser.addPhoto(file.toURI().toString(),  LocalDateTime.ofInstant(Instant.ofEpochMilli(file.lastModified()), ZoneId.systemDefault()));
+            System.out.println(id +" "+file.toURI().toString());
+            //curUser.a
+            currentAlbum.addPhoto(id);
             fillScrollPane();
         }
 	}
@@ -308,7 +314,7 @@ public class PhotoController
 		@Override
 		public void handle(MouseEvent event) {
 			customLabel lbl = (customLabel) event.getSource();
-			albumName.setText(lbl.getText());
+			//albumName.setText(lbl.getText());
 			setInfo(curUser.getPhoto(lbl.getIdI()));
 		}
 		

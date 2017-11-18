@@ -30,5 +30,18 @@ public class StockUser
 		}
 		user.addAlbum(a);
 		UserDatabase.addUser(user);
+		
+		//temp
+//		user = new User("stock2");
+//		a = new Album("stock", user);
+//		for(int i = 0; i < 10; i++)
+//		{
+//			p = new Photo("/stock/"+i+".jpg", LocalDateTime.parse("2017-11-10T15:12:22"));
+//			p.addCaption(i+"!");
+//			user.addPhoto(p);
+//			a.addPhoto(p.getId());
+//		}
+//		user.addAlbum(a);
+//		UserDatabase.addUser(user);
 	}
 }

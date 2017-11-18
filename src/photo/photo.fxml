@@ -21,7 +21,7 @@
                   <Label fx:id="username" layoutX="14.0" layoutY="567.0" text="&lt;username&gt;" />
                   <ScrollPane fx:id="photoDisplayPane" layoutX="7.0" layoutY="158.0" prefHeight="391.0" prefWidth="305.0" />
                   <Label fx:id="albumName" layoutX="14.0" layoutY="14.0" text="&lt;album name&gt;" />
-                  <Button fx:id="home" layoutX="237.0" layoutY="19.0" mnemonicParsing="false" text="Home" />
+                  <Button fx:id="home" layoutX="237.0" layoutY="19.0" mnemonicParsing="false" onAction="#home" text="Home" />
                   <Button fx:id="addPhoto" layoutX="225.0" layoutY="78.0" mnemonicParsing="false" onAction="#addPhoto" text="Add Photo" />
                </children>
             </AnchorPane>

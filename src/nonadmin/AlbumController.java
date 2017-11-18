@@ -37,7 +37,7 @@ import utility.buttonUtility;
  */
 public class AlbumController
 {
-	
+
 	/** The tile pane. */
 	private TilePane tilePane;
 
@@ -79,17 +79,22 @@ public class AlbumController
 	/** The delete. */
 	@FXML
 	private Button delete;
-	
+
 	/** The edit. */
 	@FXML
 	private Button edit;
-	
+
 	/** The open. */
 	@FXML
 	private Button open;
-	
+
+	/** The new albumn. */
+	@FXML
+	private Button newAlbumn;
+
 	/** The current user. */
 	private User currentUser;
+
 	/**
 	 * sets properties to buttons and a few of the labels
 	 * loads list from file.
@@ -133,18 +138,33 @@ public class AlbumController
 	private void fillScrollPane(ArrayList<Album> albums)
 	{
 		int imageSize = 128;
+
 		for (Album a : albums)
 		{
-			Label bt2 = new Label();                        
-			Image img2 = new Image(currentUser.getPhoto(a.getPhotos().get(0)).getLocation(),imageSize, 0, true, false);
-			ImageView view2 = new ImageView(img2);
-			bt2.setGraphic(view2);
-			bt2.setText(a.getName());
-			bt2.setContentDisplay(ContentDisplay.TOP);
-			bt2.addEventHandler(MouseEvent.MOUSE_CLICKED, new clickAlbum());
-			tilePane.getChildren().add(bt2);  
-		}
+			if(a.getSize() > 0)
+			{
+				Label bt2 = new Label();                        
+				Image img2 = new Image(currentUser.getPhoto(a.getPhotos().get(0)).getLocation(),imageSize, 0, true, false);
+				ImageView view2 = new ImageView(img2);
+				bt2.setGraphic(view2);
+				bt2.setText(a.getName());
+				bt2.setContentDisplay(ContentDisplay.TOP);
+				bt2.addEventHandler(MouseEvent.MOUSE_CLICKED, new clickAlbum());
+				tilePane.getChildren().add(bt2);  
+			}
+			else
+			{
+				Label bt2 = new Label();                        
+				Image img2 = new Image("/nonadmin/folder.png",128, 0, true, false);
+				ImageView view2 = new ImageView(img2);
+				bt2.setGraphic(view2);
+				bt2.setText(a.getName());
+				bt2.setContentDisplay(ContentDisplay.TOP);
+				bt2.addEventHandler(MouseEvent.MOUSE_CLICKED, new clickAlbum());
+				tilePane.getChildren().add(bt2);  
+			}
 
+		}
 	}
 
 	/**
@@ -177,7 +197,7 @@ public class AlbumController
 	 * The Class clickAlbum.
 	 */
 	private class clickAlbum implements EventHandler<MouseEvent>{
-		
+
 		/* (non-Javadoc)
 		 * @see javafx.event.EventHandler#handle(javafx.event.Event)
 		 */
@@ -185,7 +205,16 @@ public class AlbumController
 		public void handle(MouseEvent event) {
 			Label lbl = (Label) event.getSource();
 			albumName.setText(lbl.getText());
-			albumDisplay.setImage( new Image(currentUser.getPhoto(currentUser.getAlbum(albumName.getText()).getPhotos().get(0)).getLocation(),128, 0, true, false));
+			Album a = currentUser.getAlbum(albumName.getText());
+			if(a.getSize() > 0)
+			{
+				albumDisplay.setImage( new Image(currentUser.getPhoto(a).get(0).getLocation(),128, 0, true, false));
+			}
+			else
+			{
+				albumDisplay.setImage( new Image("/nonadmin/folder.png",128, 0, true, false));
+			}
+			
 			albumDisplay.setPreserveRatio(true);
 			if(event.getClickCount() == 2)
 			{
@@ -199,16 +228,16 @@ public class AlbumController
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				
+
 				PhotoController controller = loader.getController();
 				controller.start(stage, currentUser.searchAlbums(lbl.getText()), currentUser);
-				
+
 				stage.setScene(new Scene(root));
 				stage.show();
 			}
 		}
 	}
-	
+
 
 	/**
 	 * Delete album.
@@ -221,8 +250,8 @@ public class AlbumController
 	{
 		currentUser.deleteAlbum(albumName.getText());
 	}
-	
-	
+
+
 	/**
 	 * Edits the album.
 	 *
@@ -232,12 +261,12 @@ public class AlbumController
 	@FXML
 	private void editAlbum(ActionEvent e) throws IOException
 	{
-		
+
 		TextInputDialog dialog = new TextInputDialog(albumName.getText());
 		dialog.setTitle("Edit album name");
 		dialog.setContentText("Enter new name for album:");
 		Optional<String> result = dialog.showAndWait();
-		
+
 		if (result.isPresent())
 		{
 			boolean b = currentUser.setAlbumName(result.get(), albumName.getText());
@@ -256,8 +285,8 @@ public class AlbumController
 			}
 		}
 	}
-	
-	
+
+
 	/**
 	 * View album.
 	 *
@@ -277,11 +306,42 @@ public class AlbumController
 			// TODO Auto-generated catch block
 			ex.printStackTrace();
 		}
-		
+
 		PhotoController controller = loader.getController();
 		controller.start(stage, currentUser.searchAlbums(albumName.getText()), currentUser);
-		
+
 		stage.setScene(new Scene(root));
 		stage.show();
+	}
+
+	/**
+	 * View album.
+	 *
+	 * @param e the e
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
+	@FXML
+	private void addAlbum(ActionEvent e) throws IOException
+	{
+		TextInputDialog dialog = new TextInputDialog(albumName.getText());
+		dialog.setTitle("Edit album name");
+		dialog.setContentText("Enter name for album:");
+		Optional<String> result = dialog.showAndWait();
+
+		if (result.isPresent())
+		{
+			boolean b = currentUser.sameName(result.get());
+			if(!b)
+			{
+				currentUser.addAlbum(result.get());
+				Label bt2 = new Label(result.get());                        
+				Image img2 = new Image("/nonadmin/folder.png",128, 0, true, false);
+				ImageView view2 = new ImageView(img2);
+				bt2.setGraphic(view2);
+				bt2.setContentDisplay(ContentDisplay.TOP);
+				bt2.addEventHandler(MouseEvent.MOUSE_CLICKED, new clickAlbum());
+				tilePane.getChildren().add(bt2);  
+			}
+		}
 	}
 }

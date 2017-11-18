@@ -114,18 +114,7 @@ public class Album implements Serializable
 	 */
 	public void setName(String name) 
 	{
-		if(owner != null)
-		{
-			if(!owner.sameName(name))
-				this.name = name;
-			else
-			{
-				Alert alert = new Alert(AlertType.ERROR);
-				alert.setTitle("Error");
-				alert.setHeaderText("Album name already exists");
-				alert.showAndWait();
-			}
-		}
+		
 		this.name = name;
 	}
 	

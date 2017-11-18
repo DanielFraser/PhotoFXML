@@ -128,10 +128,13 @@ public class User implements Serializable
 	 *
 	 * @param s the s
 	 * @param ld the ld
+	 * @return the int
 	 */
-	public void addPhoto(String s, LocalDateTime ld)
+	public int addPhoto(String s, LocalDateTime ld)
 	{
-		userPhotos.add(new Photo(s, ld));
+		Photo p = new Photo(s, ld);
+		userPhotos.add(p);
+		return p.getId();
 	}
 	
 	/**
@@ -178,7 +181,13 @@ public class User implements Serializable
 		return photos;
 	}
 	
-	protected boolean sameName(String name)
+	/**
+	 * Same name.
+	 *
+	 * @param name the name
+	 * @return true, if successful
+	 */
+	public boolean sameName(String name)
 	{
 		for(Album a : albums)
 		{
@@ -188,11 +197,18 @@ public class User implements Serializable
 		return false;
 	}
 	
+	/**
+	 * Sets the album name.
+	 *
+	 * @param name the name
+	 * @param album the album
+	 * @return true, if successful
+	 */
 	public boolean setAlbumName(String name, String album)
 	{
 		for(Album a : albums)
 		{
-			if(a.getName().equalsIgnoreCase(album))
+			if(!sameName(album))
 			{
 				a.setName(name);
 				return true;
@@ -201,6 +217,12 @@ public class User implements Serializable
 		return false;
 	}
 	
+	/**
+	 * Gets the album.
+	 *
+	 * @param name the name
+	 * @return the album
+	 */
 	public Album getAlbum(String name)
 	{
 		for(Album a : albums)
@@ -211,5 +233,14 @@ public class User implements Serializable
 			}
 		}
 		return null;
+	}
+
+	/**
+	 * Gets the num photos.
+	 *
+	 * @return the num photos
+	 */
+	public int getNumPhotos() {
+		return userPhotos.size();
 	}
 }
