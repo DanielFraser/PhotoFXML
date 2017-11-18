@@ -144,7 +144,7 @@ public class UserDatabase
 		return false;
 	}
 	
-	public ArrayList<String> getUsernames()
+	public static ArrayList<String> getUsernames()
 	{
 		ArrayList<String> usernames = new ArrayList<>();
 		for(User u : users)

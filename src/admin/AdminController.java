@@ -58,8 +58,8 @@ public class AdminController {
 	
 	public void start(Stage MainStage) {
 		
-//		observableList = FXCollections.observableArrayList(UserDatabase.getUserNames());
-//		UserList.setItems(observableList);
+		observableList = FXCollections.observableArrayList(UserDatabase.getUsernames());
+		UserList.setItems(observableList);
 		
 		
 	}
@@ -77,6 +77,8 @@ public class AdminController {
 	public void addUser(ActionEvent e) {
 		
 		String username = CreateUserInput.getText();
+		UserDatabase.addUser(username);
+		CreateUserInput.setText("");
 		//Add a user in User/UserDatabase
 		
 	}
