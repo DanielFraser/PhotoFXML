@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.Optional;
 
 import javax.swing.JFileChooser;
 import javax.swing.UIManager;
@@ -18,10 +20,15 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -79,7 +86,7 @@ public class PhotoController
 	
 	/** The num photos. */
 	@FXML
-	private Label caption;
+	private TextArea caption;
 	
 	/** The date created. */
 	@FXML
@@ -93,6 +100,9 @@ public class PhotoController
 	@FXML
 	private Button next;
 	
+	@FXML
+	private Button editCapt;
+	
 	/** The tile pane. */
 	private TilePane tilePane;
 	
@@ -105,6 +115,7 @@ public class PhotoController
 	/** The cur user. */
 	private User curUser;
 	
+	private int id;
 	/**
 	 * Start.
 	 *
@@ -268,11 +279,8 @@ public class PhotoController
 		{
             File file = fc.getSelectedFile();
             photoDisplay.setImage(new Image(file.toURI().toString()));
-            //SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-            //file.lastModified()
             int id = curUser.addPhoto(file.toURI().toString(),  LocalDateTime.ofInstant(Instant.ofEpochMilli(file.lastModified()), ZoneId.systemDefault()));
-            System.out.println(id +" "+file.toURI().toString());
-            //curUser.a
+     
             currentAlbum.addPhoto(id);
             fillScrollPane();
         }
@@ -285,6 +293,7 @@ public class PhotoController
 	 */
 	private void setInfo(Photo p)
 	{
+		id = p.getId();
 		photoDisplay.setImage(new Image(p.getLocation()));
 		tags.setText(p.printTags());
 		caption.setText(p.getCaption());
@@ -314,9 +323,78 @@ public class PhotoController
 		@Override
 		public void handle(MouseEvent event) {
 			customLabel lbl = (customLabel) event.getSource();
-			//albumName.setText(lbl.getText());
 			setInfo(curUser.getPhoto(lbl.getIdI()));
 		}
 		
+	}
+	
+	@FXML
+	private void delete(ActionEvent e)
+	{
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("Confirm Deletion");
+		alert.setContentText("Are you sure you want to delete this photo?");
+
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.get() == ButtonType.OK)
+		{
+			currentAlbum.getPhotos().remove(new Integer(id));
+			fillScrollPane();
+		}
+	}
+	
+	@FXML
+	private void move(ActionEvent e)
+	{
+		ArrayList<String> choices = curUser.getAlbumNames();
+		choices.remove(currentAlbum.getName());
+		
+		ChoiceDialog<String> dialog = new ChoiceDialog<>(choices.get(0), choices);
+		dialog.setTitle("Move Photo");
+		dialog.setContentText("Choose album:");
+		Optional<String> result = dialog.showAndWait();
+		
+		if (result.isPresent())
+		{
+		    currentAlbum.getPhotos().remove(new Integer(id));
+		    Album a = curUser.getAlbum(result.get());
+		    a.addPhoto(id);
+		    fillScrollPane();
+		}
+	}
+	
+	@FXML
+	private void copy(ActionEvent e)
+	{
+		ArrayList<String> choices = curUser.getAlbumNames();
+		choices.remove(currentAlbum.getName());
+		
+		ChoiceDialog<String> dialog = new ChoiceDialog<>(choices.get(0), choices);
+		dialog.setTitle("Copy Photo");
+		dialog.setContentText("Choose album:");
+		Optional<String> result = dialog.showAndWait();
+		
+		if (result.isPresent())
+		{
+		    Album a = curUser.getAlbum(result.get());
+		    a.addPhoto(id);
+		}
+	}
+	boolean editCap = false;
+	@FXML
+	private void editCaption(ActionEvent e)
+	{
+		if(editCap)
+		{
+			caption.setEditable(true);
+			editCap = !editCap;
+			editCapt.setText("Save caption");
+		}
+		else
+		{
+			curUser.getPhoto(id).addCaption(caption.getText());
+			editCap = !editCap;
+			editCapt.setText("Edit Caption");
+		}
 	}
 }

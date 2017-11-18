@@ -26,9 +26,6 @@ public class Photo implements Serializable
 
 	/** The tags. */
 	private HashMap<String, String> tags = new HashMap<>();
-
-	/** The next id. */
-	static AtomicInteger nextId = new AtomicInteger();
 	
 	/** The id. */
 	private int id;
@@ -39,9 +36,9 @@ public class Photo implements Serializable
 	 * @param initLocation the init location
 	 * @param date the date
 	 */
-	public Photo(String initLocation, LocalDateTime date) 
+	public Photo(String initLocation, LocalDateTime date, int userID) 
 	{
-		id = nextId.incrementAndGet();
+		id = userID;
 		location = initLocation;
 		dateCreated = date;
 	}

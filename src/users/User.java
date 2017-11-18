@@ -8,6 +8,7 @@ import java.util.function.Predicate;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import jdk.nashorn.internal.runtime.FindProperty;
 import javafx.scene.control.ButtonType;
 
 // TODO: Auto-generated Javadoc
@@ -32,6 +33,9 @@ public class User implements Serializable
 	/** The user name. */
 	private String userName;
 
+	/** The id. */
+	private int id = 0;
+	
 	/**
 	 * Instantiates a new user.
 	 *
@@ -124,6 +128,22 @@ public class User implements Serializable
 	}
 	
 	/**
+	 * Gets the photo.
+	 *
+	 * @param location the location
+	 * @return the photo
+	 */
+	public int getPhoto(String location)
+	{
+		for(Photo p : userPhotos)
+		{
+			if(p.getLocation().equals(location))
+				return p.getId();
+		}
+		return -1;
+	}
+	
+	/**
 	 * Adds the photo.
 	 *
 	 * @param s the s
@@ -132,9 +152,15 @@ public class User implements Serializable
 	 */
 	public int addPhoto(String s, LocalDateTime ld)
 	{
-		Photo p = new Photo(s, ld);
-		userPhotos.add(p);
-		return p.getId();
+		if(getPhoto(s) == -1)
+		{
+			Photo p = new Photo(s, ld, id);
+			id++;
+			userPhotos.add(p);
+			System.out.println(p.getId() + " " + s + " " + p.getLocation());
+			return p.getId();
+		}
+		return getPhoto(s);
 	}
 	
 	/**
@@ -242,5 +268,35 @@ public class User implements Serializable
 	 */
 	public int getNumPhotos() {
 		return userPhotos.size();
+	}
+	
+	/**
+	 * Edits the album.
+	 *
+	 * @param a the a
+	 */
+	public void editAlbum(Album a)
+	{
+		for(int i = 0; i < albums.size(); i++)
+		{
+			if(a.getName().equals(albums.get(i).getName()))
+			{
+				albums.set(i, a);
+			}
+		}
+	}
+	
+	/**
+	 * Gets the album names.
+	 * @return 
+	 *
+	 * @return the album names
+	 */
+	public ArrayList<String> getAlbumNames()
+	{
+		ArrayList<String> s = new ArrayList<>();
+		for(Album a : albums)
+			s.add(a.getName());
+		return s;
 	}
 }

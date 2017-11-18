@@ -107,9 +107,13 @@ public class UserDatabase
 	 */
 	public static void addUser(String name) 
 	{
-		Predicate<User> predicate = c-> c.getUserName().equals(name);
-		User user = users.stream().filter(predicate).findFirst().get();
-		if(user == null)
+		boolean exists = false;
+		for(User u : users)
+		{
+			if(u.getUserName().equalsIgnoreCase(name))
+				exists = true;
+		}
+		if(!exists)
 			users.add(new User(name));
 		else
 		{

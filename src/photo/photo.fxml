@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -36,7 +37,6 @@
                   <Button fx:id="logout" layoutX="169.0" layoutY="551.0" mnemonicParsing="false" onAction="#logOutAct" prefHeight="25.0" prefWidth="87.0" text="Log Out" />
                   <Label layoutX="30.0" layoutY="263.0" text="Date:" />
                   <Label fx:id="date" layoutX="90.0" layoutY="263.0" text="&lt;Date&gt;" />
-                  <Label fx:id="caption" layoutX="27.0" layoutY="186.0" prefHeight="55.0" prefWidth="245.0" text="&lt;caption&gt;&#10;&lt;caption&gt;&#10;&lt;caption&gt;" />
                   <Label layoutX="30.0" layoutY="288.0" text="Tags:" />
                   <Label fx:id="tags" layoutX="91.0" layoutY="288.0" text="&lt;Tags&gt;" />
                   <GridPane layoutX="9.0" layoutY="483.0">
@@ -51,16 +51,17 @@
                     </rowConstraints>
                      <children>
                         <Group GridPane.rowIndex="1" />
-                        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Move" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="25.0" prefWidth="53.0" text="Copy" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Delete" GridPane.rowIndex="1" />
+                        <Button fx:id="move" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#move" text="Move" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Button fx:id="copy" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#copy" prefHeight="25.0" prefWidth="53.0" text="Copy" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                        <Button fx:id="delete" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#delete" text="Delete" GridPane.rowIndex="1" />
                      </children>
                   </GridPane>
                   <Button fx:id="addTag" layoutX="25.0" layoutY="377.0" mnemonicParsing="false" text="Add tag(s)" />
                   <Button fx:id="removeTag" layoutX="113.0" layoutY="377.0" mnemonicParsing="false" text="Remove tag(s)" />
-                  <Button fx:id="editCaption" layoutX="216.0" layoutY="377.0" mnemonicParsing="false" text="Edit Caption" />
+                  <Button fx:id="editCapt" layoutX="216.0" layoutY="377.0" mnemonicParsing="false" onAction="#editCaption" text="Edit Caption" />
                   <Button fx:id="prev" layoutX="2.0" layoutY="70.0" mnemonicParsing="false" onAction="#prevPhoto" text="&lt;" />
                   <Button fx:id="next" layoutX="285.0" layoutY="70.0" mnemonicParsing="false" onAction="#nextPhoto" text="&gt;" />
+                  <TextArea fx:id="caption" layoutX="24.0" layoutY="169.0" prefHeight="83.0" prefWidth="255.0" />
                </children>
             </AnchorPane>
         </items>
