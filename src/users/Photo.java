@@ -8,6 +8,9 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class Photo.
@@ -51,7 +54,16 @@ public class Photo implements Serializable
 	 */
 	public void addTag(String key, String value) 
 	{
-		tags.put(key, value);
+		if(!tags.containsKey(key))
+			tags.put(key, value);
+		else
+		{
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Error!");
+			alert.setContentText("Sorry, tag already exists");
+
+			alert.showAndWait();
+		}
 	}
 
 	/**
@@ -116,7 +128,7 @@ public class Photo implements Serializable
 		String s = "";
 		for (Entry<String,String> pair : tags.entrySet())
 		{
-			  s += pair.getKey()+": "+pair.getValue();
+			  s += pair.getKey()+": "+pair.getValue() + "\n";
 		}
 		return s;
 	}
