@@ -10,6 +10,7 @@ import java.util.function.Predicate;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import stock.StockUser;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -29,9 +30,20 @@ public class UserDatabase
 		try
         {   
 			//remove stock user
+			
 			Predicate<User> predicate = c-> c.getUserName().equals("stock");
-			User user = users.stream().filter(predicate).findFirst().get();
-			users.remove(user);
+			boolean hasStock = users.stream().filter(predicate).anyMatch(predicate);
+			if(hasStock)
+			{
+				User user = null;
+				for(User u : users)
+				{
+					if(u.getUserName().equals("stock"))
+						user = u;
+				}
+				users.remove(user);
+			}
+				
 			
             //Saving of object in a file
             FileOutputStream file = new FileOutputStream("usernames.ser");
@@ -43,6 +55,7 @@ public class UserDatabase
             out.close();
             file.close();
             
+            StockUser.createStockUser();
             System.out.println("usernames has been serialized");
         }
         catch(Exception e)
