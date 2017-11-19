@@ -2,6 +2,7 @@ package admin;
 
 
 
+import java.io.IOException;
 import java.util.Optional;
 
 import javafx.collections.FXCollections;
@@ -18,6 +19,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import users.User;
 import users.UserDatabase;
+import utility.buttonUtility;
 
 public class AdminController {
 
@@ -58,9 +60,21 @@ public class AdminController {
 	
 	public void start(Stage MainStage) {
 		
+		UsernameLabel.setText("");
+		NumAlbumsLabel.setText("");
+		
 		observableList = FXCollections.observableArrayList(UserDatabase.getUsernames());
 		UserList.setItems(observableList);
 		
+		UserList.getSelectionModel().select(0);
+		if(observableList.size() > 0)
+		{
+			setInfo(observableList.get(0));
+		}
+
+		
+		UserList.getSelectionModel().selectedIndexProperty().addListener((obs, oldVal, newVal) -> showUserDetails(MainStage));
+
 		
 	}
 	
@@ -68,17 +82,34 @@ public class AdminController {
 		
 		String user = UserList.getSelectionModel().getSelectedItem();
 		setInfo(user);
+		
 	}
 	
 	private void setInfo(String user) {
+		
+			UsernameLabel.setText(user);
 	   
 	}
 	
 	public void addUser(ActionEvent e) {
 		
 		String username = CreateUserInput.getText();
-		UserDatabase.addUser(username);
-		CreateUserInput.setText("");
+		
+		if(username.isEmpty()) {
+			System.out.println("Username is blank");
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("User name is invalid");
+			alert.setHeaderText("User name is blank. Please enter a valid username!");
+			alert.show();
+		}
+		else
+		{
+			System.out.println("New user name added: "+username);
+			UserDatabase.addUser(username);
+			UserDatabase.saveUsernames();
+			CreateUserInput.setText("");
+			observableList.add(username);
+		}
 		//Add a user in User/UserDatabase
 		
 	}
@@ -92,18 +123,29 @@ public class AdminController {
 		Optional<ButtonType> result = alert.showAndWait();
 		
 		if(result.get() == ButtonType.OK) {
-			
-		}else {
+			String username = UsernameLabel.getText();
+			int index = UserList.getSelectionModel().getSelectedIndex();
+			UserDatabase.deleteUsername(username);
+			observableList.remove(index);
 			
 		}
 		
 	}
 	
-	public void adminLogOut(ActionEvent e) {
+	public void clear(ActionEvent e) {
+		CreateUserInput.setText("");
+	}
+	
+	public void adminLogOut(ActionEvent e) throws IOException {
+		Stage stage = (Stage) LogOutButton.getScene().getWindow();
+		buttonUtility.logOut(stage);
 		
 	}
 	
-	public void adminQuit(ActionEvent e) {
+	public void adminQuit(ActionEvent e) throws IOException {
+		
+		Stage stage = (Stage) QuitButton.getScene().getWindow();
+		buttonUtility.quit(stage);
 		
 	}
 	

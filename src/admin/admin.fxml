@@ -15,6 +15,7 @@
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
                   <ListView id="UserList" fx:id="UserList" layoutY="60.0" prefHeight="421.0" prefWidth="291.0" />
+                  <Label layoutX="20.0" layoutY="37.0" text="Users.." />
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="476.0" prefWidth="310.0">
@@ -32,7 +33,7 @@
                               <Label fx:id="UsernameLabel" layoutX="122.0" layoutY="72.0" text="&lt;Username&gt;" />
                               <Label layoutX="43.0" layoutY="101.0" text="# of Albums:" />
                               <Label fx:id="NumAlbumsLabel" layoutX="128.0" layoutY="101.0" text="&lt;NumOfAlbums&gt;" />
-                              <Button id="deleteButton" fx:id="deleteButton" layoutX="110.0" layoutY="166.0" mnemonicParsing="false" text="Delete" />
+                              <Button id="deleteButton" fx:id="deleteButton" layoutX="110.0" layoutY="166.0" mnemonicParsing="false" onAction="#deleteSelectedUser" text="Delete" />
                            </children>
                         </AnchorPane>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
@@ -44,8 +45,8 @@
                               </Label>
                               <Label layoutX="36.0" layoutY="64.0" text="Username:" />
                               <TextField fx:id="CreateUserInput" layoutX="113.0" layoutY="59.0" prefHeight="17.0" prefWidth="111.0" />
-                              <Button fx:id="AddButton" layoutX="210.0" layoutY="104.0" mnemonicParsing="false" text="Add.." onAction="#addUser" />
-                              <Button fx:id="ClearButton" layoutX="139.0" layoutY="104.0" mnemonicParsing="false" text="Clear" />
+                              <Button fx:id="AddButton" layoutX="210.0" layoutY="104.0" mnemonicParsing="false" onAction="#addUser" text="Add.." />
+                              <Button fx:id="ClearButton" layoutX="139.0" layoutY="104.0" mnemonicParsing="false" onAction="#clear" text="Clear" />
                            </children>
                         </AnchorPane>
                     </items>
@@ -54,8 +55,8 @@
             </AnchorPane>
         </items>
       </SplitPane>
-      <Button fx:id="LogOutButton" layoutX="514.0" layoutY="488.0" mnemonicParsing="false" text="Log Out" />
-      <Button fx:id="QuitButton" layoutX="438.0" layoutY="488.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="55.0" text="Quit" />
+      <Button fx:id="LogOutButton" layoutX="514.0" layoutY="488.0" mnemonicParsing="false" onAction="#adminLogOut" text="Log Out" />
+      <Button fx:id="QuitButton" layoutX="438.0" layoutY="488.0" mnemonicParsing="false" onAction="#adminQuit" prefHeight="27.0" prefWidth="55.0" text="Quit" />
       <Label layoutX="39.0" layoutY="489.0" prefHeight="27.0" prefWidth="72.0" text="Admin">
          <font>
             <Font size="24.0" />

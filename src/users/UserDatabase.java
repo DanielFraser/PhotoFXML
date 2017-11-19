@@ -161,7 +161,7 @@ public class UserDatabase
 		return usernames;
 	}
 	
-	public void deleteUsername(String name)
+	public static void deleteUsername(String name)
 	{
 		Predicate<User> predicate = c-> c.getUserName().equals(name);
 		User user = users.stream().filter(predicate).findFirst().get();
