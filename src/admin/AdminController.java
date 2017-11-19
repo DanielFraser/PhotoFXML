@@ -102,17 +102,17 @@ public class AdminController {
 			alert.setHeaderText("User name is blank. Please enter a valid username!");
 			alert.show();
 		}
-		else if(UserDatabase.addUser(username) == false){
-			CreateUserInput.setText("");
-		} 
-		else
-		{
-			System.out.println("New user name added: "+username);
-			UserDatabase.addUser(username);
-			UserDatabase.saveUsernames();
+		else if(UserDatabase.addUser(username)){
 			CreateUserInput.setText("");
 			observableList.add(username);
-		}
+		} 
+//		else
+//		{
+////			UserDatabase.addUser(username);
+//			UserDatabase.saveUsernames();
+//			CreateUserInput.setText("");
+//			observableList.add(username);
+//		}
 		//Add a user in User/UserDatabase
 		
 	}
