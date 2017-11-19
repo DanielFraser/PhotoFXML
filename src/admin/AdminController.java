@@ -101,20 +101,23 @@ public class AdminController {
 			alert.setTitle("User name is invalid");
 			alert.setHeaderText("User name is blank. Please enter a valid username!");
 			alert.show();
+		} else if(username.contains(" ")) {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("User name is invalid");
+			alert.setHeaderText("Cannot create username that contains whitespace. Please enter a valid username!");
+			alert.show();
+		}
+		else if(username.equals("admin")) {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("User name is invalid");
+			alert.setHeaderText("Cannot create username of type admin. Please enter a valid username!");
+			alert.show();
 		}
 		else if(UserDatabase.addUser(username)){
 			CreateUserInput.setText("");
 			observableList.add(username);
 		} 
-//		else
-//		{
-////			UserDatabase.addUser(username);
-//			UserDatabase.saveUsernames();
-//			CreateUserInput.setText("");
-//			observableList.add(username);
-//		}
-		//Add a user in User/UserDatabase
-		
+
 	}
 	
 	public void deleteSelectedUser(ActionEvent e) {

@@ -11,9 +11,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Control;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import nonadmin.AlbumController;
 import users.UserDatabase;
@@ -53,7 +55,12 @@ public class LoginController {
 			stage.show();
  		}
 		else if(!UserDatabase.findUserB(username)) {
-				System.out.println("User Does not Exist");
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("User does not exist");
+			alert.setHeaderText("User does not appear to be in our system, contact admin to create a user for you!");
+			alert.show();
+			userNameInput.setText("");
+				
 		} else {
  			
 			FXMLLoader loader = new FXMLLoader();
