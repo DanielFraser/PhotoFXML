@@ -102,6 +102,9 @@ public class AdminController {
 			alert.setHeaderText("User name is blank. Please enter a valid username!");
 			alert.show();
 		}
+		else if(UserDatabase.addUser(username) == false){
+			CreateUserInput.setText("");
+		} 
 		else
 		{
 			System.out.println("New user name added: "+username);
