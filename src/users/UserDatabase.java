@@ -105,7 +105,7 @@ public class UserDatabase
 	 *
 	 * @param name the name
 	 */
-	public static void addUser(String name) 
+	public static boolean addUser(String name) 
 	{
 		boolean exists = false;
 		for(User u : users)
@@ -122,6 +122,7 @@ public class UserDatabase
 			alert.setHeaderText("Username already exists");
 			alert.showAndWait();
 		}
+		return !exists;
 	}
 	
 	/**
