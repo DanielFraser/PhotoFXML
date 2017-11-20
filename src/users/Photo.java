@@ -6,10 +6,10 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map.Entry;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.util.Pair;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -38,12 +38,25 @@ public class Photo implements Serializable
 	 *
 	 * @param initLocation the init location
 	 * @param date the date
+	 * @param userID the user ID
 	 */
 	public Photo(String initLocation, LocalDateTime date, int userID) 
 	{
 		id = userID;
 		location = initLocation;
 		dateCreated = date;
+	}
+	
+	/**
+	 * Checks for tag.
+	 *
+	 * @param key the key
+	 * @param value the value
+	 * @return true, if successful
+	 */
+	public boolean hasTag(String key)
+	{
+		return !tags.containsKey(key);
 	}
 	
 	/**

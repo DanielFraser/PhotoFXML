@@ -1,15 +1,18 @@
 package users;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.function.Predicate;
 
+import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
+
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import jdk.nashorn.internal.runtime.FindProperty;
 import javafx.scene.control.ButtonType;
+import javafx.util.Pair;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -157,7 +160,6 @@ public class User implements Serializable
 			Photo p = new Photo(s, ld, id);
 			id++;
 			userPhotos.add(p);
-			System.out.println(p.getId() + " " + s + " " + p.getLocation());
 			return p.getId();
 		}
 		return getPhoto(s);
@@ -288,7 +290,6 @@ public class User implements Serializable
 	
 	/**
 	 * Gets the album names.
-	 * @return 
 	 *
 	 * @return the album names
 	 */
@@ -298,5 +299,47 @@ public class User implements Serializable
 		for(Album a : albums)
 			s.add(a.getName());
 		return s;
+	}
+	
+	/**
+	 * Search.
+	 *
+	 * @param start the start
+	 * @param end the end
+	 * @return the array list
+	 */
+	public ArrayList<Photo> search(LocalDate start, LocalDate end)
+	{
+		ArrayList<Photo> match = new ArrayList<>();
+		for(Photo p : userPhotos)
+		{
+			if(!p.getDate().toLocalDate().isBefore(start) && !p.getDate().toLocalDate().isAfter(end))
+			{
+				match.add(p);
+			}
+		}
+		return match;
+	}
+	
+	/**
+	 * Search.
+	 *
+	 * @param tag the tag
+	 * @return the array list
+	 */
+	public ArrayList<Photo> search(Pair<String, String>... tag)
+	{
+		ArrayList<Photo> match = new ArrayList<>();
+		boolean hasAll = true;
+		for(Photo p : userPhotos)
+		{
+			for(Pair<String, String> t : tag)
+			{
+				hasAll = hasAll && p.hasTag(t.getKey());
+			}
+			if(hasAll)
+				match.add(p);
+		}
+		return match;
 	}
 }
