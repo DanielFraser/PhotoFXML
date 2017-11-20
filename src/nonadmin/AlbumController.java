@@ -26,6 +26,7 @@ import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import photo.PhotoController;
+import search.SearchController;
 import users.Album;
 import users.User;
 import users.UserDatabase;
@@ -343,5 +344,20 @@ public class AlbumController
 				tilePane.getChildren().add(bt2);  
 			}
 		}
+	}
+	
+	@FXML
+	private void search(ActionEvent e) throws IOException
+	{
+		Stage stage = (Stage) quit.getScene().getWindow();
+		FXMLLoader loader = new FXMLLoader();
+		loader.setLocation(getClass().getResource("/search/search.fxml"));
+		Parent root = loader.load();
+
+		SearchController controller = loader.getController();
+		controller.start(stage, currentUser);
+
+		stage.setScene(new Scene(root));
+		stage.show();
 	}
 }

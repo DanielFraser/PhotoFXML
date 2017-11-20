@@ -2,9 +2,11 @@
 
 <?import javafx.scene.Group?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -12,42 +14,48 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane minHeight="600.0" minWidth="600.0" prefHeight="600.0" prefWidth="643.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="search.SearchController">
+<AnchorPane minHeight="600.0" minWidth="1000.0" prefHeight="600.0" prefWidth="643.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="search.SearchController">
    <children>
       <SplitPane dividerPositions="0.5" prefHeight="600.0" prefWidth="594.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="350.0">
                <children>
                   <Label fx:id="username" layoutX="14.0" layoutY="567.0" text="&lt;username&gt;" />
-                  <ScrollPane fx:id="albumDisplayPane" layoutX="7.0" layoutY="158.0" prefHeight="391.0" prefWidth="305.0" />
+                  <ScrollPane fx:id="searchDisplayPane" layoutX="7.0" layoutY="158.0" prefHeight="391.0" prefWidth="466.0" />
                   <Label fx:id="albumName" layoutX="14.0" layoutY="14.0" text="&lt;album name&gt;" />
-                  <Button fx:id="home" layoutX="237.0" layoutY="19.0" mnemonicParsing="false" text="Home" />
-                  <Button fx:id="addPhoto" layoutX="225.0" layoutY="78.0" mnemonicParsing="false" text="Turn results &#10;into album" />
+                  <Button fx:id="home" layoutX="387.0" layoutY="23.0" mnemonicParsing="false" text="Home" />
+                  <Button fx:id="addPhoto" layoutX="387.0" layoutY="62.0" mnemonicParsing="false" text="Turn results &#10;into album" />
+                  <DatePicker fx:id="dpF" layoutX="14.0" layoutY="107.0" prefHeight="26.0" prefWidth="81.0" />
+                  <DatePicker fx:id="dpT" layoutX="118.0" layoutY="107.0" prefHeight="26.0" prefWidth="81.0" />
+                  <Label layoutX="14.0" layoutY="133.0" text="From" />
+                  <Label layoutX="145.0" layoutY="133.0" text="To" />
+                  <Button fx:id="search" layoutX="386.0" layoutY="125.0" mnemonicParsing="false" onAction="#search" prefHeight="26.0" prefWidth="81.0" text="Search" />
+                  <TextField fx:id="tags" layoutX="217.0" layoutY="108.0" />
                </children>
             </AnchorPane>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="598.0" prefWidth="305.0" SplitPane.resizableWithParent="false">
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="598.0" prefWidth="457.0" SplitPane.resizableWithParent="false">
                <children>
-                  <ImageView fx:id="albumDisplay" fitHeight="155.0" fitWidth="259.0" layoutX="29.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="photoDisplay" fitHeight="155.0" fitWidth="369.0" layoutX="53.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../../../../../Pictures/ACBF_THEME/ac4_Wallpaper2_1280x720.jpg" />
                      </image>
                   </ImageView>
                   <Button fx:id="quit" layoutX="37.0" layoutY="551.0" mnemonicParsing="false" onAction="#quitAct" prefHeight="25.0" prefWidth="87.0" text="Quit" />
-                  <Button fx:id="logout" layoutX="169.0" layoutY="551.0" mnemonicParsing="false" onAction="#logOutAct" prefHeight="25.0" prefWidth="87.0" text="Log Out" />
+                  <Button fx:id="logout" layoutX="348.0" layoutY="551.0" mnemonicParsing="false" onAction="#logOutAct" prefHeight="25.0" prefWidth="87.0" text="Log Out" />
                   <Label layoutX="30.0" layoutY="263.0" text="Date:" />
                   <Label fx:id="numPhotos" layoutX="90.0" layoutY="263.0" text="&lt;Date&gt;" />
-                  <Label fx:id="albumName" layoutX="27.0" layoutY="186.0" prefHeight="55.0" prefWidth="245.0" text="&lt;caption&gt;&#10;&lt;caption&gt;&#10;&lt;caption&gt;" />
+                  <Label fx:id="albumName" layoutX="27.0" layoutY="186.0" prefHeight="55.0" prefWidth="446.0" text="&lt;caption&gt;&#10;&lt;caption&gt;&#10;&lt;caption&gt;" />
                   <Label layoutX="30.0" layoutY="288.0" text="Tags:" />
                   <Label fx:id="dateCreated" layoutX="91.0" layoutY="288.0" text="&lt;Tags&gt;" />
-                  <GridPane layoutX="9.0" layoutY="483.0">
+                  <GridPane layoutX="9.0" layoutY="483.0" prefHeight="30.0" prefWidth="465.0">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                     </columnConstraints>
                     <rowConstraints>
-                      <RowConstraints />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="0.0" minHeight="0.0" prefHeight="0.0" />
+                        <RowConstraints maxHeight="30.4" minHeight="10.0" prefHeight="30.4" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
                         <Group GridPane.rowIndex="1" />
@@ -56,11 +64,11 @@
                         <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Delete" GridPane.rowIndex="1" />
                      </children>
                   </GridPane>
-                  <Button layoutX="25.0" layoutY="377.0" mnemonicParsing="false" text="Add tag(s)" />
-                  <Button layoutX="113.0" layoutY="377.0" mnemonicParsing="false" text="Remove tag(s)" />
-                  <Button layoutX="216.0" layoutY="377.0" mnemonicParsing="false" text="Edit Caption" />
-                  <Button fx:id="prev" layoutX="2.0" layoutY="73.0" mnemonicParsing="false" text="&lt;" />
-                  <Button fx:id="next" layoutX="291.0" layoutY="73.0" mnemonicParsing="false" text="&gt;" />
+                  <Button layoutX="120.0" layoutY="375.0" mnemonicParsing="false" text="Add tag(s)" />
+                  <Button layoutX="208.0" layoutY="375.0" mnemonicParsing="false" text="Remove tag(s)" />
+                  <Button layoutX="311.0" layoutY="375.0" mnemonicParsing="false" text="Edit Caption" />
+                  <Button fx:id="prev" layoutX="17.0" layoutY="66.0" mnemonicParsing="false" text="&lt;" />
+                  <Button fx:id="next" layoutX="433.0" layoutY="73.0" mnemonicParsing="false" text="&gt;" />
                </children>
             </AnchorPane>
         </items>

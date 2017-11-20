@@ -196,4 +196,16 @@ public class Photo implements Serializable
 		return tags;
 	}
 	
+	@Override
+	public boolean equals(Object obj) {
+		if(obj == null || !(obj instanceof Photo))
+		{
+			return false;
+		}
+		else
+		{
+			Photo p = (Photo) obj;
+			return p.getLocation().equals(this.location);
+		}
+	}
 }

@@ -218,7 +218,7 @@ public class PhotoController
 
 
 	/**
-	 * in debugging mode.
+	 * calls the quit function in button utility
 	 *
 	 * @param e the e
 	 * @throws IOException Signals that an I/O exception has occurred.
