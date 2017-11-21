@@ -85,6 +85,10 @@ public class AlbumController
 	@FXML
 	private Button edit;
 
+	/** The edit. */
+	@FXML
+	private Button search;
+	
 	/** The open. */
 	@FXML
 	private Button open;
@@ -346,6 +350,12 @@ public class AlbumController
 		}
 	}
 	
+	/**
+	 * Search.
+	 *
+	 * @param e the e
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	@FXML
 	private void search(ActionEvent e) throws IOException
 	{

@@ -56,7 +56,23 @@ public class Photo implements Serializable
 	 */
 	public boolean hasTag(String key)
 	{
-		return !tags.containsKey(key);
+		return tags.containsKey(key);
+	}
+	
+	/**
+	 * Checks for tag.
+	 *
+	 * @param key the key
+	 * @param value the value
+	 * @return true, if successful
+	 */
+	public boolean hasTag(String key, String value)
+	{
+		if(key.equals("*"))
+			return tags.containsValue(value);
+		if(hasTag(key))
+			return tags.get(key).equalsIgnoreCase(value);
+		return false;
 	}
 	
 	/**

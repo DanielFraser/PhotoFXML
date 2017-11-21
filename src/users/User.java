@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import java.util.Optional;
 import java.util.function.Predicate;
 
-import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
-
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
@@ -327,15 +325,21 @@ public class User implements Serializable
 	 * @param tag the tag
 	 * @return the array list
 	 */
-	public ArrayList<Photo> search(Pair<String, String>... tag)
+	public ArrayList<Photo> search(ArrayList<Pair<String, String>> tag)
 	{
 		ArrayList<Photo> match = new ArrayList<>();
 		boolean hasAll = true;
 		for(Photo p : userPhotos)
 		{
+			hasAll = true;
 			for(Pair<String, String> t : tag)
 			{
-				hasAll = hasAll && p.hasTag(t.getKey());
+				if(t.getKey().equals("*") && !t.getValue().equals("*"))
+					hasAll = hasAll && p.hasTag(t.getKey(), t.getValue());
+				else if(!t.getKey().equals("*") && t.getValue().equals("*"))
+					hasAll = hasAll && p.hasTag(t.getKey());
+				else
+					hasAll = hasAll && p.hasTag(t.getKey(), t.getValue());
 			}
 			if(hasAll)
 				match.add(p);

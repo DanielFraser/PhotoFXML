@@ -3,19 +3,27 @@ package search;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.StringTokenizer;
 import java.util.stream.Collectors;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -25,6 +33,7 @@ import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Pair;
+import nonadmin.AlbumController;
 import users.Album;
 import users.Photo;
 import users.User;
@@ -84,14 +93,20 @@ public class SearchController
 	/** The tile pane. */
 	private TilePane tilePane;
 	
+	/** The dp T. */
 	@FXML
 	private DatePicker dpT;
 	
+	/** The dp F. */
 	@FXML
 	private DatePicker dpF;
 	
+	/** The tags. */
 	@FXML
 	private TextField tags;
+	
+	/** The photos. */
+	private ArrayList<Integer> newAlbum = new ArrayList<>();
 	
 	/**
 	 * Start.
@@ -127,6 +142,8 @@ public class SearchController
 
 	/**
 	 * Fill scroll pane.
+	 *
+	 * @param photos the photos
 	 */
 	private void fillScrollPane(ArrayList<Photo> photos)
 	{
@@ -142,6 +159,7 @@ public class SearchController
 			bt2.addEventHandler(MouseEvent.MOUSE_CLICKED, new clickPhoto());
 			bt2.setWrapText(true);
 			tilePane.getChildren().add(bt2);
+			newAlbum.add(p.getId());
 		}
 
 		searchDisplayPane.setFitToWidth(true); //prevent horizontal scrolling
@@ -190,6 +208,11 @@ public class SearchController
 
 	}
 	
+	/**
+	 * Search.
+	 *
+	 * @param e the e
+	 */
 	@FXML
 	private void search(ActionEvent e)
 	{
@@ -205,13 +228,75 @@ public class SearchController
 			while(st.hasMoreTokens())
 			{
 				st2 = new StringTokenizer(st.nextToken(), ":");
-				photos.add(new Pair<String, String>(st2.nextToken(), st2.nextToken()));
+				String s1 = st2.nextToken().trim(), s2 = st2.nextToken().trim();
+				if(!(s1.equals("*") && s2.equals("*")))
+					photos.add(new Pair<String, String>(s1, s2));
 			}
-			fillScrollPane(curUser.search((Pair<String, String>[]) photos.toArray()));
+			fillScrollPane(curUser.search(photos));
 		}
 		else
 		{
+			fillScrollPane(new ArrayList<>());
 			System.out.println("Error!");
 		}
+	}
+	
+	/**
+	 * Home.
+	 *
+	 * @param e the e
+	 */
+	@FXML
+	private void home(ActionEvent e)
+	{
+		System.out.println("home");
+		Stage stage = (Stage) quit.getScene().getWindow();
+		FXMLLoader loader = new FXMLLoader();
+		loader.setLocation(getClass().getResource("/nonadmin/album.fxml"));
+		Parent root = null;
+		try {
+			root = loader.load();
+		} catch (IOException ex) {
+			// TODO Auto-generated catch block
+			ex.printStackTrace();
+		}
+
+		AlbumController controller = loader.getController();
+		controller.start(stage, curUser.getUserName());
+
+		stage.setScene(new Scene(root));
+		stage.show();
+	}
+	
+	/**
+	 * To album.
+	 *
+	 * @param e the e
+	 */
+	@FXML
+	private void toAlbum(ActionEvent e)
+	{
+		TextInputDialog dialog = new TextInputDialog("");
+		dialog.setTitle("New album name");
+		dialog.setContentText("Enter name for album:");
+		Optional<String> result = dialog.showAndWait();
+
+		if (result.isPresent())
+		{
+			boolean b = curUser.sameName(result.get());
+			if(!b)
+			{
+				curUser.addAlbum(new Album(result.get(), newAlbum));
+			}
+			else
+			{
+				Alert alert = new Alert(AlertType.ERROR);
+				alert.setTitle("Error Dialog");
+				alert.setContentText("Album name is already in use, please select a different name!");
+				
+				alert.showAndWait();
+			}
+		}
+		
 	}
 }
