@@ -309,7 +309,6 @@ public class PhotoController
 	private void addPhoto(ActionEvent e) throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException
 	{
 		//UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-<<<<<<< HEAD
 		//FileNameExtensionFilter filter = new FileNameExtensionFilter("Image Files", "jpg", "png", "gif", "jpeg");
 		FileChooser fc = new FileChooser();
 		fc.setTitle("Select image files");
@@ -318,17 +317,9 @@ public class PhotoController
 		File file = fc.showOpenDialog(null);
 		//int selection = fc.showOpenDialog(fc);
 
+		
+		
 		if (file != null) 
-=======
-		FileNameExtensionFilter filter = new FileNameExtensionFilter("Image Files", "jpg", "png", "gif", "jpeg");
-		JFileChooser fc = new JFileChooser();
-		fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-		fc.setFileFilter(filter);
-		fc.setAcceptAllFileFilterUsed(false);
-		int selection = fc.showOpenDialog(fc);
-
-		if (selection == JFileChooser.APPROVE_OPTION) 
->>>>>>> 79f3c014d6342731b7f12083572805ad52c8f811
 		{
 			photoDisplay.setImage(new Image(file.toURI().toString()));
 			int id = curUser.addPhoto(file.toURI().toString(),  LocalDateTime.ofInstant(Instant.ofEpochMilli(file.lastModified()), ZoneId.systemDefault()));
