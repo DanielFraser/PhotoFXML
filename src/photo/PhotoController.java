@@ -13,7 +13,6 @@ import java.util.Optional;
 import javax.swing.JFileChooser;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.filechooser.FileNameExtensionFilter;
 
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
@@ -53,6 +52,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.util.Pair;
@@ -308,6 +309,17 @@ public class PhotoController
 	private void addPhoto(ActionEvent e) throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException
 	{
 		//UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+<<<<<<< HEAD
+		//FileNameExtensionFilter filter = new FileNameExtensionFilter("Image Files", "jpg", "png", "gif", "jpeg");
+		FileChooser fc = new FileChooser();
+		fc.setTitle("Select image files");
+		fc.getExtensionFilters().addAll( new ExtensionFilter("Image Files", "*.jpg", "*.png", "*.gif", "*.jpeg"));
+
+		File file = fc.showOpenDialog(null);
+		//int selection = fc.showOpenDialog(fc);
+
+		if (file != null) 
+=======
 		FileNameExtensionFilter filter = new FileNameExtensionFilter("Image Files", "jpg", "png", "gif", "jpeg");
 		JFileChooser fc = new JFileChooser();
 		fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
@@ -316,8 +328,8 @@ public class PhotoController
 		int selection = fc.showOpenDialog(fc);
 
 		if (selection == JFileChooser.APPROVE_OPTION) 
+>>>>>>> 79f3c014d6342731b7f12083572805ad52c8f811
 		{
-			File file = fc.getSelectedFile();
 			photoDisplay.setImage(new Image(file.toURI().toString()));
 			int id = curUser.addPhoto(file.toURI().toString(),  LocalDateTime.ofInstant(Instant.ofEpochMilli(file.lastModified()), ZoneId.systemDefault()));
 
