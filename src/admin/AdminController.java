@@ -3,6 +3,8 @@ package admin;
 
 
 import java.io.IOException;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Optional;
 
 import javafx.collections.FXCollections;
@@ -64,6 +66,9 @@ public class AdminController {
 		NumAlbumsLabel.setText("");
 		
 		observableList = FXCollections.observableArrayList(UserDatabase.getUsernames());
+		
+		Collections.sort(observableList, String.CASE_INSENSITIVE_ORDER);
+		
 		UserList.setItems(observableList);
 		
 		UserList.getSelectionModel().select(0);
@@ -88,6 +93,14 @@ public class AdminController {
 	private void setInfo(String user) {
 		
 			UsernameLabel.setText(user);
+			int numberOfAlbums;
+			if(UserDatabase.findUser(user) == null) {
+				numberOfAlbums = 0;
+			}
+			else
+				 numberOfAlbums = UserDatabase.findUser(user).getAlbums().size();
+			
+			NumAlbumsLabel.setText(String.valueOf(numberOfAlbums));
 	   
 	}
 	
@@ -107,7 +120,7 @@ public class AdminController {
 			alert.setHeaderText("Cannot create username that contains whitespace. Please enter a valid username!");
 			alert.show();
 		}
-		else if(username.equals("admin")) {
+		else if(username.equalsIgnoreCase("admin")) {
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("User name is invalid");
 			alert.setHeaderText("Cannot create username of type admin. Please enter a valid username!");
@@ -116,6 +129,7 @@ public class AdminController {
 		else if(UserDatabase.addUser(username)){
 			CreateUserInput.setText("");
 			observableList.add(username);
+			Collections.sort(observableList, String.CASE_INSENSITIVE_ORDER);
 		} 
 
 	}

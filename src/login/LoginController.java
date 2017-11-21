@@ -6,6 +6,7 @@ import java.io.IOException;
 import admin.AdminController;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -16,6 +17,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Control;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import nonadmin.AlbumController;
 import users.UserDatabase;
@@ -33,7 +36,13 @@ public class LoginController {
 	private Button QuitButton;
 	
 	public void start(Stage mainStage) {
-		
+		userNameInput.setOnKeyPressed(new EventHandler<KeyEvent>() {  
+			public void handle(KeyEvent key) {
+				if (key.getCode() == KeyCode.ENTER) {
+					LoginButton.fire();
+				}
+			}
+		});
 	}
 	
 	public void login(ActionEvent E) throws IOException  {
