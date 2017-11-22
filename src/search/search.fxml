@@ -69,7 +69,8 @@
                   <Button fx:id="editCapt" layoutX="311.0" layoutY="375.0" mnemonicParsing="false" text="Edit Caption" />
                   <Button fx:id="prev" layoutX="17.0" layoutY="66.0" mnemonicParsing="false" onAction="#prevPhoto" text="&lt;" />
                   <Button fx:id="next" layoutX="433.0" layoutY="73.0" mnemonicParsing="false" onAction="#nextPhoto" text="&gt;" />
-                  <TextArea fx:id="caption" layoutX="11.0" layoutY="182.0" prefHeight="67.0" prefWidth="465.0" />
+                  <TextArea fx:id="caption" layoutX="11.0" layoutY="182.0" prefHeight="67.0" prefWidth="465.0" visible="false" />
+                  <Label fx:id="lblCaption" layoutX="8.0" layoutY="181.0" prefHeight="67.0" prefWidth="465.0" />
                </children>
             </AnchorPane>
         </items>

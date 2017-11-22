@@ -145,6 +145,9 @@ public class SearchController
 	/** The old text. */
 	private String oldText;
 	
+	/** The lbl caption. */
+	@FXML
+	private Label lblCaption;
 	/**
 	 * Start.
 	 *
@@ -156,6 +159,20 @@ public class SearchController
 		createTilePane();
 		//fillScrollPane();
 		username.setText(currentUser.getUserName());
+		caption.setOnKeyPressed(new EventHandler<KeyEvent>() {  
+			public void handle(KeyEvent key) {
+				if (key.getCode() == KeyCode.ESCAPE) {
+					caption.setEditable(false);
+					editCap = true;
+					lblCaption.setText(oldText);
+					editCapt.setVisible(false);
+					lblCaption.setVisible(true);
+					editCapt.setText("Edit Caption");
+					fillScrollPane(curUser.getPhoto(newAlbum));
+					setInfo(curUser.getPhoto(id));
+				}
+			}
+		});
 	}
 	
 	/**
@@ -494,16 +511,22 @@ public class SearchController
 		if(editCap)
 		{
 			caption.setEditable(true);
-			editCap  = !editCap;
+			editCap = !editCap;
 			editCapt.setText("Save caption");
-			oldText = caption.getText();
+			oldText = lblCaption.getText();
+			caption.setVisible(true);
+			lblCaption.setVisible(false);
 		}
 		else
 		{
+			caption.setVisible(false);
+			lblCaption.setVisible(true);
 			curUser.getPhoto(id).addCaption(caption.getText());
 			editCap = !editCap;
+			lblCaption.setText(caption.getText());
 			editCapt.setText("Edit Caption");
 			fillScrollPane(curUser.getPhoto(newAlbum));
+			setInfo(curUser.getPhoto(id));
 		}
 	}
 	
