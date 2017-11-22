@@ -47,7 +47,8 @@ public class LoginController {
 	/**
 	 * Start.
 	 *
-	 * @param mainStage start called in main, since its the initial screen in the program, also contains key event for ENTER
+	 * @param the main stage 
+	 * start called in main, since its the initial screen in the program, also contains key event for ENTER
 	 */
 	public void start(Stage mainStage) {
 		userNameInput.setOnKeyPressed(new EventHandler<KeyEvent>() {  
@@ -60,7 +61,7 @@ public class LoginController {
 	}
 	
 	/**
-	 * Login.
+	 * Login action 
 	 *
 	 * @param E the e
 	 * @throws IOException logins into application, checks the value to determine the path (admin vs non-admin)
@@ -108,7 +109,7 @@ public class LoginController {
 	}
 	
 	/**
-	 * Quit.
+	 * Quit the application
 	 *
 	 * @param E the e
 	 * @throws IOException quit from login, using quitButton

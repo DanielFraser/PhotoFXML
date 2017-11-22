@@ -86,9 +86,10 @@ public class AdminController {
 	}
 	
 	/**
-	 * Start.
+	 * Start. initialization method for the admin screen, called in LoginController if usernameInput is admin
 	 *
-	 * @param MainStage initialization method for the admin screen, called in LoginController if usernameInput is admin
+	 * @param the main stage 
+	 * 
 	 */
 	public void start(Stage MainStage) {
 		
@@ -117,7 +118,7 @@ public class AdminController {
 	/**
 	 * Show user details.
 	 *
-	 * @param mainStage  Gets the currently selected user and passes into setInfo()
+	 * @param the main stage 
 	 */
 	private void showUserDetails(Stage mainStage) {
 		
@@ -127,9 +128,9 @@ public class AdminController {
 	}
 	
 	/**
-	 * Sets the info.
+	 * Sets the info. and display it in the right
 	 *
-	 * @param user Take the currently selected user sets the Lables on the right to their respective values
+	 * @param a string that is the User objects username
 	 */
 	private void setInfo(String user) {
 		
@@ -149,7 +150,7 @@ public class AdminController {
 	/**
 	 * Adds the user.
 	 *
-	 * @param e Click event to add a user
+	 * @param e
 	 */
 	public void addUser(ActionEvent e) {
 		
@@ -183,7 +184,7 @@ public class AdminController {
 	/**
 	 * Delete selected user.
 	 *
-	 * @param e Click event for the deleteButton
+	 * @param e
 	 */
 	public void deleteSelectedUser(ActionEvent e) {
 		
@@ -231,18 +232,17 @@ public class AdminController {
 	/**
 	 * Clear.
 	 *
-	 * @param e Simple Clear button to clear up textfield of any input in the text field
+	 * @param e
 	 */
 	public void clear(ActionEvent e) {
 		CreateUserInput.setText("");
 	}
 	
 	/**
-	 * Admin log out.
+	 * Admin log out. back to login screen
 	 *
 	 * @param e the e
-	 * @throws IOException ActionEvent for Logout from the admin back to the login screen, gets current stage
-	 * and runs that stage through our buttonUtility's logOut method
+	 * @throws IOException ActionEvent
 	 */
 	public void adminLogOut(ActionEvent e) throws IOException {
 		Stage stage = (Stage) LogOutButton.getScene().getWindow();
@@ -251,11 +251,10 @@ public class AdminController {
 	}
 	
 	/**
-	 * Admin quit.
+	 * Admin quit. uses ButtonUtility.quit();
 	 *
 	 * @param e the e
-	 * @throws IOException Quit application from the admin the screen, gets current stage and passes it through the
-	 * quit() method located in buttonUtility
+	 * @throws IOException 
 	 */
 	public void adminQuit(ActionEvent e) throws IOException {
 		
