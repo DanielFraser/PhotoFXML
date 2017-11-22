@@ -12,8 +12,10 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
 
-// TODO: Auto-generated Javadoc
 /**
+ * @author Daniel Fraser
+ * @author Peter Laskai
+ * 
  * The Class Album.
  */
 public class Album implements Serializable 

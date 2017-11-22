@@ -2,8 +2,10 @@ package utility;
 
 import javafx.scene.control.Label;
 
-// TODO: Auto-generated Javadoc
 /**
+ * @author Daniel Fraser
+ * @author Peter Laskai
+ * 
  * The Class customLabel.
  */
 public class customLabel extends Label

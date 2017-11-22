@@ -14,8 +14,10 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.util.Pair;
 
-// TODO: Auto-generated Javadoc
 /**
+ * @author Daniel Fraser
+ * @author Peter Laskai
+ * 
  * each user has 0 or more albums
  * each user can will search its own list of albums given a name.
  *

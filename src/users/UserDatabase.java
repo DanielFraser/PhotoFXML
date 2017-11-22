@@ -12,8 +12,10 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import stock.StockUser;
 
-// TODO: Auto-generated Javadoc
 /**
+ * @author Daniel Fraser
+ * @author Peter Laskai
+ * 
  * The Class UserDatabase.
  */
 public class UserDatabase 
@@ -117,6 +119,7 @@ public class UserDatabase
 	 * Adds the users.
 	 *
 	 * @param name the name
+	 * @return true, if successful
 	 */
 	public static boolean addUser(String name) 
 	{
@@ -171,6 +174,11 @@ public class UserDatabase
 		return false;
 	}
 	
+	/**
+	 * Gets the usernames.
+	 *
+	 * @return the usernames
+	 */
 	public static ArrayList<String> getUsernames()
 	{
 		ArrayList<String> usernames = new ArrayList<>();
@@ -179,6 +187,11 @@ public class UserDatabase
 		return usernames;
 	}
 	
+	/**
+	 * Delete username.
+	 *
+	 * @param name the name
+	 */
 	public static void deleteUsername(String name)
 	{
 		Predicate<User> predicate = c-> c.getUserName().equals(name);

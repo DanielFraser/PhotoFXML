@@ -24,20 +24,30 @@ import nonadmin.AlbumController;
 import users.UserDatabase;
 import utility.buttonUtility;
 
+/**
+ * @author Daniel Fraser
+ * @author Peter Laskai
+ * 
+ * The Class LoginController.
+ */
 public class LoginController {
 	
+	/** The user name input. */
 	@FXML 
 	private TextField userNameInput; //input where user enters their user name credentials 
 	
+	/** The Login button. */
 	@FXML
 	private Button LoginButton; //Button to login and progress
 	
+	/** The Quit button. */
 	@FXML
 	private Button QuitButton; //Button to exit program
 	
 	/**
-	 * @param mainStage
-	 * start called in main, since its the initial screen in the program, also contains key event for ENTER
+	 * Start.
+	 *
+	 * @param mainStage start called in main, since its the initial screen in the program, also contains key event for ENTER
 	 */
 	public void start(Stage mainStage) {
 		userNameInput.setOnKeyPressed(new EventHandler<KeyEvent>() {  
@@ -50,9 +60,10 @@ public class LoginController {
 	}
 	
 	/**
-	 * @param E
-	 * @throws IOException
-	 * logins into application, checks the value to determine the path (admin vs non-admin)
+	 * Login.
+	 *
+	 * @param E the e
+	 * @throws IOException logins into application, checks the value to determine the path (admin vs non-admin)
 	 */
 	public void login(ActionEvent E) throws IOException  {
 		
@@ -97,9 +108,10 @@ public class LoginController {
 	}
 	
 	/**
-	 * @param E
-	 * @throws IOException
-	 * quit from login, using quitButton
+	 * Quit.
+	 *
+	 * @param E the e
+	 * @throws IOException quit from login, using quitButton
 	 */
 	public void quit(ActionEvent E) throws IOException {
 		Stage stage = (Stage) QuitButton.getScene().getWindow();

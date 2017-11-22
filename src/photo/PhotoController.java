@@ -67,8 +67,10 @@ import users.User;
 import utility.buttonUtility;
 import utility.customLabel;
 
-// TODO: Auto-generated Javadoc
 /**
+ * @author Daniel Fraser
+ * @author Peter Laskai
+ * 
  * The Class PhotoController.
  */
 public class PhotoController 

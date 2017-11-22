@@ -7,8 +7,10 @@ import users.Photo;
 import users.User;
 import users.UserDatabase;
 
-// TODO: Auto-generated Javadoc
 /**
+ * @author Daniel Fraser
+ * @author Peter Laskai
+ * 
  * The Class StockUser.
  */
 public class StockUser

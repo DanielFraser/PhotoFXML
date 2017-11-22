@@ -20,8 +20,10 @@ import javafx.stage.Stage;
 import nonadmin.AlbumController;
 import utility.buttonUtility;
 
-// TODO: Auto-generated Javadoc
 /**
+ * @author Daniel Fraser
+ * @author Peter Laskai
+ * 
  * The Class drawingController.
  */
 public class drawingController 

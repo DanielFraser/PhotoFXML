@@ -23,49 +23,72 @@ import users.User;
 import users.UserDatabase;
 import utility.buttonUtility;
 
+/**
+ * @author Daniel Fraser
+ * @author Peter Laskai
+ * 
+ * The Class AdminController.
+ */
 public class AdminController {
 	
 	//All necessary FXML 
 
+	/** The Create user input. */
 	@FXML
 	private TextField CreateUserInput;
 	
+	/** The Username label. */
 	@FXML
 	private Label UsernameLabel;
 	
+	/** The Num albums label. */
 	@FXML
 	private Label NumAlbumsLabel;
 	
+	/** The User list. */
 	@FXML
 	private ListView<String> UserList;
 	
+	/** The observable list. */
 	@FXML
 	private ObservableList<String> observableList;
 	
+	/** The Add button. */
 	@FXML
 	private Button AddButton;
 	
+	/** The delete button. */
 	@FXML
 	private Button deleteButton;
+	
+	/** The Clear button. */
 	@FXML
 	private Button ClearButton;
 	
+	/** The Log out button. */
 	@FXML
 	private Button LogOutButton;
 	
+	/** The Quit button. */
 	@FXML
 	private Button QuitButton;
 	
+	/** The admin stage. */
 	public Stage adminStage;
 	
+	/**
+	 * Sets the stage.
+	 *
+	 * @param stage the new stage
+	 */
 	public void setStage(Stage stage) {
 		this.adminStage = stage;
 	}
 	
 	/**
-	 * @param MainStage
-	 * initialization method for the admin screen, called in LoginController if usernameInput is admin
+	 * Start.
 	 *
+	 * @param MainStage initialization method for the admin screen, called in LoginController if usernameInput is admin
 	 */
 	public void start(Stage MainStage) {
 		
@@ -92,8 +115,9 @@ public class AdminController {
 	}
 	
 	/**
-	 * @param mainStage
-	 *  Gets the currently selected user and passes into setInfo()
+	 * Show user details.
+	 *
+	 * @param mainStage  Gets the currently selected user and passes into setInfo()
 	 */
 	private void showUserDetails(Stage mainStage) {
 		
@@ -103,8 +127,9 @@ public class AdminController {
 	}
 	
 	/**
-	 * @param user
-	 * Take the currently selected user sets the Lables on the right to their respective values
+	 * Sets the info.
+	 *
+	 * @param user Take the currently selected user sets the Lables on the right to their respective values
 	 */
 	private void setInfo(String user) {
 		
@@ -122,8 +147,9 @@ public class AdminController {
 	}
 	
 	/**
-	 * @param e
-	 * Click event to add a user
+	 * Adds the user.
+	 *
+	 * @param e Click event to add a user
 	 */
 	public void addUser(ActionEvent e) {
 		
@@ -155,8 +181,9 @@ public class AdminController {
 	}
 	
 	/**
-	 * @param e
-	 * Click event for the deleteButton
+	 * Delete selected user.
+	 *
+	 * @param e Click event for the deleteButton
 	 */
 	public void deleteSelectedUser(ActionEvent e) {
 		
@@ -202,17 +229,19 @@ public class AdminController {
 	
 	
 	/**
-	 * @param e
-	 * Simple Clear button to clear up textfield of any input in the text field
+	 * Clear.
+	 *
+	 * @param e Simple Clear button to clear up textfield of any input in the text field
 	 */
 	public void clear(ActionEvent e) {
 		CreateUserInput.setText("");
 	}
 	
 	/**
-	 * @param e
-	 * @throws IOException
-	 * ActionEvent for Logout from the admin back to the login screen, gets current stage
+	 * Admin log out.
+	 *
+	 * @param e the e
+	 * @throws IOException ActionEvent for Logout from the admin back to the login screen, gets current stage
 	 * and runs that stage through our buttonUtility's logOut method
 	 */
 	public void adminLogOut(ActionEvent e) throws IOException {
@@ -222,10 +251,11 @@ public class AdminController {
 	}
 	
 	/**
-	 * @param e
-	 * @throws IOException
-	 * Quit application from the admin the screen, gets current stage and passes it through the
-	 * quit() method located in buttonUtility 
+	 * Admin quit.
+	 *
+	 * @param e the e
+	 * @throws IOException Quit application from the admin the screen, gets current stage and passes it through the
+	 * quit() method located in buttonUtility
 	 */
 	public void adminQuit(ActionEvent e) throws IOException {
 		

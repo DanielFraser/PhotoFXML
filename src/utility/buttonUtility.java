@@ -8,6 +8,12 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import users.UserDatabase;
 
+/**
+ * @author Daniel Fraser
+ * @author Peter Laskai
+ * 
+ * The Class buttonUtility.
+ */
 public class buttonUtility
 {
 	/*
@@ -15,11 +21,10 @@ public class buttonUtility
 	 */
 	
 	/**
-	 * edit to login screen when done
-	 * 
-	 * @param stage
-	 * @param root
-	 * @throws IOException
+	 * edit to login screen when done.
+	 *
+	 * @param stage the stage
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public static void logOut(Stage stage) throws IOException
 	{
@@ -32,11 +37,10 @@ public class buttonUtility
 	}
 	
 	/**
-	 * saves list of usernames
-	 * 
-	 * @param stage
-	 * @param root
-	 * @throws IOException
+	 * saves list of usernames.
+	 *
+	 * @param stage the stage
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public static void quit(Stage stage) throws IOException
 	{

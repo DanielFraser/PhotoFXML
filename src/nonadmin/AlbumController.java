@@ -34,8 +34,10 @@ import users.User;
 import users.UserDatabase;
 import utility.buttonUtility;
 
-// TODO: Auto-generated Javadoc
 /**
+ * @author Daniel Fraser
+ * @author Peter Laskai
+ * 
  * The Class AlbumController.
  */
 public class AlbumController

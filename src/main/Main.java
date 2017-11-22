@@ -15,8 +15,10 @@ import stock.StockUser;
 import users.UserDatabase;
 
 
-// TODO: Auto-generated Javadoc
 /**
+ * @author Daniel Fraser
+ * @author Peter Laskai
+ * 
  * The Class Main.
  */
 public class Main extends Application {
