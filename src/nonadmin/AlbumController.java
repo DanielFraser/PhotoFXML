@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Optional;
 
+import drawing.drawingController;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -34,6 +35,7 @@ import users.User;
 import users.UserDatabase;
 import utility.buttonUtility;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class AlbumController.
  *
@@ -399,6 +401,27 @@ public class AlbumController
 
 		SearchController controller = loader.getController();
 		controller.start(stage, currentUser);
+
+		stage.setScene(new Scene(root));
+		stage.show();
+	}
+	
+	/**
+	 * Draw photo.
+	 *
+	 * @param e the e
+	 * @throws IOException 
+	 */
+	@FXML
+	private void drawPhoto(ActionEvent e) throws IOException
+	{
+		Stage stage = new Stage();
+		FXMLLoader loader = new FXMLLoader();
+		loader.setLocation(getClass().getResource("/drawing/drawing.fxml"));
+		Parent root = loader.load();
+
+		drawingController controller = loader.getController();
+		controller.start(stage);
 
 		stage.setScene(new Scene(root));
 		stage.show();

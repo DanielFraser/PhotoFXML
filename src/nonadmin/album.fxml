@@ -27,6 +27,7 @@
                   <Label layoutX="138.0" layoutY="99.0" text="To" />
                   <TextField fx:id="name" layoutX="225.0" layoutY="124.0" prefHeight="25.0" prefWidth="79.0" />
                   <Label layoutX="222.0" layoutY="99.0" text="Search by name" />
+                  <Button fx:id="photo" layoutX="67.0" layoutY="50.0" mnemonicParsing="false" onAction="#drawPhoto" text="Draw A Photo" />
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="598.0" prefWidth="305.0" SplitPane.resizableWithParent="false">

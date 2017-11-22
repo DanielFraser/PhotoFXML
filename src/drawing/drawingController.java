@@ -7,9 +7,6 @@ import javax.imageio.ImageIO;
 
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ColorPicker;
@@ -17,8 +14,6 @@ import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import nonadmin.AlbumController;
-import utility.buttonUtility;
 
 /**
  * @author Daniel Fraser
@@ -106,7 +101,6 @@ public class drawingController
                     System.out.println(ex.getMessage());
                 }
             }
-			//ImageIO.write(SwingFXUtils.fromFXImage(screenshot, null), "png", new File(result.get()+".png"));
 		}
 		catch (Exception e) {
 			System.out.println("failed to save image!\nError: " + e);

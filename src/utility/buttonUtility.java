@@ -33,7 +33,7 @@ public class buttonUtility
 		FXMLLoader loader = new FXMLLoader();
 		loader.setLocation(buttonUtility.class.getResource("/login/login.fxml"));
 		Parent root = loader.load();
-		
+		UserDatabase.saveUsernames();
 		stage.setScene(new Scene(root));
 		stage.show();
 	}

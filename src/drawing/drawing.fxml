@@ -16,7 +16,7 @@
       <Canvas fx:id="canvas" height="600.0" width="600.0" BorderPane.alignment="CENTER" />
    </center>
    <top>
-      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+      <VBox prefHeight="68.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
             <MenuBar>
               <menus>
