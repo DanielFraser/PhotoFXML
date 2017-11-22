@@ -186,14 +186,15 @@ public class AdminController {
 			else
 				newIndex = index;
 			
-			UserList.getSelectionModel().select(newIndex);
-			
-			if(newIndex > -1)
-				setInfo(observableList.get(newIndex));
-			
-			
 			UserDatabase.deleteUsername(username); //pases arg to deleteUsername()
 			observableList.remove(index); //removes from observable list
+			
+			UserList.getSelectionModel().select(newIndex);
+	
+			if(newIndex > -1)
+				setInfo(observableList.get(newIndex)); //selects next in list
+			
+			
 			
 		}
 		
