@@ -3,6 +3,7 @@ package photo;
 import java.io.File;
 import java.io.IOException;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -36,6 +38,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContentDisplay;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -146,6 +149,23 @@ public class PhotoController
 
 	/** The edit cap. */
 	private boolean editCap = true;
+	
+	/** The to. */
+	@FXML
+	private DatePicker to;
+	
+	/** The from. */
+	@FXML
+	private DatePicker from;
+	
+	/** The name. */
+	@FXML
+	private TextField name;
+	
+	/** The lbl caption. */
+	@FXML
+	private Label lblCaption;
+	
 	/**
 	 * Start.
 	 *
@@ -159,18 +179,42 @@ public class PhotoController
 		currentAlbum = album;
 		albumName.setText(album.getName());
 		curUser = user;
-		fillScrollPane();
+		fillScrollPane(curUser.getPhoto(currentAlbum.getPhotos()));
 		username.setText(user.getUserName());
 		caption.setOnKeyPressed(new EventHandler<KeyEvent>() {  
 			public void handle(KeyEvent key) {
 				if (key.getCode() == KeyCode.ESCAPE) {
 					caption.setEditable(false);
 					editCap = true;
-					caption.setText(oldText);
+					lblCaption.setText(oldText);
+					editCapt.setVisible(false);
+					lblCaption.setVisible(true);
 					editCapt.setText("Edit Caption");
-					fillScrollPane();
+					fillScrollPane(curUser.getPhoto(currentAlbum.getPhotos()));
+					setInfo(curUser.getPhoto(id));
 				}
 			}
+		});
+		from.valueProperty().addListener(new ChangeListener<LocalDate>() {
+	        @Override
+	        public void changed(
+	                ObservableValue<? extends LocalDate> observableValue,
+	                LocalDate oldValue, LocalDate newValue) {
+	            //System.out.println(oldValue + " -> " + newValue);
+	            fillScrollPane(curUser.searchPhotos(currentAlbum,newValue, to.getValue()));   
+	        }
+	    });
+		to.valueProperty().addListener(new ChangeListener<LocalDate>() {
+	        @Override
+	        public void changed(
+	                ObservableValue<? extends LocalDate> observableValue,
+	                LocalDate oldValue, LocalDate newValue) {
+	            //System.out.println(oldValue + " -> " + newValue);
+	            fillScrollPane(curUser.searchPhotos(currentAlbum, from.getValue(),newValue));  
+	        }
+	    });
+		name.textProperty().addListener((observable, oldValue, newValue) -> {
+			fillScrollPane(curUser.searchPhotos(currentAlbum, newValue));
 		});
 	}
 
@@ -195,13 +239,15 @@ public class PhotoController
 
 	/**
 	 * Fill scroll pane.
+	 *
+	 * @param photos the photos
 	 */
-	private void fillScrollPane()
+	private void fillScrollPane(ArrayList<Photo> photos)
 	{
 		VBox vb = createTilePane();
 		int imageSize = 128;
 		tilePane.getChildren().clear();
-		for (Photo p : curUser.getPhoto(currentAlbum))
+		for (Photo p : photos)
 		{
 			customLabel bt2 = new customLabel(p.getCaption(), p.getId());                        
 			Image img2 = new Image(p.getLocation(), imageSize, 0, true, false);
@@ -221,7 +267,7 @@ public class PhotoController
 
 
 	/**
-	 * calls the quit function in button utility
+	 * calls the quit function in button utility.
 	 *
 	 * @param e the e
 	 * @throws IOException Signals that an I/O exception has occurred.
@@ -310,24 +356,20 @@ public class PhotoController
 	@FXML
 	private void addPhoto(ActionEvent e) throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException
 	{
-		//UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-		//FileNameExtensionFilter filter = new FileNameExtensionFilter("Image Files", "jpg", "png", "gif", "jpeg");
 		FileChooser fc = new FileChooser();
 		fc.setTitle("Select image files");
 		fc.getExtensionFilters().addAll( new ExtensionFilter("Image Files", "*.jpg", "*.png", "*.gif", "*.jpeg"));
 
 		File file = fc.showOpenDialog(null);
-		//int selection = fc.showOpenDialog(fc);
-
-		
-		
 		if (file != null) 
 		{
 			photoDisplay.setImage(new Image(file.toURI().toString()));
-			int id = curUser.addPhoto(file.toURI().toString(),  LocalDateTime.ofInstant(Instant.ofEpochMilli(file.lastModified()), ZoneId.systemDefault()));
+			int id2 = curUser.addPhoto(file.toURI().toString(),  LocalDateTime.ofInstant(Instant.ofEpochMilli(file.lastModified()), ZoneId.systemDefault()));
 
-			currentAlbum.addPhoto(id);
-			fillScrollPane();
+			currentAlbum.addPhoto(id2);
+			fillScrollPane(curUser.getPhoto(currentAlbum.getPhotos()));
+			setInfo(curUser.getPhoto(id2));
+			id = id2;
 		}
 	}
 
@@ -341,7 +383,7 @@ public class PhotoController
 		id = p.getId();
 		photoDisplay.setImage(new Image(p.getLocation()));
 		tags.setText(p.printTags());
-		caption.setText(p.getCaption());
+		lblCaption.setText(p.getCaption());
 		date.setText(p.getDateS());
 		int length = currentAlbum.getPhotos().size();
 		int i = currentAlbum.getPhotos().indexOf(p.getId());
@@ -389,7 +431,7 @@ public class PhotoController
 		if (result.get() == ButtonType.OK)
 		{
 			currentAlbum.getPhotos().remove(new Integer(id));
-			fillScrollPane();
+			fillScrollPane(curUser.getPhoto(currentAlbum.getPhotos()));
 		}
 	}
 
@@ -414,7 +456,7 @@ public class PhotoController
 			currentAlbum.getPhotos().remove(new Integer(id));
 			Album a = curUser.getAlbum(result.get());
 			a.addPhoto(id);
-			fillScrollPane();
+			fillScrollPane(curUser.getPhoto(currentAlbum.getPhotos()));
 		}
 	}
 
@@ -454,14 +496,20 @@ public class PhotoController
 			caption.setEditable(true);
 			editCap = !editCap;
 			editCapt.setText("Save caption");
-			oldText = caption.getText();
+			oldText = lblCaption.getText();
+			caption.setVisible(true);
+			lblCaption.setVisible(false);
 		}
 		else
 		{
+			caption.setVisible(false);
+			lblCaption.setVisible(true);
 			curUser.getPhoto(id).addCaption(caption.getText());
 			editCap = !editCap;
+			lblCaption.setText(caption.getText());
 			editCapt.setText("Edit Caption");
-			fillScrollPane();
+			fillScrollPane(curUser.getPhoto(currentAlbum.getPhotos()));
+			setInfo(curUser.getPhoto(id));
 		}
 	}
 
@@ -515,7 +563,7 @@ public class PhotoController
 
 		result.ifPresent(valueAndType -> {
 			curUser.getPhoto(id).addTag(valueAndType.getKey(), valueAndType.getValue());
-			fillScrollPane();
+			fillScrollPane(curUser.getPhoto(currentAlbum.getPhotos()));
 			setInfo(curUser.getPhoto(id));
 		});
 	}

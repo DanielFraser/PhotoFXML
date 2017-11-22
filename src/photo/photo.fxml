@@ -2,10 +2,12 @@
 
 <?import javafx.scene.Group?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -23,7 +25,13 @@
                   <ScrollPane fx:id="photoDisplayPane" layoutX="7.0" layoutY="158.0" prefHeight="391.0" prefWidth="305.0" />
                   <Label fx:id="albumName" layoutX="14.0" layoutY="14.0" text="&lt;album name&gt;" />
                   <Button fx:id="home" layoutX="237.0" layoutY="19.0" mnemonicParsing="false" onAction="#home" text="Home" />
-                  <Button fx:id="addPhoto" layoutX="225.0" layoutY="78.0" mnemonicParsing="false" onAction="#addPhoto" text="Add Photo" />
+                  <Button fx:id="addPhoto" layoutX="225.0" layoutY="59.0" mnemonicParsing="false" onAction="#addPhoto" text="Add Photo" />
+                  <DatePicker fx:id="from" editable="false" layoutX="14.0" layoutY="118.0" prefHeight="25.0" prefWidth="83.0" />
+                  <DatePicker fx:id="to" editable="false" layoutX="118.0" layoutY="118.0" prefHeight="25.0" prefWidth="83.0" />
+                  <Label layoutX="28.0" layoutY="91.0" text="From" />
+                  <Label layoutX="131.0" layoutY="91.0" text="To" />
+                  <TextField fx:id="name" layoutX="218.0" layoutY="118.0" prefHeight="25.0" prefWidth="87.0" />
+                  <Label layoutX="218.0" layoutY="100.0" text="Search by Caption" />
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="598.0" prefWidth="305.0" SplitPane.resizableWithParent="false">
@@ -61,7 +69,8 @@
                   <Button fx:id="editCapt" layoutX="216.0" layoutY="377.0" mnemonicParsing="false" onAction="#editCaption" text="Edit Caption" />
                   <Button fx:id="prev" layoutX="2.0" layoutY="70.0" mnemonicParsing="false" onAction="#prevPhoto" text="&lt;" />
                   <Button fx:id="next" layoutX="285.0" layoutY="70.0" mnemonicParsing="false" onAction="#nextPhoto" text="&gt;" />
-                  <TextArea fx:id="caption" layoutX="24.0" layoutY="169.0" prefHeight="83.0" prefWidth="255.0" />
+                  <TextArea fx:id="caption" layoutX="24.0" layoutY="169.0" prefHeight="83.0" prefWidth="255.0" visible="false" />
+                  <Label fx:id="lblCaption" layoutX="28.0" layoutY="167.0" prefHeight="83.0" prefWidth="249.0" />
                </children>
             </AnchorPane>
         </items>

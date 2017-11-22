@@ -3,10 +3,17 @@ package search;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.StringTokenizer;
+import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -18,11 +25,15 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.Alert.AlertType;
@@ -36,6 +47,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import javafx.util.Pair;
 import nonadmin.AlbumController;
 import users.Album;
@@ -81,7 +93,7 @@ public class SearchController
 	
 	/** The album name. */
 	@FXML
-	private Label caption;
+	private TextArea caption;
 	
 	/** The num photos. */
 	@FXML
@@ -112,11 +124,24 @@ public class SearchController
 	/** The photos. */
 	private ArrayList<Integer> newAlbum = new ArrayList<>();
 
+	/** The edit capt. */
+	@FXML
+	private Button editCapt;
+	
+	/** The id. */
 	private int id;
 
+	/** The prev P. */
 	private int prevP;
 
+	/** The next P. */
 	private int nextP;
+
+	/** The edit cap. */
+	private boolean editCap = true;
+
+	/** The old text. */
+	private String oldText;
 	
 	/**
 	 * Start.
@@ -160,6 +185,7 @@ public class SearchController
 		VBox vb = createTilePane();
 		int imageSize = 128;
 		tilePane.getChildren().clear();
+		newAlbum.clear();
 		for (Photo p : photos)
 		{
 			customLabel bt2 = new customLabel(p.getCaption(), p.getId());                        
@@ -386,5 +412,163 @@ public class SearchController
 			fillScrollPane(curUser.getPhoto(newAlbum));
 			setInfo(curUser.getPhoto(id));
 		});
+	}
+	
+	/**
+	 * Rm tag.
+	 *
+	 * @param e the e
+	 */
+	@FXML
+	private void rmTag(ActionEvent e)
+	{
+		Dialog<Pair<String, String>> dialog = new Dialog<>();
+		dialog.setTitle("Remove Tag(s)");
+
+		ButtonType rmBtn = new ButtonType("Remove tag", ButtonData.OK_DONE);
+		dialog.getDialogPane().getButtonTypes().addAll(rmBtn, new ButtonType("Done", ButtonData.CANCEL_CLOSE));
+
+		GridPane grid = new GridPane();
+		grid.setHgap(10);
+		grid.setVgap(10);
+		grid.setPadding(new Insets(20, 150, 10, 10));
+
+		Map<String, String> map = curUser.getPhoto(id).getTags();
+
+		TableColumn<Map.Entry<String, String>, String> value = new TableColumn<Map.Entry<String, String>, String>("Value");
+		value.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Map.Entry<String, String>, String>, ObservableValue<String>>() {
+			@Override
+			public ObservableValue<String> call(TableColumn.CellDataFeatures<Map.Entry<String, String>, String> p) {
+				return new SimpleStringProperty(p.getValue().getValue());
+			}
+		});
+		TableColumn<Map.Entry<String, String>, String> type = new TableColumn<Map.Entry<String, String>, String>("Type");
+		type.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Map.Entry<String, String>, String>, ObservableValue<String>>() {
+			@Override
+			public ObservableValue<String> call(TableColumn.CellDataFeatures<Map.Entry<String, String>, String> p) {
+				return new SimpleStringProperty(p.getValue().getKey());
+			}
+		});
+
+		ObservableList<Map.Entry<String, String>> items = FXCollections.observableArrayList(map.entrySet());
+		final TableView<Map.Entry<String,String>> tags = new TableView<>(items);
+		tags.setEditable(false);
+		tags.getColumns().setAll(value, type);
+
+		grid.add(tags, 0, 0);
+
+		Node rmT = dialog.getDialogPane().lookupButton(rmBtn);
+		rmT.disableProperty().bind(Bindings.isEmpty(tags.getSelectionModel().getSelectedItems()));
+		rmT.addEventFilter(ActionEvent.ACTION, (event) -> {
+			Photo p = curUser.getPhoto(id);
+			Entry<String, String> temp = tags.getSelectionModel().getSelectedItem();
+			p.removeTag(temp.getKey(), temp.getValue());
+			items.remove(temp);
+			event.consume(); 
+		}); 
+		
+		dialog.getDialogPane().setContent(grid);
+
+		dialog.setResultConverter(dialogButton -> {
+			if (dialogButton == rmBtn) {
+				Photo p = curUser.getPhoto(id);
+				Entry<String, String> temp = tags.getSelectionModel().getSelectedItem();
+				p.removeTag(temp.getKey(), temp.getValue());
+			}
+			return null;
+		});
+
+		dialog.showAndWait();
+	}
+	
+	/**
+	 * Edits the caption.
+	 *
+	 * @param e the e
+	 */
+	@FXML
+	private void editCaption(ActionEvent e)
+	{
+		if(editCap)
+		{
+			caption.setEditable(true);
+			editCap  = !editCap;
+			editCapt.setText("Save caption");
+			oldText = caption.getText();
+		}
+		else
+		{
+			curUser.getPhoto(id).addCaption(caption.getText());
+			editCap = !editCap;
+			editCapt.setText("Edit Caption");
+			fillScrollPane(curUser.getPhoto(newAlbum));
+		}
+	}
+	
+	/**
+	 * Next photo.
+	 *
+	 * @param e the e
+	 */
+	@FXML
+	private void nextPhoto(ActionEvent e)
+	{
+		if(nextP != -1)
+			setInfo(curUser.getPhoto(newAlbum.get(nextP)));
+	}
+
+	/**
+	 * Prev photo.
+	 *
+	 * @param e the e
+	 */
+	@FXML
+	private void prevPhoto(ActionEvent e)
+	{
+		if(prevP != -1)
+			setInfo(curUser.getPhoto(newAlbum.get(prevP)));
+	}
+	
+	/**
+	 * Delete.
+	 *
+	 * @param e the e
+	 */
+	@FXML
+	private void delete(ActionEvent e)
+	{
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("Confirm Deletion");
+		alert.setContentText("Are you sure you want to delete this photo?");
+
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.get() == ButtonType.OK)
+		{
+			newAlbum.remove(new Integer(id));
+			fillScrollPane(curUser.getPhoto(newAlbum));
+		}
+	}
+	
+	/**
+	 * Copy.
+	 *
+	 * @param e the e
+	 */
+	@FXML
+	private void copy(ActionEvent e)
+	{
+		ArrayList<String> choices = curUser.getAlbumNames();
+		//choices.remove(newAlbum.getName());
+
+		ChoiceDialog<String> dialog = new ChoiceDialog<>(choices.get(0), choices);
+		dialog.setTitle("Copy Photo");
+		dialog.setContentText("Choose album:");
+		Optional<String> result = dialog.showAndWait();
+
+		if (result.isPresent())
+		{
+			Album a = curUser.getAlbum(result.get());
+			a.addPhoto(id);
+		}
 	}
 }

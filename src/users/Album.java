@@ -3,6 +3,7 @@ package users;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -27,14 +28,8 @@ public class Album implements Serializable
 	/** The name. */
 	private String name;
 	
-	/** The date format. */
-	DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-	
-	/** The cal. */
-	private Calendar cal;
-	
 	/** The date created. */
-	private Date dateCreated;
+	private LocalDate dateCreated;
 	
 	User owner;
 	/**
@@ -44,8 +39,8 @@ public class Album implements Serializable
 	 */
 	public Album(String initName, User initOwner) {
 		setName(initName);
-		cal = Calendar.getInstance();
 		owner = initOwner;
+		dateCreated = LocalDate.now();
 	}
 	
 	
@@ -127,15 +122,14 @@ public class Album implements Serializable
 	{
 		return photos.size();
 	}
-
-
+	
 	/**
 	 * Gets the date created.
 	 *
 	 * @return the date created
 	 */
-	public String getDateCreated() {
-		return dateFormat.format(cal.getTime());
+	public LocalDate getDateCreated() {
+		return dateCreated;
 	}
 	
 	/**

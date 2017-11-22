@@ -1,26 +1,28 @@
 package nonadmin;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Optional;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
@@ -99,7 +101,19 @@ public class AlbumController
 
 	/** The current user. */
 	private User currentUser;
-
+	
+	/** The to. */
+	@FXML
+	private DatePicker to;
+	
+	/** The from. */
+	@FXML
+	private DatePicker from;
+	
+	/** The name. */
+	@FXML
+	private TextField name;
+	
 	/**
 	 * sets properties to buttons and a few of the labels
 	 * loads list from file.
@@ -114,6 +128,27 @@ public class AlbumController
 		albumDisplayPane.setFitToWidth(true); //prevent horizontal scrolling
 		albumDisplayPane.setContent(vb); //add images to scrollpane
 		username.setText(user); //debug
+		from.valueProperty().addListener(new ChangeListener<LocalDate>() {
+	        @Override
+	        public void changed(
+	                ObservableValue<? extends LocalDate> observableValue,
+	                LocalDate oldValue, LocalDate newValue) {
+	            //System.out.println(oldValue + " -> " + newValue);
+	            fillScrollPane(currentUser.searchAlbums(newValue, to.getValue()));  
+	        }
+	    });
+		to.valueProperty().addListener(new ChangeListener<LocalDate>() {
+	        @Override
+	        public void changed(
+	                ObservableValue<? extends LocalDate> observableValue,
+	                LocalDate oldValue, LocalDate newValue) {
+	            //System.out.println(oldValue + " -> " + newValue);
+	            fillScrollPane(currentUser.searchAlbums(from.getValue(),newValue));  
+	        }
+	    });
+		name.textProperty().addListener((observable, oldValue, newValue) -> {
+			fillScrollPane(currentUser.searchAlbumsA(newValue));
+		});
 	}
 
 	/**

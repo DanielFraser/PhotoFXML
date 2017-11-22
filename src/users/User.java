@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Optional;
 import java.util.function.Predicate;
 
+import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
+
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
@@ -357,6 +359,105 @@ public class User implements Serializable
 			}
 			if(hasAll)
 				match.add(p);
+		}
+		return match;
+	}
+	
+	/**
+	 * Search albums.
+	 *
+	 * @param start the start
+	 * @param end the end
+	 * @return the array list
+	 */
+	public ArrayList<Album> searchAlbums(LocalDate start, LocalDate end)
+	{
+		ArrayList<Album> match = new ArrayList<>();
+		boolean fits = true;
+		for(Album a : albums)
+		{
+			fits = true;
+			
+			if(start != null)
+			{
+				fits = fits && !a.getDateCreated().isBefore(start);
+			}
+			if(end != null)
+			{
+				fits = fits && !a.getDateCreated().isAfter(end);
+			}
+			if(fits)
+				match.add(a);
+		}
+		return match;
+	}
+	
+	/**
+	 * Search albums.
+	 *
+	 * @param start the start
+	 * @param end the end
+	 * @return the array list
+	 */
+	public ArrayList<Album> searchAlbumsA(String name)
+	{
+		ArrayList<Album> match = new ArrayList<>();
+		for(Album a : albums)
+		{
+			if(a.getName().contains(name))
+				match.add(a);
+		}
+		return match;
+	}
+
+	/**
+	 * Search photos.
+	 *
+	 * @param currentAlbum the current album
+	 * @param start the start
+	 * @param end the end
+	 * @return the array list
+	 */
+	public ArrayList<Photo> searchPhotos(Album currentAlbum, LocalDate start, LocalDate end) 
+	{
+		ArrayList<Photo> match = new ArrayList<>();
+		boolean fits = true;
+		LocalDate p;
+		for(Integer i : currentAlbum.getPhotos())
+		{
+			fits = true;
+			p = getPhoto(i).getDate().toLocalDate();
+			if(start != null)
+			{
+				fits = fits && !p.isBefore(start);
+			}
+			if(end != null)
+			{
+				fits = fits && !p.isAfter(end);
+			}
+			if(fits)
+				match.add(getPhoto(i));
+		}
+		return match;
+	}
+	
+	/**
+	 * Search photos.
+	 *
+	 * @param currentAlbum the current album
+	 * @param name the name
+	 * @return the array list
+	 */
+	public ArrayList<Photo> searchPhotos(Album currentAlbum, String name) 
+	{
+		ArrayList<Photo> match = new ArrayList<>();
+		Photo p;
+		for(Integer i : currentAlbum.getPhotos())
+		{
+			p = getPhoto(i);
+			
+			if(p.getCaption().contains(name))
+				match.add(getPhoto(i));
 		}
 		return match;
 	}
