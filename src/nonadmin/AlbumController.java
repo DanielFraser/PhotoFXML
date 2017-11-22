@@ -15,6 +15,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.DatePicker;
@@ -22,6 +23,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -359,9 +361,10 @@ public class AlbumController
 	 *
 	 * @param e the e
 	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws InterruptedException 
 	 */
 	@FXML
-	private void addAlbum(ActionEvent e) throws IOException
+	private void addAlbum(ActionEvent e) throws IOException, InterruptedException
 	{
 		TextInputDialog dialog = new TextInputDialog(albumName.getText());
 		dialog.setTitle("Edit album name");
@@ -381,6 +384,13 @@ public class AlbumController
 				bt2.setContentDisplay(ContentDisplay.TOP);
 				bt2.addEventHandler(MouseEvent.MOUSE_CLICKED, new clickAlbum());
 				tilePane.getChildren().add(bt2);  
+			}
+			else
+			{
+				Alert alert = new Alert(AlertType.ERROR);
+				alert.setTitle("Error Dialog");
+				alert.setContentText("Sorry, album name already taken, please select another");
+				alert.show();
 			}
 		}
 	}

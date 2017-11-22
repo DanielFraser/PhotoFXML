@@ -218,6 +218,10 @@ public class PhotoController
 		name.textProperty().addListener((observable, oldValue, newValue) -> {
 			fillScrollPane(curUser.searchPhotos(currentAlbum, newValue));
 		});
+		if(album.getSize() > 0)
+		{
+			setInfo(curUser.getPhoto(album.getPhotos().get(0)));
+		}
 	}
 
 	/**
