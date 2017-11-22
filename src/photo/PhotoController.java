@@ -513,6 +513,7 @@ public class PhotoController
 		result.ifPresent(valueAndType -> {
 			curUser.getPhoto(id).addTag(valueAndType.getKey(), valueAndType.getValue());
 			fillScrollPane();
+			setInfo(curUser.getPhoto(id));
 		});
 	}
 

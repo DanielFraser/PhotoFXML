@@ -208,6 +208,20 @@ public class User implements Serializable
 	}
 	
 	/**
+	 * Gets the photo.
+	 *
+	 * @param album the album
+	 * @return the photo
+	 */
+	public ArrayList<Photo> getPhoto(ArrayList<Integer> album)
+	{
+		ArrayList<Photo> photos = new ArrayList<>();
+		for(int i : album)
+			photos.add(getPhoto(i));
+		return photos;
+	}
+	
+	/**
 	 * Same name.
 	 *
 	 * @param name the name
@@ -232,11 +246,11 @@ public class User implements Serializable
 	 */
 	public boolean setAlbumName(String name, String album)
 	{
-		for(Album a : albums)
+		for(int i = 0; i < albums.size(); i++)
 		{
-			if(!sameName(album))
+			if(!sameName(name) && albums.get(i).getName().equals(album))
 			{
-				a.setName(name);
+				albums.get(i).setName(name);
 				return true;
 			}
 		}

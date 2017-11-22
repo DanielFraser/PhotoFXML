@@ -12,6 +12,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -19,16 +20,19 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -77,15 +81,15 @@ public class SearchController
 	
 	/** The album name. */
 	@FXML
-	private Label albumName;
+	private Label caption;
 	
 	/** The num photos. */
 	@FXML
-	private Label numPhotos;
+	private Label date;
 	
 	/** The date created. */
 	@FXML
-	private Label dateCreated;
+	private Label tags2;
 	
 	/** The cur user. */
 	private User curUser;
@@ -107,6 +111,12 @@ public class SearchController
 	
 	/** The photos. */
 	private ArrayList<Integer> newAlbum = new ArrayList<>();
+
+	private int id;
+
+	private int prevP;
+
+	private int nextP;
 	
 	/**
 	 * Start.
@@ -193,6 +203,28 @@ public class SearchController
 	}
 
 	/**
+	 * Sets the info.
+	 *
+	 * @param p the new info
+	 */
+	private void setInfo(Photo p)
+	{
+		id = p.getId();
+		photoDisplay.setImage(new Image(p.getLocation()));
+		tags2.setText(p.printTags());
+		caption.setText(p.getCaption());
+		date.setText(p.getDateS());
+		int length = newAlbum.size();
+		int i = newAlbum.indexOf(p.getId());
+		prevP = -1;
+		nextP = -1;
+		if(i > 0)
+			prevP = i-1;
+		if(i < length - 1)
+			nextP = i+1;
+	}
+	
+	/**
 	 * The Class clickAlbum.
 	 */
 	private class clickPhoto implements EventHandler<MouseEvent>{
@@ -203,7 +235,7 @@ public class SearchController
 		@Override
 		public void handle(MouseEvent event) {
 			customLabel lbl = (customLabel) event.getSource();
-			//setInfo(curUser.getPhoto(lbl.getIdI()));
+			setInfo(curUser.getPhoto(lbl.getIdI()));
 		}
 
 	}
@@ -298,5 +330,60 @@ public class SearchController
 			}
 		}
 		
+	}
+	
+	/**
+	 * Adds the tag.
+	 *
+	 * @param e the e
+	 */
+	@FXML
+	private void addTag(ActionEvent e)
+	{
+		Dialog<Pair<String, String>> dialog = new Dialog<>();
+		dialog.setTitle("add Tag");
+
+		ButtonType addTBtn = new ButtonType("Add tag", ButtonData.OK_DONE);
+		dialog.getDialogPane().getButtonTypes().addAll(addTBtn, ButtonType.CANCEL);
+
+		GridPane grid = new GridPane();
+		grid.setHgap(10);
+		grid.setVgap(10);
+		grid.setPadding(new Insets(20, 150, 10, 10));
+
+		TextField type = new TextField();
+		type.setPromptText("Enter type");
+		TextField value = new TextField();
+		value.setPromptText("Enter value");
+
+		grid.add(new Label("Enter type:"), 0, 0);
+		grid.add(type, 1, 0);
+		grid.add(new Label("Enter value:"), 0, 1);
+		grid.add(value, 1, 1);
+
+		Node loginButton = dialog.getDialogPane().lookupButton(addTBtn);
+		loginButton.setDisable(true);
+
+		type.textProperty().addListener((observable, oldValue, newValue) -> {
+			loginButton.setDisable(newValue.trim().isEmpty());
+		});
+
+		dialog.getDialogPane().setContent(grid);
+
+		// Convert the result to a username-password-pair when the login button is clicked.
+		dialog.setResultConverter(dialogButton -> {
+			if (dialogButton == addTBtn) {
+				return new Pair<>(type.getText(), value.getText());
+			}
+			return null;
+		});
+
+		Optional<Pair<String, String>> result = dialog.showAndWait();
+
+		result.ifPresent(valueAndType -> {
+			curUser.getPhoto(id).addTag(valueAndType.getKey(), valueAndType.getValue());
+			fillScrollPane(curUser.getPhoto(newAlbum));
+			setInfo(curUser.getPhoto(id));
+		});
 	}
 }

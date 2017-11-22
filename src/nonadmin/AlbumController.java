@@ -143,7 +143,7 @@ public class AlbumController
 	private void fillScrollPane(ArrayList<Album> albums)
 	{
 		int imageSize = 128;
-
+		tilePane.getChildren().clear();
 		for (Album a : albums)
 		{
 			if(a.getSize() > 0)
@@ -254,6 +254,7 @@ public class AlbumController
 	private void deleteAlbum(ActionEvent e) throws IOException
 	{
 		currentUser.deleteAlbum(albumName.getText());
+		fillScrollPane(currentUser.getAlbums());
 	}
 
 
@@ -277,16 +278,9 @@ public class AlbumController
 			boolean b = currentUser.setAlbumName(result.get(), albumName.getText());
 			if(b)
 			{
-				for(int i = 0; i < tilePane.getChildren().size(); i++)
-				{
-					if(((Label) tilePane.getChildren().get(i)).getText().equals(albumName.getText()))
-					{
-						Label lbl = (Label) tilePane.getChildren().get(i);
-						lbl.setText(result.get());
-						tilePane.getChildren().set(i, lbl);
-					}
-				}
+				
 				albumName.setText(result.get());
+				fillScrollPane(currentUser.getAlbums());
 			}
 		}
 	}

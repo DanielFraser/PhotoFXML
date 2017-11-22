@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane minHeight="600.0" minWidth="1000.0" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="search.SearchController">
+<AnchorPane minHeight="600.0" minWidth="1000.0" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="search.SearchController">
    <children>
       <SplitPane dividerPositions="0.5" prefHeight="600.0" prefWidth="594.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
@@ -44,10 +44,10 @@
                   <Button fx:id="quit" layoutX="37.0" layoutY="551.0" mnemonicParsing="false" onAction="#quitAct" prefHeight="25.0" prefWidth="87.0" text="Quit" />
                   <Button fx:id="logout" layoutX="348.0" layoutY="551.0" mnemonicParsing="false" onAction="#logOutAct" prefHeight="25.0" prefWidth="87.0" text="Log Out" />
                   <Label layoutX="30.0" layoutY="263.0" text="Date:" />
-                  <Label fx:id="numPhotos" layoutX="90.0" layoutY="263.0" text="&lt;Date&gt;" />
-                  <Label fx:id="albumName" layoutX="27.0" layoutY="186.0" prefHeight="55.0" prefWidth="446.0" text="&lt;caption&gt;&#10;&lt;caption&gt;&#10;&lt;caption&gt;" />
+                  <Label fx:id="date" layoutX="90.0" layoutY="263.0" text="&lt;Date&gt;" />
+                  <Label fx:id="caption" layoutX="27.0" layoutY="186.0" prefHeight="55.0" prefWidth="446.0" text="&lt;caption&gt;&#10;&lt;caption&gt;&#10;&lt;caption&gt;" />
                   <Label layoutX="30.0" layoutY="288.0" text="Tags:" />
-                  <Label fx:id="dateCreated" layoutX="91.0" layoutY="288.0" text="&lt;Tags&gt;" />
+                  <Label fx:id="tags2" layoutX="91.0" layoutY="288.0" text="&lt;Tags&gt;" />
                   <GridPane layoutX="9.0" layoutY="483.0" prefHeight="30.0" prefWidth="465.0">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -65,7 +65,7 @@
                         <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Delete" GridPane.rowIndex="1" />
                      </children>
                   </GridPane>
-                  <Button layoutX="120.0" layoutY="375.0" mnemonicParsing="false" text="Add tag(s)" />
+                  <Button layoutX="120.0" layoutY="375.0" mnemonicParsing="false" onAction="#addTag" text="Add tag(s)" />
                   <Button layoutX="208.0" layoutY="375.0" mnemonicParsing="false" text="Remove tag(s)" />
                   <Button layoutX="311.0" layoutY="375.0" mnemonicParsing="false" text="Edit Caption" />
                   <Button fx:id="prev" layoutX="17.0" layoutY="66.0" mnemonicParsing="false" text="&lt;" />
