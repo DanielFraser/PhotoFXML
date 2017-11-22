@@ -185,7 +185,7 @@ public class AlbumController
 	 */
 	private void fillScrollPane(ArrayList<Album> albums)
 	{
-		int imageSize = 128;
+		int imageSize = 64;
 		tilePane.getChildren().clear();
 		for (Album a : albums)
 		{
@@ -203,7 +203,7 @@ public class AlbumController
 			else
 			{
 				Label bt2 = new Label();                        
-				Image img2 = new Image("/nonadmin/folder.png",128, 0, true, false);
+				Image img2 = new Image("/nonadmin/folder.png",64, 0, true, false);
 				ImageView view2 = new ImageView(img2);
 				bt2.setGraphic(view2);
 				bt2.setText(a.getName());
@@ -378,7 +378,7 @@ public class AlbumController
 			{
 				currentUser.addAlbum(result.get());
 				Label bt2 = new Label(result.get());                        
-				Image img2 = new Image("/nonadmin/folder.png",128, 0, true, false);
+				Image img2 = new Image("/nonadmin/folder.png",64, 0, true, false);
 				ImageView view2 = new ImageView(img2);
 				bt2.setGraphic(view2);
 				bt2.setContentDisplay(ContentDisplay.TOP);

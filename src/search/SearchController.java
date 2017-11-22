@@ -259,7 +259,7 @@ public class SearchController
 	private void setInfo(Photo p)
 	{
 		id = p.getId();
-		photoDisplay.setImage(new Image(p.getLocation()));
+		photoDisplay.setImage(new Image(p.getLocation(),128, 0, true, false));
 		tags2.setText(p.printTags());
 		lblCaption.setText(p.getCaption());
 		date.setText(p.getDateS());

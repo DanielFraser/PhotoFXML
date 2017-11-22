@@ -11,11 +11,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
 
-import javax.swing.JFileChooser;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
-
-import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
@@ -36,7 +31,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceDialog;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Dialog;
@@ -49,7 +43,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -251,7 +244,7 @@ public class PhotoController
 	private void fillScrollPane(ArrayList<Photo> photos)
 	{
 		VBox vb = createTilePane();
-		int imageSize = 128;
+		int imageSize = 64;
 		tilePane.getChildren().clear();
 		for (Photo p : photos)
 		{
@@ -263,7 +256,6 @@ public class PhotoController
 			bt2.addEventHandler(MouseEvent.MOUSE_CLICKED, new clickPhoto());
 			bt2.setWrapText(true);
 			tilePane.getChildren().add(bt2);
-			//System.out.println(p.getLocation() + " " + p.getId());
 		}
 
 		photoDisplayPane.setFitToWidth(true); //prevent horizontal scrolling
@@ -357,10 +349,9 @@ public class PhotoController
 	 * @throws ClassNotFoundException the class not found exception
 	 * @throws InstantiationException the instantiation exception
 	 * @throws IllegalAccessException the illegal access exception
-	 * @throws UnsupportedLookAndFeelException the unsupported look and feel exception
 	 */
 	@FXML
-	private void addPhoto(ActionEvent e) throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException
+	private void addPhoto(ActionEvent e) throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException
 	{
 		FileChooser fc = new FileChooser();
 		fc.setTitle("Select image files");
@@ -387,7 +378,7 @@ public class PhotoController
 	private void setInfo(Photo p)
 	{
 		id = p.getId();
-		photoDisplay.setImage(new Image(p.getLocation()));
+		photoDisplay.setImage(new Image(p.getLocation(),128, 0, true, false));
 		tags.setText(p.printTags());
 		lblCaption.setText(p.getCaption());
 		date.setText(p.getDateS());
@@ -400,10 +391,6 @@ public class PhotoController
 		if(i < length - 1)
 			nextP = i+1;
 	}
-
-	//	Stage secondStage = new Stage();
-	//  secondStage.setScene(new Scene(root));
-	//  secondStage.show();
 
 	/**
 	 * The Class clickAlbum.
