@@ -159,6 +159,7 @@ public class SearchController
 	{
 		VBox vb = createTilePane();
 		int imageSize = 128;
+		tilePane.getChildren().clear();
 		for (Photo p : photos)
 		{
 			customLabel bt2 = new customLabel(p.getCaption(), p.getId());                        

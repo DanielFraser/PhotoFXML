@@ -168,6 +168,7 @@ public class PhotoController
 					editCap = true;
 					caption.setText(oldText);
 					editCapt.setText("Edit Caption");
+					fillScrollPane();
 				}
 			}
 		});
@@ -199,6 +200,7 @@ public class PhotoController
 	{
 		VBox vb = createTilePane();
 		int imageSize = 128;
+		tilePane.getChildren().clear();
 		for (Photo p : curUser.getPhoto(currentAlbum))
 		{
 			customLabel bt2 = new customLabel(p.getCaption(), p.getId());                        
@@ -209,7 +211,7 @@ public class PhotoController
 			bt2.addEventHandler(MouseEvent.MOUSE_CLICKED, new clickPhoto());
 			bt2.setWrapText(true);
 			tilePane.getChildren().add(bt2);
-			System.out.println(p.getLocation() + " " + p.getId());
+			//System.out.println(p.getLocation() + " " + p.getId());
 		}
 
 		photoDisplayPane.setFitToWidth(true); //prevent horizontal scrolling
@@ -459,6 +461,7 @@ public class PhotoController
 			curUser.getPhoto(id).addCaption(caption.getText());
 			editCap = !editCap;
 			editCapt.setText("Edit Caption");
+			fillScrollPane();
 		}
 	}
 
