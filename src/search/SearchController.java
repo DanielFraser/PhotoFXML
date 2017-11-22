@@ -57,6 +57,8 @@ import utility.buttonUtility;
 import utility.customLabel;
 
 /**
+ * The Class SearchController.
+ *
  * @author Daniel Fraser
  * @author Peter Laskai
  * 

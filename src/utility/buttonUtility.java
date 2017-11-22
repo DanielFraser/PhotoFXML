@@ -9,6 +9,8 @@ import javafx.stage.Stage;
 import users.UserDatabase;
 
 /**
+ * The Class buttonUtility.
+ *
  * @author Daniel Fraser
  * @author Peter Laskai
  * 

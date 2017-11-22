@@ -15,12 +15,13 @@ import javafx.scene.control.ButtonType;
 import javafx.util.Pair;
 
 /**
+ * The Class User.
+ *
  * @author Daniel Fraser
  * @author Peter Laskai
  * 
  * each user has 0 or more albums
  * each user can will search its own list of albums given a name.
- *
  * @author Daniel Fraser
  */
 public class User implements Serializable
@@ -397,8 +398,7 @@ public class User implements Serializable
 	/**
 	 * Search albums.
 	 *
-	 * @param start the start
-	 * @param end the end
+	 * @param name the name
 	 * @return the array list
 	 */
 	public ArrayList<Album> searchAlbumsA(String name)

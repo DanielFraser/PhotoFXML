@@ -35,6 +35,8 @@ import users.UserDatabase;
 import utility.buttonUtility;
 
 /**
+ * The Class AlbumController.
+ *
  * @author Daniel Fraser
  * @author Peter Laskai
  * 

@@ -13,6 +13,8 @@ import javafx.scene.control.Alert.AlertType;
 import stock.StockUser;
 
 /**
+ * The Class UserDatabase.
+ *
  * @author Daniel Fraser
  * @author Peter Laskai
  * 

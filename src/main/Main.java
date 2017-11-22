@@ -14,8 +14,9 @@ import login.LoginController;
 import stock.StockUser;
 import users.UserDatabase;
 
-
 /**
+ * The Class Main.
+ *
  * @author Daniel Fraser
  * @author Peter Laskai
  * 

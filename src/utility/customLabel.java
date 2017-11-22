@@ -18,7 +18,7 @@ public class customLabel extends Label
 	 * Instantiates a new custom label.
 	 *
 	 * @param s the s
-	 * @param a the a
+	 * @param newId the new id
 	 */
 	public customLabel(String s, int newId) 
 	{

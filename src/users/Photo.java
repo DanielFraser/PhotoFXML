@@ -12,6 +12,8 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.util.Pair;
 
 /**
+ * The Class Photo.
+ *
  * @author Daniel Fraser
  * @author Peter Laskai
  * 
@@ -53,7 +55,6 @@ public class Photo implements Serializable
 	 * Checks for tag.
 	 *
 	 * @param key the key
-	 * @param value the value
 	 * @return true, if successful
 	 */
 	public boolean hasTag(String key)
@@ -214,6 +215,9 @@ public class Photo implements Serializable
 		return tags;
 	}
 	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if(obj == null || !(obj instanceof Photo))
