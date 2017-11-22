@@ -189,7 +189,7 @@ public class PhotoController
 					caption.setEditable(false);
 					editCap = true;
 					lblCaption.setText(oldText);
-					editCapt.setVisible(false);
+					caption.setVisible(false);
 					lblCaption.setVisible(true);
 					editCapt.setText("Edit Caption");
 					fillScrollPane(curUser.getPhoto(currentAlbum.getPhotos()));
@@ -501,6 +501,7 @@ public class PhotoController
 			oldText = lblCaption.getText();
 			caption.setVisible(true);
 			lblCaption.setVisible(false);
+			caption.setText(lblCaption.getText());
 		}
 		else
 		{

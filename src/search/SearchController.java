@@ -165,11 +165,12 @@ public class SearchController
 					caption.setEditable(false);
 					editCap = true;
 					lblCaption.setText(oldText);
-					editCapt.setVisible(false);
+					caption.setVisible(false);
 					lblCaption.setVisible(true);
 					editCapt.setText("Edit Caption");
 					fillScrollPane(curUser.getPhoto(newAlbum));
 					setInfo(curUser.getPhoto(id));
+					caption.setText("");
 				}
 			}
 		});
@@ -258,7 +259,7 @@ public class SearchController
 		id = p.getId();
 		photoDisplay.setImage(new Image(p.getLocation()));
 		tags2.setText(p.printTags());
-		caption.setText(p.getCaption());
+		lblCaption.setText(p.getCaption());
 		date.setText(p.getDateS());
 		int length = newAlbum.size();
 		int i = newAlbum.indexOf(p.getId());
@@ -516,6 +517,7 @@ public class SearchController
 			oldText = lblCaption.getText();
 			caption.setVisible(true);
 			lblCaption.setVisible(false);
+			caption.setText(lblCaption.getText());
 		}
 		else
 		{
