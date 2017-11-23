@@ -141,7 +141,6 @@ public class AlbumController
 	        public void changed(
 	                ObservableValue<? extends LocalDate> observableValue,
 	                LocalDate oldValue, LocalDate newValue) {
-	            //System.out.println(oldValue + " -> " + newValue);
 	            fillScrollPane(currentUser.searchAlbums(newValue, to.getValue()));  
 	        }
 	    });
@@ -150,7 +149,6 @@ public class AlbumController
 	        public void changed(
 	                ObservableValue<? extends LocalDate> observableValue,
 	                LocalDate oldValue, LocalDate newValue) {
-	            //System.out.println(oldValue + " -> " + newValue);
 	            fillScrollPane(currentUser.searchAlbums(from.getValue(),newValue));  
 	        }
 	    });

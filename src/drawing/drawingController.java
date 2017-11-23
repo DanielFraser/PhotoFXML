@@ -9,8 +9,10 @@ import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Slider;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -98,12 +100,18 @@ public class drawingController
                 		file = new File(file.getAbsolutePath() + ".png");
                     ImageIO.write(SwingFXUtils.fromFXImage(screenshot, null), "png", file);
                 } catch (IOException ex) {
-                    System.out.println(ex.getMessage());
+                	Alert alert = new Alert(AlertType.ERROR);
+        			alert.setTitle("Error Dialog");
+        			alert.setContentText(ex.getMessage());
+        			alert.show();
                 }
             }
 		}
 		catch (Exception e) {
-			System.out.println("failed to save image!\nError: " + e);
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Error Dialog");
+			alert.setContentText("failed to save image!\nError: " + e);
+			alert.show();
 		}
 	}
 }

@@ -195,7 +195,6 @@ public class PhotoController
 	        public void changed(
 	                ObservableValue<? extends LocalDate> observableValue,
 	                LocalDate oldValue, LocalDate newValue) {
-	            //System.out.println(oldValue + " -> " + newValue);
 	            fillScrollPane(curUser.searchPhotos(currentAlbum,newValue, to.getValue()));   
 	        }
 	    });
@@ -204,7 +203,6 @@ public class PhotoController
 	        public void changed(
 	                ObservableValue<? extends LocalDate> observableValue,
 	                LocalDate oldValue, LocalDate newValue) {
-	            //System.out.println(oldValue + " -> " + newValue);
 	            fillScrollPane(curUser.searchPhotos(currentAlbum, from.getValue(),newValue));  
 	        }
 	    });
@@ -298,7 +296,6 @@ public class PhotoController
 	@FXML
 	private void home(ActionEvent e)
 	{
-		System.out.println("home");
 		Stage stage = (Stage) quit.getScene().getWindow();
 		FXMLLoader loader = new FXMLLoader();
 		loader.setLocation(getClass().getResource("/nonadmin/album.fxml"));

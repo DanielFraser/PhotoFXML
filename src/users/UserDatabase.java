@@ -60,7 +60,7 @@ public class UserDatabase
             file.close();
             
             StockUser.createStockUser();
-            System.out.println("usernames has been serialized");
+            //System.out.println("usernames has been serialized");
         }
         catch(Exception e)
         {
@@ -86,7 +86,7 @@ public class UserDatabase
             in.close();
             file.close();
             
-            System.out.println("usernames has been deserialized");
+            //System.out.println("usernames has been deserialized");
         }
         catch(FileNotFoundException e)
 		{

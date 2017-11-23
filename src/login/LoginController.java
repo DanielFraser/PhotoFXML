@@ -69,7 +69,6 @@ public class LoginController {
 	public void login(ActionEvent E) throws IOException  {
 		
 		String username = userNameInput.getText();
-		System.out.println(username);
 
 		if(username.equals("admin")) {// User is admin
 			FXMLLoader loader = new FXMLLoader();
